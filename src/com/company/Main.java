@@ -7,6 +7,7 @@ public class Main {
         System.out.println("초기상태입니다");
         GyubinClass gyubin = new GyubinClass();
         jaewonClass jwClass = new jaewonClass();
+        ChangClass changClass = new ChangClass();
     }
 
 }
