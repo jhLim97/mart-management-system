@@ -19,9 +19,9 @@ public class MainView extends JFrame {
         setVisible(true);
     }
 
-    public void loginView() {
+    public void drawLoginView() {
         loginView = new LoginView();
-        loginView.drawLoginView();
+        loginView.drawView();
         getContentPane().add(loginView);
         setVisible(true);
     }
@@ -65,6 +65,10 @@ public class MainView extends JFrame {
         bottomPanel.add(messageLabel);
         bottomPanel.add(chatButton);
         bottomPanel.add(timeLabel);
+    }
+
+    public static void main(String[] args) {
+        new MainView().drawLoginView();
     }
 
 }

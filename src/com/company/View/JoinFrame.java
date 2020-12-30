@@ -5,7 +5,7 @@ import javax.swing.*;
 public class JoinFrame extends JFrame{
     JLabel idLabel, pwLabel, nameLabel;
     JTextField txtId, txtPw, txtName;
-    JRadioButton isSuperUser,isStaff;
+    JRadioButton adminRButton, staffRButton;
     JButton joinButton;
     ButtonGroup buttonGroup;
 
@@ -21,14 +21,14 @@ public class JoinFrame extends JFrame{
         txtPw = new JTextField(20);
         txtName = new JTextField(20);
 
-        isSuperUser = new JRadioButton("관리자");
-        isSuperUser.setSelected(false);
-        isStaff = new JRadioButton("직원");
-        isStaff.setSelected(false);
+        adminRButton = new JRadioButton("관리자");
+        adminRButton.setSelected(false);
+        staffRButton = new JRadioButton("직원");
+        staffRButton.setSelected(false);
 
         buttonGroup = new ButtonGroup();
-        buttonGroup.add(isSuperUser);
-        buttonGroup.add(isStaff);
+        buttonGroup.add(adminRButton);
+        buttonGroup.add(staffRButton);
 
         joinButton = new JButton("등록");
 
@@ -36,7 +36,35 @@ public class JoinFrame extends JFrame{
         setVisible(true);
     }
 
-    public void drawJoinFrame() {
-        idLabel.setBounds(100,200,50,20);
+    public void drawView() {
+        idLabel.setBounds(100,200,50,30);
+        txtId.setBounds(160,200,150,30);
+
+        pwLabel.setBounds(100,240,50,30);
+        txtPw.setBounds(160,240,150,30);
+
+        nameLabel.setBounds(100,280,50,30);
+        txtName.setBounds(160,280,150,30);
+
+        adminRButton.setBounds(120,320,80,30);
+        staffRButton.setBounds(220,320,80,30);
+
+        joinButton.setBounds(380,650,60,30);
+
+        add(idLabel);
+        add(pwLabel);
+        add(nameLabel);
+        add(txtId);
+        add(txtPw);
+        add(txtName);
+        add(adminRButton);
+        add(staffRButton);
+        add(joinButton);
+
+        repaint();
+    }
+
+    public static void main(String[] args) {
+        new JoinFrame().drawView();
     }
 }

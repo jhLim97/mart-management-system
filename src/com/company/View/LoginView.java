@@ -31,7 +31,7 @@ public class LoginView extends JPanel{
         joinButton.setBounds(610,380,80,20);
     }
 
-    public void drawLoginView() {
+    public void drawView() {
         add(idLabel);
         add(txtId);
         add(loginButton);
