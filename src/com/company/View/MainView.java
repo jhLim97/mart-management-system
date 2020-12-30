@@ -3,7 +3,6 @@ package com.company.View;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class MainView extends JFrame {
     JPanel buttonPanel, bottomPanel, centerPanel;
     JButton productButton, orderListButton, customerButton, shoppingButton, chatButton;
