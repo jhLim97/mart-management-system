@@ -40,7 +40,6 @@ public class OrderListViewPanel extends JPanel {
         revenueTotal = new JLabel("총 매출");
         total = new JLabel("총액 : ");
 
-
     }
 
     public void drawView(){
