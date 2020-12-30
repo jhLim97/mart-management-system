@@ -23,47 +23,25 @@ public class OrderListView extends JPanel {
         this.setPreferredSize(new Dimension(1200,500));
         this.setLayout(null);
 
-        //
+        //ListPanel
         ListPanel = new JPanel();
-        ListPanel.setLayout(null);
-        ListPanel.setBackground(Color.gray);
-        ListPanel.setBounds(10,10,1170,50);
-
+        //OrderLab
         orderLab = new JLabel("판매 정보 및 매출");
-        orderLab.setHorizontalAlignment(JLabel.LEFT);
-        orderLab.setVerticalAlignment(JLabel.CENTER);
-        orderLab.setFont(new Font("", Font.BOLD, 30));
-        orderLab.setBounds(10,00,300,50);
 
         //orderHistory View
         orderHistoryView = new JTextArea();
-        orderHistoryView.setBounds(10, 70, 800, 380);
-        orderHistoryView.setText("\n       주문정보\t    주문코드\t제품코드\t제품갯수\t제품가격\t판매날짜");
-        orderHistoryView.setEditable(false);
-        orderHistoryView.setBorder(new EtchedBorder(EtchedBorder.RAISED));
-        JScrollPane sp = new JScrollPane(orderHistoryView);
-
-
 
         //revenue panel + Label
         revenuePanel = new JPanel();
-        revenuePanel.setBackground(Color.lightGray);
-        revenuePanel.setBounds(820,70,360,380);
-        revenuePanel.setLayout(null);
-        this.add(revenuePanel);
-        revenueDay = new JLabel("요일별 매출"); revenueDay.setBounds(20,20,320,30);
-        revenueDay.setFont(new Font("",Font.BOLD,20));
-        minDay = new JLabel("최저 : "); minDay.setBounds(20,60,320,30);
-        maxDay = new JLabel("최고 : "); maxDay.setBounds(20,100,320,30);
-        revenueMonth = new JLabel("월별 매출"); revenueMonth.setBounds(20,140,320,30);
-        minMonth = new JLabel("최저 : "); minMonth.setBounds(20,180,320,30);
-        maxMonth = new JLabel("최고 : "); maxMonth.setBounds(20,220,320,30);
-        revenueMonth.setFont(new Font("",Font.BOLD,20));
-        revenueTotal = new JLabel("총 매출"); revenueTotal.setBounds(20,260,320,30);
-        revenueTotal.setFont(new Font("",Font.BOLD,20));
-        total = new JLabel("총액 : "); total.setBounds(20,300,320,30);
+        revenueDay = new JLabel("요일별 매출");
+        minDay = new JLabel("최저 : ");
+        maxDay = new JLabel("최고 : ");
+        revenueMonth = new JLabel("월별 매출");
+        minMonth = new JLabel("최저 : ");
+        maxMonth = new JLabel("최고 : ");
+        revenueTotal = new JLabel("총 매출");
+        total = new JLabel("총액 : ");
 
-        total.setFont(new Font("", Font.BOLD,15));
 
         //JTable
 //        jt = new JTable(new DefaultTableModel());
@@ -74,10 +52,46 @@ public class OrderListView extends JPanel {
     }
 
     public void Start_OverListView(){
+        //ListPanel
+        ListPanel.setLayout(null);
+        ListPanel.setBackground(Color.gray);
+        ListPanel.setBounds(10,10,1170,50);
+        //OrderLab
+        orderLab.setHorizontalAlignment(JLabel.LEFT);
+        orderLab.setVerticalAlignment(JLabel.CENTER);
+        orderLab.setFont(new Font("", Font.BOLD, 30));
+        orderLab.setBounds(10,00,300,50);
+        //TextArea
+        orderHistoryView.setBounds(10, 70, 800, 380);
+        orderHistoryView.setText("\n       주문정보\t    주문코드\t제품코드\t제품갯수\t제품가격\t판매날짜");
+        orderHistoryView.setEditable(false);
+        orderHistoryView.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        JScrollPane sp = new JScrollPane(orderHistoryView);
+        //revenuePanel
+        revenuePanel.setBackground(Color.lightGray);
+        revenuePanel.setBounds(820,70,360,380);
+        revenuePanel.setLayout(null);
+        //revenue panel + Label
+        revenueDay.setBounds(20,20,320,30);
+        minDay.setBounds(20,60,320,30);
+        maxDay.setBounds(20,100,320,30);
+        revenueMonth.setBounds(20,140,320,30);
+        minMonth.setBounds(20,180,320,30);
+        maxMonth.setBounds(20,220,320,30);
+        revenueTotal.setBounds(20,260,320,30);
+        total.setBounds(20,300,320,30);
 
+        revenueDay.setFont(new Font("",Font.BOLD,20));
+        revenueMonth.setFont(new Font("",Font.BOLD,20));
+        revenueTotal.setFont(new Font("",Font.BOLD,20));
+        total.setFont(new Font("", Font.BOLD,15));
+
+
+        //add
         this.add(ListPanel);
         ListPanel.add(orderLab);
         this.add(orderHistoryView);
+        this.add(revenuePanel);
         revenuePanel.add(revenueDay);
         revenuePanel.add(revenueMonth);
         revenuePanel.add(revenueTotal);
