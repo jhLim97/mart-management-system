@@ -2,16 +2,16 @@ package com.company.View;
 
 import javax.swing.*;
 
-public class JoinFrame extends JFrame{
+public class JoinView extends JFrame{
     JLabel idLabel, pwLabel, nameLabel;
     JTextField txtId, txtPw, txtName;
     JRadioButton adminRButton, staffRButton;
     JButton joinButton;
     ButtonGroup buttonGroup;
 
-    public JoinFrame() {
-        setTitle("회원가입");
-        setLayout(null);
+    public static void main(String[] args) { new JoinView().drawView(); }
+
+    public JoinView() {
 
         idLabel = new JLabel("ID");
         pwLabel = new JLabel("PW");
@@ -22,21 +22,28 @@ public class JoinFrame extends JFrame{
         txtName = new JTextField(20);
 
         adminRButton = new JRadioButton("관리자");
-        adminRButton.setSelected(false);
+
         staffRButton = new JRadioButton("직원");
-        staffRButton.setSelected(false);
 
         buttonGroup = new ButtonGroup();
-        buttonGroup.add(adminRButton);
-        buttonGroup.add(staffRButton);
 
         joinButton = new JButton("등록");
-
-        setSize(500,750);
-        setVisible(true);
     }
 
     public void drawView() {
+        setTitle("회원가입");
+        setLayout(null);
+
+        setSize(500,750);
+
+        adminRButton.setSelected(false);
+        staffRButton.setSelected(false);
+        buttonGroup.add(adminRButton);
+        buttonGroup.add(staffRButton);
+
+        adminRButton.setBounds(120,320,80,30);
+        staffRButton.setBounds(220,320,80,30);
+
         idLabel.setBounds(100,200,50,30);
         txtId.setBounds(160,200,150,30);
 
@@ -45,9 +52,6 @@ public class JoinFrame extends JFrame{
 
         nameLabel.setBounds(100,280,50,30);
         txtName.setBounds(160,280,150,30);
-
-        adminRButton.setBounds(120,320,80,30);
-        staffRButton.setBounds(220,320,80,30);
 
         joinButton.setBounds(380,650,60,30);
 
@@ -61,10 +65,9 @@ public class JoinFrame extends JFrame{
         add(staffRButton);
         add(joinButton);
 
-        repaint();
+        setVisible(true);
+
     }
 
-    public static void main(String[] args) {
-        new JoinFrame().drawView();
-    }
+
 }
