@@ -11,6 +11,8 @@ public class MainView extends JFrame {
 
     LoginViewPanel loginViewPanel;
     OrderListViewPanel orderListViewPanel;
+    CustomerViewPanel customerViewPanel;
+    ProductViewPanel productViewPanel;
     public static void main(String[] args) {
         MainView app = new MainView(); // 메인뷰 프레임 생성
         app.drawView();
@@ -48,19 +50,34 @@ public class MainView extends JFrame {
 
 
     public void drawLoginPanel() {
-        loginViewPanel = new LoginViewPanel();
+        if(loginViewPanel == null) loginViewPanel = new LoginViewPanel();
         loginViewPanel.drawView();
-        getContentPane().add(loginViewPanel);
+        getContentPane().add(loginViewPanel,BorderLayout.CENTER);
         setVisible(true);
     }
 
     public void drawOrderListViewPanel(){
-         orderListViewPanel = new OrderListViewPanel();
+         if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
          orderListViewPanel.drawView();;
          getContentPane().add(orderListViewPanel,BorderLayout.CENTER);
          setVisible(true);
     }
-
+    public void drawCustomerViewPanel(){
+        if(customerViewPanel == null) customerViewPanel = new CustomerViewPanel();
+        customerViewPanel.drawView();
+        getContentPane().add(customerViewPanel,BorderLayout.CENTER);
+        setVisible(true);
+    }
+    public void drawProductViewPanel(){
+        ProductViewPanel productView = new ProductViewPanel();
+        productView.drawView();
+        add(productView, BorderLayout.CENTER);
+        setVisible(true);
+//        if(productViewPanel == null) productViewPanel = new ProductViewPanel();
+//        productViewPanel.drawView();
+//        getContentPane().add(productViewPanel,BorderLayout.CENTER);
+//        setVisible(true);
+    }
     public void drawMainPanel() {
 
         buttonPanel.setLayout(new GridLayout(1, 5));
@@ -86,9 +103,6 @@ public class MainView extends JFrame {
         bottomPanel.add(messageLabel);
         bottomPanel.add(chatButton);
         bottomPanel.add(timeLabel);
-
-
-
 
     }
 

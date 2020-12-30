@@ -37,8 +37,6 @@ public class CustomerViewPanel extends JPanel {
         lblNewCustomer = new JLabel("신규 고객");
         jtaNewCustomer = new JTextArea(" ", 5, 5);
 
-        drawView();
-
     }
 
     public void drawView() {
