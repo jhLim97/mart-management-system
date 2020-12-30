@@ -11,12 +11,14 @@ public class MainView extends JFrame {
     String date, time;
 
     LoginViewPanel loginViewPanel;
-
+    OrderListViewPanel orderListViewPanel;
     public static void main(String[] args) {
         MainView app = new MainView(); // 메인뷰 프레임 생성
         app.drawView();
-        // app.drawLoginPanel();
-        // app.drawMainPanel();
+//        app.drawLoginPanel();
+        app.drawMainPanel();
+        app.drawOrderListViewPanel();
+        new productCRUDView().drawView();
     }
 
     public MainView() {
@@ -52,6 +54,12 @@ public class MainView extends JFrame {
         setVisible(true);
     }
 
+    public void drawOrderListViewPanel(){
+         orderListViewPanel = new OrderListViewPanel();
+         orderListViewPanel.drawView();;
+         getContentPane().add(orderListViewPanel,BorderLayout.CENTER);
+         setVisible(true);
+    }
 
     public void drawMainPanel() {
 
@@ -66,7 +74,6 @@ public class MainView extends JFrame {
         add(buttonPanel, BorderLayout.PAGE_START);
 
         centerPanel.setSize(1200, 700);
-        add(centerPanel, BorderLayout.CENTER);
         bottomPanel.setPreferredSize(new Dimension(1200, 30));
         bottomPanel.setLayout(null);
 
