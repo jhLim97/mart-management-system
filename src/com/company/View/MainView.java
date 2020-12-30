@@ -3,7 +3,6 @@ package com.company.View;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class MainView extends JFrame {
     JPanel buttonPanel, bottomPanel, centerPanel;
     JButton productButton, orderListButton, customerButton, shoppingButton, chatButton;
@@ -45,8 +44,9 @@ public class MainView extends JFrame {
         setLayout(new BorderLayout());
 
         setVisible(true);
-
     }
+
+
     public void drawLoginPanel() {
         loginViewPanel = new LoginViewPanel();
         loginViewPanel.drawView();
@@ -87,5 +87,9 @@ public class MainView extends JFrame {
         bottomPanel.add(chatButton);
         bottomPanel.add(timeLabel);
 
+
+
+
     }
+
 }
