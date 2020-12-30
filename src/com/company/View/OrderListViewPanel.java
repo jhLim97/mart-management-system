@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
-public class OrderListView extends JPanel {
+public class OrderListViewPanel extends JPanel {
     JPanel ListPanel;
     JLabel orderLab; //판매 정보 및 매출
     JTextArea orderHistoryView; //상품 판매기록 뵤여주는 JTestArea
@@ -19,9 +19,7 @@ public class OrderListView extends JPanel {
     JLabel total;//총합금액표기라벨
     JTable jt;
 
-    public OrderListView() {
-        this.setPreferredSize(new Dimension(1200,500));
-        this.setLayout(null);
+    public OrderListViewPanel() {
 
         //ListPanel
         ListPanel = new JPanel();
@@ -43,15 +41,13 @@ public class OrderListView extends JPanel {
         total = new JLabel("총액 : ");
 
 
-        //JTable
-//        jt = new JTable(new DefaultTableModel());
-//        jt.setBounds(10,70,800,380);
-//        this.add(jt);
-
-
     }
 
-    public void Start_OverListView(){
+    public void drawView(){
+
+        this.setPreferredSize(new Dimension(1200,500));
+        this.setLayout(null);
+
         //ListPanel
         ListPanel.setLayout(null);
         ListPanel.setBackground(Color.gray);
@@ -98,5 +94,6 @@ public class OrderListView extends JPanel {
         revenuePanel.add(minDay); revenuePanel.add(maxDay);
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
+
     }
 }

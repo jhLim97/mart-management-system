@@ -9,14 +9,7 @@ public class productCRUDView extends JFrame {
     public JButton completeButton;
     public JPanel centerPanel,bottomPanel;
 
-    public static void main(String[] args) {
-        productCRUDView app = new productCRUDView();
-        app.drawView();
-        productCRUDView appPanel = new productCRUDView();
-        appPanel.drawView();
-
-
-    }
+    public static void main(String[] args) { new productCRUDView().drawView();}
 
     public productCRUDView(){
 
@@ -64,6 +57,6 @@ public class productCRUDView extends JFrame {
         centerPanel.add(completeButton);
         add(centerPanel,BorderLayout.CENTER);
 
-
+        setVisible(true);
     }
 }

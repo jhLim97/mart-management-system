@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
-public class CustomerManageFrame extends JFrame {
+public class CustomerManageView extends JFrame {
     JPanel mainPanel;
     JLabel nameLabel;//고객 이름
     JLabel phoneLabel;//핸드폰 번호
@@ -18,14 +18,12 @@ public class CustomerManageFrame extends JFrame {
     JTextField stateTF;//상태텍스트필드
     JLabel customerMangeLab;//고객관리
 
-    public CustomerManageFrame(){
+    public static void main(String[] args) { new CustomerManageView().drawView(); }
 
+
+    public CustomerManageView(){
 
         mainPanel = new JPanel();
-        mainPanel.setPreferredSize(new Dimension(370,410));
-        mainPanel.setLayout(null);
-        this.add(mainPanel);
-
         //고객관리라벨
         customerMangeLab = new JLabel("고객 관리");
         //이름관련
@@ -47,10 +45,14 @@ public class CustomerManageFrame extends JFrame {
         stateTF = new JTextField("## 상태 : ");
 
     }
-    void startUI(){
+    void drawView(){
         this.setSize(370,410);
         this.setTitle("고객 정보 관리");
         this.setResizable(false);
+
+        mainPanel.setPreferredSize(new Dimension(370,410));
+        mainPanel.setLayout(null);
+        this.add(mainPanel);
 
         customerMangeLab.setFont(new Font("",Font.BOLD,15));
         customerMangeLab.setBounds(10,10,150,30);
