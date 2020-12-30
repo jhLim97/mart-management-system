@@ -38,6 +38,10 @@ public class ProductViewPanel extends JPanel {
         bodyPanel = new JPanel();
         bodyPanel.setLayout(new BorderLayout());
 
+        scroll1 = new JScrollPane(productTable);
+        scroll2 = new JScrollPane(smallAMountArea);
+        scroll3 = new JScrollPane(almostExpiredArea);
+
         tableContents = new String[][]{
                 {"1", " "," ", " ", " ", " ", " ", " "},
             {"2", " "," ", " ", " ", " ", " ", " "},
@@ -63,17 +67,13 @@ public class ProductViewPanel extends JPanel {
         menuBarPanel.add(deleteButton);
         add(menuBarPanel, BorderLayout.PAGE_START);
 
-        scroll1 = new JScrollPane(productTable);
         scroll1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         bodyPanel.add(scroll1, BorderLayout.CENTER);
 
-        scroll2 = new JScrollPane(smallAMountArea);
         scroll2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
-        scroll3 = new JScrollPane(almostExpiredArea);
         scroll3.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
