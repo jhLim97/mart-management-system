@@ -8,6 +8,7 @@ public class Main {
         GyubinClass gyubin = new GyubinClass();
         jaewonClass jwClass = new jaewonClass();
         ChangClass changClass = new ChangClass();
+        JunhyukClass junhyuk = new JunhyukClass();
     }
 
 }
