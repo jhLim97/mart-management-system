@@ -2,15 +2,19 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ProductViewPanel extends JPanel {
     JPanel menuBarPanel, bodyPanel, txtAreaPanel;
     JTextField txtSearch;
-    JButton searchButton, addButton, updateButton, deleteButton;
+    public JButton searchButton, addButton, updateButton, deleteButton;
     JTable productTable;
     JTextArea smallAMountArea, almostExpiredArea;
     JScrollPane scroll1, scroll2, scroll3;
     String tableHeader[] = {"", "Code","Name","Price","Location","Date","Count","State"}, tableContents[][];
+
+    //controller
+    ProductController controller;
 
     public static void main(String[] args) {
         MainView app = new MainView();
@@ -18,8 +22,10 @@ public class ProductViewPanel extends JPanel {
         app.drawMainPanel();
         ProductViewPanel productView = new ProductViewPanel();
         productView.drawView();
+        productView.setController(); //컨트롤러 장착
         app.add(productView, BorderLayout.CENTER);
         app.setVisible(true);
+
     }
 
     public ProductViewPanel() {
@@ -51,6 +57,8 @@ public class ProductViewPanel extends JPanel {
 
         smallAMountArea = new JTextArea(15,30);
         almostExpiredArea = new JTextArea(15,30);
+
+
 
         setVisible(true);
     }
@@ -86,4 +94,14 @@ public class ProductViewPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
 
     }
+
+    
+    public void addActionListener(ActionListener listener){
+        searchButton.addActionListener(listener);
+        addButton.addActionListener(listener);
+        updateButton.addActionListener(listener);
+        deleteButton.addActionListener(listener);
+    }
+
+
 }
