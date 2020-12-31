@@ -12,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 
 public class ProductController extends Thread{
     public ProductViewPanel v;
@@ -21,6 +23,7 @@ public class ProductController extends Thread{
     public ArrayList<ProductDTO> datas;
     public boolean editMode = false;
     MainView mainView ;
+    Date date ;
 
     public ProductController(ProductViewPanel v) throws SQLException, ClassNotFoundException {
         this.v=v;
@@ -28,6 +31,9 @@ public class ProductController extends Thread{
         appMain();
         refreshData();
         mainView = new MainView();
+        start();
+        v.smallAMountArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
+        v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
     public void appMain(){
         v.addActionListener(new ActionListener() {
@@ -215,9 +221,101 @@ public class ProductController extends Thread{
     }
 
 
-    public void start(){
-        while(true){
+    public void run(){
+        String txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
+        String txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
+        ArrayList<ProductDTO> data = null;
+        
+        while(true){//while
+            java.util.Date now = new java.util.Date();
+
+            try {
+                data=dao.getAll();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } //daoGeoAll try
+
+            if(data!=null) {
+                for (ProductDTO p : data) {
+
+                    boolean chk1=false,chk2=false;
+
+                    long diff = p.getExpDate().getTime() - now.getTime();
+                    long sec = diff / 1000;
+
+
+                    if ( sec < 604800) {//시간측정 일주일
+                        p.setState("유통기한임박");
+                        System.out.print(3);
+                        try {
+                            dao.updateProduct(p);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        txt += p.getPrCode() + "\t" + p.getPrName() + "\t" + p.getPrice() + "\t" + p.getLocation() +
+                                "\t" + p.getExpDate() + "\t" + p.getAmount() +"\t" + p.getState() + "\n";
+                        chk1 =true;
+                    }//if 시간측정
+
+                    if( p.getAmount() < 10){//재고측정
+                        System.out.print(2);
+                        p.setState("재고부족임박");
+                        try {
+                            dao.updateProduct(p);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        txt2 += p.getPrCode() + "\t" + p.getPrName() + "\t" + p.getPrice() + "\t" + p.getLocation() +
+                                "\t" + p.getExpDate() + "\t" + p.getAmount() +"\t" + p.getState() + "\n";
+                        chk2 = true;
+                    }//재고측정
+
+                    if(chk1){
+                        if(chk2){
+                        System.out.print(1);
+                        p.setState("재고유통기한임박");
+                        try {
+                            dao.updateProduct(p);
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        }
+                    }//상태변환 재고 유통기한 둘다 측정할떄 변화
+
+
+                    chk1 =false; chk2 =false;
+                }
+
+            }try {
+                sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            v.smallAMountArea.setText(txt);
+            v.almostExpiredArea.setText(txt2);
+            txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
+            txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
+
+
+
+
+            try {
+                refreshData();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
