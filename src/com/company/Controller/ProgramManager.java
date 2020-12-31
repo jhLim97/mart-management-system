@@ -39,30 +39,34 @@ public class ProgramManager {
         this.state = state;
     }
     public void setMainState(){
+        this.state = mainState;
         if(mainState == null) mainState = new MainState();
         drawMainView();
         mainView.drawMainPanel();
         mainView.drawProductViewPanel();
         mainState.applyListener();
-        this.state = mainState;
+
     }
     public void setLoginState() {
+        this.state = loginState;
         if(loginState == null) loginState = new LoginState();
         drawMainView();
         mainView.drawLoginPanel();
         loginState.applyListener();
-        this.state = loginState;
+
     }
     public void setOrderManageState(){
-        if(orderManageState == null) orderManageState = new OrderManageState();
-
-        mainView.drawOrderListViewPanel();
         this.state = orderManageState;
+        if(orderManageState == null) orderManageState = new OrderManageState();
+        mainView.drawOrderListViewPanel();
+        orderManageState.applyListener();
+
     }
     public void setCustomerManageState(){
+        this.state = customerManageState;
         if(customerManageState == null) customerManageState = new CustomerManageState();
         mainView.drawCustomerViewPanel();
-        this.state = customerManageState;
+        customerManageState.applyListener();
     }
 
     private static ProgramManager s_Instance;
