@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+<<<<<<< HEAD
     <data-source source="LOCAL" name="MMS@localhost" uuid="1c1ba01a-dec9-4376-9adf-78e9f308827c">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
+=======
+    <data-source source="LOCAL" name="mms@localhost" uuid="631e39d6-096e-4fa2-85a0-a9d8f7798961">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/mms</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+>>>>>>> 84e7c9b481ee2f4500d1ff9a6f2be1b5b84616b5
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
