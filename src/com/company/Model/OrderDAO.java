@@ -107,19 +107,21 @@ public class OrderDAO {
         sql = "insert into Orders(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
 
         try {
-            System.out.println(1);
             pstmt = con.prepareStatement(sql);
-            //pstmt.setInt(1, product.getPrcode()); // 이거 수정하기 --> 가장 최근 숫자 + 1로
-            //pstmt.setInt(1, items.size()); // 이거 맞나? --> 앞에 하나 삭제할 경우 주키 중복될 수 있음
-            //int s = items.size();
-            //pstmt.setInt(1, Integer.valueOf(items.get(s-1))+1); // prcode컬럼에 AUTO_INCREMENT 속성을 적용했으므로 따로 입력안해줘서 맥스값으로 계속 채워짐
             pstmt.setInt(1, order.getEntry_price());
             pstmt.setString(2, order.getC_name());
             pstmt.setString(3, order.getPhone_num());
             pstmt.setString(4, order.getBuy_date());
-            System.out.println(2);
             pstmt.executeUpdate();
-            System.out.println(3);
+
+            // 가장 최신의 입력된 auto_increment 값 가져오기
+            // --> mysql에서는 해당 값을 컨넥션 별로 관리하므로 멀티 스레드 구현 시 race condition같은 문제를 걱정할 필요없음
+            // 즉, 락을 걸거나 트랜잭션을 구현할 필요가 X
+            sql = "select last_insert_id()";
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            if(rs.next()) order.setOrder_code(rs.getInt(1));
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -130,6 +132,26 @@ public class OrderDAO {
         return true;
     }
 
+    public boolean updateOrder(OrderDTO order) { // 파라미터의 객체 정보로 업데이트
+        connectDB();
+        sql = "update Orders set entry_price = ? where order_code = ?";
+
+        try {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, order.getEntry_price());
+            pstmt.setInt(2, order.getOrder_code());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        closeDB();
+
+        return true;
+    }
+
+    // ------- 아래 함수는 사용 여부 미정 -------
     public boolean delOrder(int orderCode) {
         connectDB();
         sql = "delete from Orders where order_code = ?";
@@ -148,28 +170,6 @@ public class OrderDAO {
         return true;
     }
 
-    // ------- 아래 함수는 사용 여부 미정 -------
-    public boolean updateOrder(OrderDTO order) { // 파라미터의 객체 정보로 업데이트
-        connectDB();
-        sql = "update Orders set entry_price = ?, c_name = ?, phone_num = ?, buy_date = ? where order_code = ?";
-
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, order.getEntry_price());
-            pstmt.setString(2, order.getC_name());
-            pstmt.setString(3, order.getPhone_num());
-            pstmt.setString(4, order.getBuy_date());
-            pstmt.setInt(5, order.getOrder_code());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        closeDB();
-
-        return true;
-    }
 
 }
 

@@ -26,6 +26,7 @@ public class OrderController {
         this.shoppingView = shoppingView;
         this.shoppingView.addOrderActionListner(new OrderActionListener());
         orderDAO = new OrderDAO();
+        orderHistoryDAO = new OrderHistoryDAO();
     }
 
     public class OrderActionListener implements ActionListener {
@@ -38,7 +39,9 @@ public class OrderController {
 
                 int rowCount = shoppingView.tbMyList.getRowCount(); // myList에 담긴 물품 즉, 행의 개수 가져오기
                 int tmp = rowCount;
-                int prCode, prPrice, prCount;
+                int orderCode, prCode, prPrice, prCount;
+                orderCode = 0; // 초기화
+
                 String cName[], cPhone[], prName;
                 cName = shoppingView.lblCname.getText().split(" : "); // 이름 추출
                 cPhone = shoppingView.lblCphoneNum.getText().split(" : "); // 번호 추출
@@ -58,38 +61,59 @@ public class OrderController {
                 //String strDate = sdf.format(cal.getTime());
                 //System.out.println(strDate);
 
-                System.out.println(rowCount);
+                orderDTO = new OrderDTO(); // 먼저 주문 테이블에 총 가격을 제외하고 작성
+                //orderDTO.setEntry_price();
+                orderDTO.setC_name(cName[1]);
+                orderDTO.setPhone_num(cPhone[1]);
+                orderDTO.setBuy_date(year + "-" + month + "-" + day);
+
+                int entryPrice = 0; // 주문 내역 테이블에 물품 다 추가한 후 해당 정보를 이용해 주문테이블 업데이트
+
+                // 여기서 물품 개수 미달이면 적절히 처리해줘야 할듯... --> 제어해서 주문 될 지 안될지 결정
+                if(status){
+                    if(orderDAO.addOrder(orderDTO)) {
+                        System.out.println("주문 테이블 작성 완료!!"); // 콘솔창에 완료 여부 출력
+                        orderCode = orderDTO.getOrder_code(); // last_insert_id()을 통해 얻어온 값
+                    }
+                    else {
+                        System.out.println("주문 테이블 작성 실패..."); // 콘솔창에 완료 여부 출력
+                        status = false; // 제어
+                    }
+
+                }
 
                 while(rowCount != 0) {
                     prCode = Integer.parseInt((String)(shoppingView.tbMyList.getValueAt(rowCount-1,1))); // 물품을 넣는 순서를 역순으로 넣음
-                    prName = (String)(shoppingView.tbMyList.getValueAt(rowCount-1,2));
-                    prPrice = Integer.parseInt((String)(shoppingView.tbMyList.getValueAt(rowCount-1,3)));
+                    prName = (String)(shoppingView.tbMyList.getValueAt(rowCount-1,2)); // 상품이름도 히스토리 테이블에 칼럼 추가해서 넣으면 직관적으로 좋을듯?
                     prCount = Integer.parseInt((String)(shoppingView.tbMyList.getValueAt(rowCount-1,4)));
+                    prPrice = Integer.parseInt((String)(shoppingView.tbMyList.getValueAt(rowCount-1,3)));
 
-                    orderDTO = new OrderDTO();
-                    orderDTO.setEntry_price(prPrice*prCount);
-                    orderDTO.setC_name(cName[1]);
-                    orderDTO.setPhone_num(cPhone[1]);
-                    orderDTO.setBuy_date(year + "-" + month + "-" + day);
 
-                    System.out.println(prPrice*prCount + " " + cName[1] + " " + cPhone[1] + year + "-" + month + "-" + day);
+                    orderHistoryDTO = new OrderHistoryDTO();
+                    orderHistoryDTO.setOrder_code(orderCode);
+                    orderHistoryDTO.setPr_code(prCode);
+                    orderHistoryDTO.setPr_count(prCount);
+                    orderHistoryDTO.setPr_price(prCount*prPrice);
 
                     // 여기서 물품 개수 미달이면 적절히 처리해줘야 할듯... --> 제어해서 주문 될 지 안될지 결정
                     if(status){
-                        if(orderDAO.addOrder(orderDTO)) {
+                        if(orderHistoryDAO.addOrderHistory(orderHistoryDTO)) {
                             System.out.println("주문 완료!!"); // 콘솔창에 완료 여부 출력
+                            entryPrice += prCount*prPrice;
                         }
                         else System.out.println("주문 실패..."); // 콘솔창에 완료 여부 출력
                     }
 
                     rowCount--;
-                    System.out.println(rowCount);
                 }
 
                 for (int i = tmp - 1; i >= 0; i--) { // 구매완료 시 MyList 내역 삭제
                     shoppingView.modelMyList.removeRow(i);
                 }
-                //orderDTO.setOrder_code(Integer.parseInt(shoppingView.tbMyList.getValueAt(1,0)));
+
+                orderDTO.setEntry_price(entryPrice);
+                if(orderDAO.updateOrder(orderDTO)) System.out.println("주문 테이블 업데이트 완료!!"); // 콘솔창에 완료 여부 출력
+                else System.out.println("주문 테이블 업데이트 실패..."); // 콘솔창에 완료 여부 출력
             }
         }
     }

@@ -39,7 +39,7 @@ public class OrderHistoryDAO {
     public void closeDB() {
         try {
             pstmt.close();
-            rs.close();
+            if(rs != null) rs.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,10 +108,6 @@ public class OrderHistoryDAO {
 
         try {
             pstmt = con.prepareStatement(sql);
-            //pstmt.setInt(1, product.getPrcode()); // 이거 수정하기 --> 가장 최근 숫자 + 1로
-            //pstmt.setInt(1, items.size()); // 이거 맞나? --> 앞에 하나 삭제할 경우 주키 중복될 수 있음
-            //int s = items.size();
-            //pstmt.setInt(1, Integer.valueOf(items.get(s-1))+1); // prcode컬럼에 AUTO_INCREMENT 속성을 적용했으므로 따로 입력안해줘서 맥스값으로 계속 채워짐
             pstmt.setInt(1, ordHis.getOrder_code());
             pstmt.setInt(2, ordHis.getPr_code());
             pstmt.setInt(3, ordHis.getPr_count());
@@ -127,6 +123,7 @@ public class OrderHistoryDAO {
         return true;
     }
 
+    // ------- 아래 함수는 사용 여부 미정 -------
     public boolean delOrderHistory(int historyId) {
         connectDB();
         sql = "delete from OrderHistory where history_id = ?";
