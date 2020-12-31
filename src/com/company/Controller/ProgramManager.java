@@ -1,5 +1,9 @@
 package com.company.Controller;
 
+import com.company.View.CustomerManageView;
+import com.company.View.MainView;
+
+
 import com.company.Main;
 import com.company.View.CustomerManageView;
 import com.company.View.LoginViewPanel;
@@ -35,6 +39,7 @@ public class ProgramManager {
     public void setState(State state) {
         this.state = state;
     }
+
     public void setMainState(){
         this.state = mainState;
         if(mainState == null) mainState = new MainState();

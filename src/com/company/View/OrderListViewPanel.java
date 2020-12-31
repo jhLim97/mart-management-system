@@ -3,7 +3,6 @@ package com.company.View;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class OrderListViewPanel extends JPanel {
     JPanel ListPanel;
@@ -96,6 +95,4 @@ public class OrderListViewPanel extends JPanel {
         revenuePanel.add(total);
 
     }
-
-
 }
