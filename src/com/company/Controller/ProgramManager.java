@@ -14,8 +14,6 @@ public class ProgramManager {
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
-    PreparedStatement pstmt;
-    ResultSet rs;
 
     private MainView mainView;
     private State state;
@@ -37,30 +35,35 @@ public class ProgramManager {
     }
 
     public void setMainState(){
+        this.state = mainState;
         if(mainState == null) mainState = new MainState();
+        mainView.loginViewPanel.setVisible(false);
         drawMainView();
         mainView.drawMainPanel();
         mainView.drawProductViewPanel();
         mainState.applyListener();
-        this.state = mainState;
+
     }
     public void setLoginState() {
+        this.state = loginState;
         if(loginState == null) loginState = new LoginState();
         drawMainView();
         mainView.drawLoginPanel();
         loginState.applyListener();
-        this.state = loginState;
+
     }
     public void setOrderManageState(){
-        if(orderManageState == null) orderManageState = new OrderManageState();
-
-        mainView.drawOrderListViewPanel();
         this.state = orderManageState;
+        if(orderManageState == null) orderManageState = new OrderManageState();
+        mainView.drawOrderListViewPanel();
+        orderManageState.applyListener();
+
     }
     public void setCustomerManageState(){
+        this.state = customerManageState;
         if(customerManageState == null) customerManageState = new CustomerManageState();
         mainView.drawCustomerViewPanel();
-        this.state = customerManageState;
+        customerManageState.applyListener();
     }
 
     private static ProgramManager s_Instance;
@@ -69,7 +72,8 @@ public class ProgramManager {
         return s_Instance;
     }
 
-    public void connectDB(){
+
+    public void connectDB(Connection conn){
         try{
             // 1단계 : JDBC 드라이버 로드
             Class.forName(jdbcDriver);
@@ -80,7 +84,7 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
-    public void closeDB(){
+    public void closeDB(Connection conn, PreparedStatement pstmt, ResultSet rs){
         try {
             // 6단계 : 연결 해제
             pstmt.close();
@@ -90,4 +94,5 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
+
 }

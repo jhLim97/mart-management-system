@@ -21,6 +21,7 @@ public class LoginState implements State{
     @Override
     public void applyListener() {
         loginViewPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
+        mmsListener.getInstance().loginPanelListener(loginViewPanel);
 
     }
 
