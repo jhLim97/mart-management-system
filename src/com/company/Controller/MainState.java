@@ -31,16 +31,17 @@ public class MainState implements State{
     public void applyListener() {
         productView = ProgramManager.getInstance().getMainView();
         productView.productButton.addActionListener(e -> {
-            ProgramManager.getInstance().setMainState();
-            System.out.println("check");
+
         });
         productView.orderListButton.addActionListener(e -> {
+            productView.productViewPanel.setVisible(false);
             ProgramManager.getInstance().setOrderManageState();
-            System.out.println("check");
+
         });
         productView.customerButton.addActionListener(e -> {
+            productView.productViewPanel.setVisible(false);
             ProgramManager.getInstance().setCustomerManageState();
-            System.out.println("check");
+
         });
 
     }

@@ -12,6 +12,6 @@ public class MainController {
 //        manager.setMainState();
 //        manager.setCustomerManageState();
 //        manager.setOrderManageState();
-;
+
     }
 }

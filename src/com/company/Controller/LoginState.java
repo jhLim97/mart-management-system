@@ -21,7 +21,10 @@ public class LoginState implements State{
     @Override
     public void applyListener() {
         loginViewPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
-
+        loginViewPanel.loginButton.addActionListener(e -> {
+            loginViewPanel.setVisible(false);
+            ProgramManager.getInstance().setMainState();
+        });
     }
 
     @Override
