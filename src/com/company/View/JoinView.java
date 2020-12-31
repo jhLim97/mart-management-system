@@ -3,11 +3,11 @@ package com.company.View;
 import javax.swing.*;
 
 public class JoinView extends JFrame{
-    JLabel idLabel, pwLabel, nameLabel;
-    JTextField txtId, txtPw, txtName;
-    JRadioButton adminRButton, staffRButton;
-    JButton joinButton;
-    ButtonGroup buttonGroup;
+    public JLabel idLabel, pwLabel, nameLabel;
+    public JTextField txtId, txtPw, txtName;
+    public JRadioButton adminRButton, staffRButton;
+    public JButton joinButton;
+    public ButtonGroup buttonGroup;
 
     public static void main(String[] args) { new JoinView().drawView(); }
 
