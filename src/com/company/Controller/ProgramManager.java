@@ -10,15 +10,12 @@ import java.sql.*;
 public class ProgramManager {
 
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/javadb?&serverTimezone=Asia/Seoul&useSSL=false";
-    Connection conn;
+    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
 
     MainState mainState;
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
-    PreparedStatement pstmt;
-    ResultSet rs;
 
     private MainView mainView;
     private State state;
@@ -41,6 +38,7 @@ public class ProgramManager {
     public void setMainState(){
         this.state = mainState;
         if(mainState == null) mainState = new MainState();
+        mainView.loginViewPanel.setVisible(false);
         drawMainView();
         mainView.drawMainPanel();
         mainView.drawProductViewPanel();
@@ -76,7 +74,7 @@ public class ProgramManager {
     }
 
 
-    public void connectDB(){
+    public void connectDB(Connection conn){
         try{
             // 1단계 : JDBC 드라이버 로드
             Class.forName(jdbcDriver);
@@ -87,7 +85,7 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
-    public void closeDB(){
+    public void closeDB(Connection conn, PreparedStatement pstmt, ResultSet rs){
         try {
             // 6단계 : 연결 해제
             pstmt.close();
@@ -97,4 +95,5 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
+
 }
