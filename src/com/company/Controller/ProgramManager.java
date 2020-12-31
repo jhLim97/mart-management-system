@@ -1,12 +1,9 @@
 package com.company.Controller;
 
-<<<<<<< HEAD
 import com.company.View.CustomerManageView;
 import com.company.View.MainView;
 
-public class ProgramManager {
 
-=======
 import com.company.Main;
 import com.company.View.CustomerManageView;
 import com.company.View.LoginViewPanel;
@@ -27,7 +24,6 @@ public class ProgramManager {
     PreparedStatement pstmt;
     ResultSet rs;
 
->>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
     private MainView mainView;
     private State state;
 
@@ -46,8 +42,7 @@ public class ProgramManager {
     public void setState(State state) {
         this.state = state;
     }
-<<<<<<< HEAD
-=======
+
     public void setMainState(){
         if(mainState == null) mainState = new MainState();
         drawMainView();
@@ -74,16 +69,12 @@ public class ProgramManager {
         mainView.drawCustomerViewPanel();
         this.state = customerManageState;
     }
->>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 
     private static ProgramManager s_Instance;
     public static ProgramManager getInstance(){
         if (s_Instance == null) s_Instance = new ProgramManager();
         return s_Instance;
     }
-
-<<<<<<< HEAD
-=======
 
     public void connectDB(){
         try{
@@ -106,5 +97,4 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
->>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 }
