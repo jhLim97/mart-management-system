@@ -1,10 +1,14 @@
 package com.company.Controller;
 
+<<<<<<< HEAD
 import java.sql.SQLException;
+=======
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 import java.util.Scanner;
 
 public class MainController {
 
+<<<<<<< HEAD
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
 
@@ -30,5 +34,16 @@ public class MainController {
         manager.drawMainView();
         manager.getState().drawPanel();
 
+=======
+    public static void main(String[] args) {
+
+        ProgramManager manager = ProgramManager.getInstance();
+        manager.setLoginState();
+
+//        manager.setMainState();
+//        manager.setCustomerManageState();
+//        manager.setOrderManageState();
+;
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
     }
 }

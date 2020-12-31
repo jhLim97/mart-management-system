@@ -5,18 +5,18 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 public class CustomerManageView extends JFrame {
-    JPanel mainPanel;
-    JLabel nameLabel;//고객 이름
-    JLabel phoneLabel;//핸드폰 번호
-    JLabel pointLabel;//포인트 번호
-    JTextField nameTF;//이름 텍스트필드
-    JTextField phoneTF;//번호 텍스트필드
-    JTextField pointTF;//포인트 텍스트필드
-    JButton enrollBtn;//등록버튼
-    JButton deleteBtn;//삭제버튼
-    JButton updateBtn;//업데이트버튼
-    JTextField stateTF;//상태텍스트필드
-    JLabel customerMangeLab;//고객관리
+    public JPanel mainPanel;
+    public JLabel nameLabel;//고객 이름
+    public JLabel phoneLabel;//핸드폰 번호
+    public JLabel pointLabel;//포인트 번호
+    public JTextField nameTF;//이름 텍스트필드
+    public JTextField phoneTF;//번호 텍스트필드
+    public JTextField pointTF;//포인트 텍스트필드
+    public JButton enrollBtn;//등록버튼
+    public JButton deleteBtn;//삭제버튼
+    public JButton updateBtn;//업데이트버튼
+    public JTextField stateTF;//상태텍스트필드
+    public JLabel customerMangeLab;//고객관리
 
     public static void main(String[] args) { new CustomerManageView().drawView(); }
 

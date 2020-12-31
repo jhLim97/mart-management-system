@@ -10,6 +10,7 @@ public class MainView extends JFrame {
     public JLabel messageLabel, timeLabel, blinkLabel;
     public String date, time;
 
+<<<<<<< HEAD
     LoginViewPanel loginViewPanel;
     OrderListViewPanel orderListViewPanel;
     CustomerViewPanel customerViewPanel;
@@ -22,6 +23,12 @@ public class MainView extends JFrame {
         app.drawOrderListViewPanel();
         new productCRUDView().drawView();
     }
+=======
+    public LoginViewPanel loginViewPanel;
+    public OrderListViewPanel orderListViewPanel;
+    public CustomerViewPanel customerViewPanel;
+    public ProductViewPanel productViewPanel;
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 
     public MainView() {
 
@@ -69,6 +76,7 @@ public class MainView extends JFrame {
         getContentPane().add(customerViewPanel,BorderLayout.CENTER);
         setVisible(true);
     }
+<<<<<<< HEAD
     public void drawProductViewPanel() throws SQLException, ClassNotFoundException {
         ProductViewPanel productView = new ProductViewPanel();
         productView.drawView();
@@ -78,11 +86,18 @@ public class MainView extends JFrame {
 //        productViewPanel.drawView();
 //        getContentPane().add(productViewPanel,BorderLayout.CENTER);
 //        setVisible(true);
+=======
+    public void drawProductViewPanel(){
+        if(productViewPanel == null) productViewPanel = new ProductViewPanel();
+        productViewPanel.drawView();
+        add(productViewPanel, BorderLayout.CENTER);
+        setVisible(true);
+
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
     }
     public void drawMainPanel() {
 
         buttonPanel.setLayout(new GridLayout(1, 5));
-
         buttonPanel.add(productButton);
         buttonPanel.add(orderListButton);
         buttonPanel.add(customerButton);

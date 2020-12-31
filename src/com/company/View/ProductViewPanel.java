@@ -12,6 +12,7 @@ public class ProductViewPanel extends JPanel {
     public JPanel menuBarPanel, bodyPanel, txtAreaPanel;
     public JTextField txtSearch;
     public JButton searchButton, addButton, updateButton, deleteButton;
+<<<<<<< HEAD
     public JTable productTable;
     public JTextArea smallAMountArea, almostExpiredArea;
     public JScrollPane scroll1, scroll2, scroll3;
@@ -31,6 +32,13 @@ public class ProductViewPanel extends JPanel {
         app.setVisible(true);
 
     }
+=======
+    JTable productTable;
+    JTextArea smallAMountArea, almostExpiredArea;
+    JScrollPane scroll1, scroll2, scroll3;
+    String tableHeader[] = {"", "Code","Name","Price","Location","Date","Count","State"}, tableContents[][];
+
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 
     public ProductViewPanel() {
         setLayout(new BorderLayout());
@@ -54,7 +62,17 @@ public class ProductViewPanel extends JPanel {
 
         tableModel = new DefaultTableModel(tableHeader,0);
 
+<<<<<<< HEAD
         productTable = new JTable(tableModel);
+=======
+        tableContents = new String[][]{
+                {"1", " "," ", " ", " ", " ", " ", " "},
+                {"2", " "," ", " ", " ", " ", " ", " "},
+                {"3", " "," ", " ", " ", " ", " ", " "},
+                {"4", " "," ", " ", " ", " ", " ", " "}
+        };
+        productTable = new JTable(tableContents, tableHeader);
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
 
         txtAreaPanel = new JPanel();
         txtAreaPanel.setLayout(new GridLayout(2,1));
@@ -111,8 +129,11 @@ public class ProductViewPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 17264d35ecf291b28383368a0fefa28424ce7abc
     public void addActionListener(ActionListener listener){
         searchButton.addActionListener(listener);
         addButton.addActionListener(listener);
