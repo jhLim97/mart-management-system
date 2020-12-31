@@ -36,7 +36,6 @@ public class productCRUDView extends JFrame {
     public void drawView(){
 
         setTitle("상품 등록/수정/삭제");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700,700);
         setLayout(new BorderLayout());
 
