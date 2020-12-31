@@ -28,10 +28,10 @@ public class CustomerManageView extends JFrame {
         customerMangeLab = new JLabel("고객 관리");
         //이름관련
         nameLabel = new JLabel("고객 이름");
-        nameTF = new JTextField("홍길동");
+        nameTF = new JTextField("");
         //핸드폰번호관련
         phoneLabel = new JLabel("핸드폰 번호");
-        phoneTF = new JTextField("010-0000-0000");
+        phoneTF = new JTextField("");
         //포인트관련
         pointLabel = new JLabel("포인트");
         pointTF = new JTextField("0");
@@ -40,7 +40,7 @@ public class CustomerManageView extends JFrame {
         //수정버튼
         updateBtn = new JButton("수정");
         //삭제버튼
-        updateBtn = new JButton("삭제");
+        updateBtn = new JButton("닫기");
         //상태 텍스트 필드
         stateTF = new JTextField("## 상태 : ");
 

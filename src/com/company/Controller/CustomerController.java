@@ -158,6 +158,9 @@ public class CustomerController {
         }
     }
 
+    public void registerCustomer() {
+
+    }
     public static void main(String[] args) {
         MainView mv = new MainView();
         CustomerViewPanel cvp= new CustomerViewPanel();
