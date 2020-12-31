@@ -39,7 +39,7 @@ public class OrderDAO {
     public void closeDB() {
         try {
             pstmt.close();
-            rs.close();
+            if(rs!=null) rs.close();
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,9 +104,10 @@ public class OrderDAO {
 
     public boolean addOrder(OrderDTO order) { // 날짜는 추후 수정...
         connectDB();
-        sql = "insert into OrderHistory(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
+        sql = "insert into Orders(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
 
         try {
+            System.out.println(1);
             pstmt = con.prepareStatement(sql);
             //pstmt.setInt(1, product.getPrcode()); // 이거 수정하기 --> 가장 최근 숫자 + 1로
             //pstmt.setInt(1, items.size()); // 이거 맞나? --> 앞에 하나 삭제할 경우 주키 중복될 수 있음
@@ -116,7 +117,9 @@ public class OrderDAO {
             pstmt.setString(2, order.getC_name());
             pstmt.setString(3, order.getPhone_num());
             pstmt.setString(4, order.getBuy_date());
+            System.out.println(2);
             pstmt.executeUpdate();
+            System.out.println(3);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -1,18 +1,21 @@
 package com.company.View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ShoppingView extends JFrame {
 
     //private JPanel selectProductPanel, productListPanel, myShoppingPanel;
-    private JLabel lblProduct, lblSearch, lblCount, lblItemList, lblMyList, lblMsg;
-    private JTextField jtfSearch, jtfCount;
-    private JComboBox cb;
-    private JTable tbItem, tbMyList;
-    private JScrollPane jspItem, jspMyList;
-    private JButton btnDelete1, btnDelete2, btnPay;
-    private Font fnt, fntDelete;
+    public JLabel lblProduct, lblSearch, lblCount, lblItemList, lblMyList, lblMsg, lblCname, lblCphoneNum;
+    public JTextField jtfSearch, jtfCount;
+    public JComboBox cb;
+    public JTable tbItem, tbMyList;
+    public JScrollPane jspItem, jspMyList;
+    public JButton btnDelete1, btnDelete2, btnPay;
+    public Font fnt, fntDelete;
+    public DefaultTableModel modelItemList, modelMyList;
 
     public ShoppingView() {
 
@@ -24,6 +27,8 @@ public class ShoppingView extends JFrame {
         lblProduct = new JLabel("상품");
         lblSearch = new JLabel("검색");
         lblCount = new JLabel("수량");
+        lblCname = new JLabel("고객이름 : 4조");
+        lblCphoneNum = new JLabel("고객 번호 : 010-8890-2749");
 
         cb = new JComboBox(); // 상품을 콤보박스에서 조회할 수 있도록 생성
         jtfSearch = new JTextField();
@@ -47,7 +52,8 @@ public class ShoppingView extends JFrame {
         };
 
         // table 생성
-        tbItem = new JTable(Itemcontents, Itemcolumns);
+        modelItemList = new DefaultTableModel(Itemcontents, Itemcolumns);
+        tbItem = new JTable(modelItemList);
         jspItem = new JScrollPane(tbItem, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         // -----------MyList-----------
@@ -56,19 +62,14 @@ public class ShoppingView extends JFrame {
         // table에 들어갈 rows, columns 정의
         String MyListcolumns[]={"No.", "A", "B", "C", "수량"};
         String MyListcontents[][]={
-                {"1", "물건1", " ", " ", " "},
-                {"2", "물건2", " ", " ", " "},
-                {"3", "물건3", " ", " ", " "},
-                {"4", " ", " ", " ", " "},
-                {"5", " ", " ", " ", " "},
-                {"6", " ", " ", " ", " "},
-                {"7", " ", " ", " ", " "},
-                {"8", " ", " ", " ", " "},
-                {"9", " ", " ", " ", " "},
+                {"1", "5", "홈런볼", "1500", "3"},
+                {"2", "2", "다우니", "4700", "8"},
+                {"3", "3", "치킨", "15000", "11"},
         };
 
         // table 생성
-        tbMyList = new JTable(MyListcontents, MyListcolumns);
+        modelMyList = new DefaultTableModel(MyListcontents, MyListcolumns);
+        tbMyList = new JTable(modelMyList);
         jspMyList = new JScrollPane(tbMyList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         btnDelete1 = new JButton("삭제");
@@ -84,70 +85,82 @@ public class ShoppingView extends JFrame {
     public void drawView() {
 
         setTitle("Shopping View");
-        setSize(400, 520);
+        setSize(400, 550);
         setLayout(null);
         setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 
         // -----------label, textfield add-----------
         lblProduct.setFont(fnt);
-        lblProduct.setBounds(20, 20, 60, 40);
+        lblProduct.setBounds(20, 50, 60, 40);
         add(lblProduct);
 
         lblSearch.setFont(fnt);
-        lblSearch.setBounds(20, 70, 60, 40);
+        lblSearch.setBounds(20, 100, 60, 40);
         add(lblSearch);
 
         lblCount.setFont(fnt);
-        lblCount.setBounds(210, 70, 60, 40);
+        lblCount.setBounds(210, 100, 60, 40);
         add(lblCount);
 
-        cb.setBounds(90, 25, 80, 30);
+        lblCname.setFont(fnt);
+        lblCname.setBounds(20, 15, 120, 30);
+        add(lblCname);
+
+        lblCphoneNum.setFont(fnt);
+        lblCphoneNum.setBounds(175, 15, 300, 30);
+        add(lblCphoneNum);
+
+        cb.setBounds(90, 55, 80, 30);
         add(cb);
 
-        jtfSearch.setBounds(90, 75, 100, 30);
+        jtfSearch.setBounds(90, 105, 100, 30);
         add(jtfSearch);
 
-        jtfCount.setBounds(280, 75, 70, 30);
+        jtfCount.setBounds(280, 105, 70, 30);
         add(jtfCount);
 
         lblItemList.setFont(fnt);
-        lblItemList.setBounds(20, 115, 200, 30);
+        lblItemList.setBounds(20, 145, 200, 30);
         add(lblItemList);
 
         // -----------ItemList add-----------
-        jspItem.setBounds(10, 150, 360, 160);
+        jspItem.setBounds(10, 180, 360, 160);
         add(jspItem);
 
         // -----------MyList-----------
         lblMyList.setFont(fnt);
-        lblMyList.setBounds(20, 315, 200, 30);
+        lblMyList.setBounds(20, 345, 200, 30);
         add(lblMyList);
 
-        jspMyList.setBounds(10, 350, 310, 70);
+        jspMyList.setBounds(10, 380, 310, 70);
         add(jspMyList);
 
         btnDelete1.setFont(fntDelete);
-        btnDelete1.setBounds(320, 373, 60, 15);
+        btnDelete1.setBounds(320, 403, 60, 15);
         add(btnDelete1);
 
         btnDelete2.setFont(fntDelete);
-        btnDelete2.setBounds(320, 388, 60, 15);
+        btnDelete2.setBounds(320, 418, 60, 15);
         add(btnDelete2);
 
         // -----------PayMsg-----------
         lblMsg.setFont(fnt);
-        lblMsg.setBounds(30, 420, 150, 60);
+        lblMsg.setBounds(30, 450, 150, 60);
         add(lblMsg);
 
-        btnPay.setBounds(285, 435, 90, 30);
+        btnPay.setBounds(285, 465, 90, 30);
         add(btnPay);
 
         //pack();
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new ShoppingView();
-    }
+    public void addOrderActionListner(ActionListener listener) {
+        btnPay.addActionListener(listener);
+        // 다른 리스너들은 추가하기...
+
+    } // addButtonActionListener()
+
+
 
 }
