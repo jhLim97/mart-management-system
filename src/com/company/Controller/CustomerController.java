@@ -159,7 +159,14 @@ public class CustomerController {
     }
 
     public void registerCustomer() {
-
+        String cName = cmv.txtName.getText();
+        String phoneNum = cmv.txtPhone.getText();
+        int cPoint = Integer.parseInt(cmv.txtPoint.getText());
+        customer = new CustomerDTO();
+        customer.setCName(cName);
+        customer.setPhoneNum(phoneNum);
+        customer.setCPoint(cPoint);
+        cdao.newCustomer(customer);
     }
     public static void main(String[] args) {
         MainView mv = new MainView();

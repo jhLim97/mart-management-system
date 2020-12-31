@@ -35,4 +35,8 @@ public class LoginViewPanel extends JPanel{
         joinButton.setBounds(610,380,80,20);
         add(joinButton);
     }
+    public void addActionListener(){
+
+    }
+
 }

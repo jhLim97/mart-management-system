@@ -3,11 +3,13 @@
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
 
     <data-source source="LOCAL" name="MMS@localhost" uuid="1c1ba01a-dec9-4376-9adf-78e9f308827c">
+
+    </data-source>
+    <data-source source="LOCAL" name="MMS@localhost [2]" uuid="bfa6ec07-f88f-47c3-9271-33005ab2cc96">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
-
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
