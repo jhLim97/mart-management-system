@@ -40,9 +40,9 @@ public class ProductViewPanel extends JPanel {
 
         tableContents = new String[][]{
                 {"1", " "," ", " ", " ", " ", " ", " "},
-            {"2", " "," ", " ", " ", " ", " ", " "},
-            {"3", " "," ", " ", " ", " ", " ", " "},
-            {"4", " "," ", " ", " ", " ", " ", " "}
+                {"2", " "," ", " ", " ", " ", " ", " "},
+                {"3", " "," ", " ", " ", " ", " ", " "},
+                {"4", " "," ", " ", " ", " ", " ", " "}
         };
         productTable = new JTable(tableContents, tableHeader);
 

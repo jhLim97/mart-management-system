@@ -2,15 +2,16 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CustomerViewPanel extends JPanel {
 
-    private JPanel optionPanel, cusInfoPanel, newCustomerPanel;
-    private JTextField jtfPhoneNum;
-    private JButton btnSearch, btnCustomerMange;
-    private JTextArea jtaCustomerList, jtaNewCustomer;
-    private JLabel lblPhoneNum, lblName, lblPoint, lblNewCustomer;
-    private JScrollPane jsp;
+    public JPanel optionPanel, cusInfoPanel, newCustomerPanel;
+    public JTextField jtfPhoneNum;
+    public JButton btnSearch, btnCustomerManage;
+    public JTextArea jtaCustomerList, jtaNewCustomer;
+    public JLabel lblPhoneNum, lblName, lblPoint, lblNewCustomer;
+    public JScrollPane jsp;
 
     public CustomerViewPanel() {
 
@@ -19,7 +20,7 @@ public class CustomerViewPanel extends JPanel {
 
         jtfPhoneNum = new JTextField(15);
         btnSearch = new JButton("조회");
-        btnCustomerMange = new JButton("고객 정보 관리");
+        btnCustomerManage = new JButton("고객 정보 관리");
 
         // ------- cusInfoPanel -------
         cusInfoPanel = new JPanel(); // 고객 칼럼 라벨들 add 할 패널
@@ -37,8 +38,6 @@ public class CustomerViewPanel extends JPanel {
         lblNewCustomer = new JLabel("신규 고객");
         jtaNewCustomer = new JTextArea(" ", 5, 5);
 
-        drawView();
-
     }
 
     public void drawView() {
@@ -54,11 +53,11 @@ public class CustomerViewPanel extends JPanel {
 
         jtfPhoneNum.setBounds(20, 5, 100, 20);
         btnSearch.setBounds(140, 5, 60, 20);
-        btnCustomerMange.setBounds(220, 5, 130, 20);
+        btnCustomerManage.setBounds(220, 5, 130, 20);
 
         optionPanel.add(jtfPhoneNum);
         optionPanel.add(btnSearch);
-        optionPanel.add(btnCustomerMange);
+        optionPanel.add(btnCustomerManage);
 
         // ------- cusInfoPanel -------
         cusInfoPanel.setBounds(0, 35, 1000, 70);
@@ -94,5 +93,12 @@ public class CustomerViewPanel extends JPanel {
         setVisible(true);
     }
 
+    public void addSearchButtonListener(ActionListener listener) {
+        btnSearch.addActionListener(listener);
+    }
+
+    public void addCustomerManageButtonListener(ActionListener listener) {
+        btnCustomerManage.addActionListener(listener);
+    }
 }
 

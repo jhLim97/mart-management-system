@@ -1,11 +1,16 @@
 package com.company.Controller;
 
+import javax.swing.*;
+
 public interface State {
 
+    public void drawFrame();
 
-    public void loginState();
-    public void productManageState();
-    public void customerManageState();
-    public void oderManageState();
+    public void drawPanel();
+
+    public void applyListener();
+
+    public void update();
+
 
 }
