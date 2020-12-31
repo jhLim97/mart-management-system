@@ -28,19 +28,19 @@ public class AccountDTO {
         this.userName = userName;
     }
 
-    public boolean isSupperUser() {
+    public boolean getIsSupperUser() {
         return isSupperUser;
     }
 
-    public void setSupperUser(boolean supperUser) {
+    public void setIsSupperUser(boolean supperUser) {
         isSupperUser = supperUser;
     }
 
-    public boolean isStaff() {
+    public boolean getIsStaff() {
         return isStaff;
     }
 
-    public void setStaff(boolean staff) {
+    public void setIsStaff(boolean staff) {
         isStaff = staff;
     }
 }
