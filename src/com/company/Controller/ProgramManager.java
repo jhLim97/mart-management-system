@@ -1,8 +1,5 @@
 package com.company.Controller;
 
-import com.company.Main;
-import com.company.View.CustomerManageView;
-import com.company.View.LoginViewPanel;
 import com.company.View.MainView;
 
 import java.sql.*;
@@ -11,6 +8,7 @@ public class ProgramManager {
 
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    Connection conn;
 
     MainState mainState;
     LoginState loginState;
@@ -35,6 +33,7 @@ public class ProgramManager {
     public void setState(State state) {
         this.state = state;
     }
+
     public void setMainState(){
         this.state = mainState;
         if(mainState == null) mainState = new MainState();

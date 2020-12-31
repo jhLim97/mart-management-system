@@ -1,10 +1,11 @@
 package com.company.Controller;
 
-import com.company.Main;
 import com.company.View.MainView;
 import com.company.View.ProductViewPanel;
 
 import javax.swing.*;
+
+import java.sql.SQLException;
 
 public class MainState implements State{
 
@@ -20,11 +21,9 @@ public class MainState implements State{
 
     }
 
-    @Override
-    public void drawPanel() {
-//        productView.drawMainPanel();
-//        productView.drawProductViewPanel();
-
+    public void drawPanel() throws SQLException, ClassNotFoundException {
+        ProgramManager.getInstance().getMainView().drawMainPanel();
+        ProgramManager.getInstance().getMainView().drawProductViewPanel();
     }
 
     @Override

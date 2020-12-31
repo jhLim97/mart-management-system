@@ -2,7 +2,7 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class MainView extends JFrame {
     public JPanel buttonPanel, bottomPanel, centerPanel;
@@ -61,9 +61,21 @@ public class MainView extends JFrame {
         getContentPane().add(customerViewPanel,BorderLayout.CENTER);
         setVisible(true);
     }
+//    public void drawProductViewPanel() throws SQLException, ClassNotFoundException {
+//        ProductViewPanel productView = new ProductViewPanel();
+//        productView.drawView();
+//        add(productView, BorderLayout.CENTER);
+//        setVisible(true);
+
     public void drawProductViewPanel(){
         if(productViewPanel == null) productViewPanel = new ProductViewPanel();
-        productViewPanel.drawView();
+        try {
+            productViewPanel.drawView();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         add(productViewPanel, BorderLayout.CENTER);
         setVisible(true);
 
