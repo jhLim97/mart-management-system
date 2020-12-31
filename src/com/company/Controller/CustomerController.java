@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class CustomerController {
+public class CustomerController extends Thread{
     public CustomerDAO cdao = new CustomerDAO();
     String bufferedString = null;
     CustomerDTO customer = null;
@@ -54,7 +54,16 @@ public class CustomerController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            registerCustomer();
+            cmv.refreshTextField();
+        }
+    }
 
+    public class ExitButtonListener implements  ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cmv.dispose();
         }
     }
 
@@ -106,6 +115,9 @@ public class CustomerController {
     public void makeCustomerManageView() {
         cmv = new CustomerManageView();
         cmv.drawView();
+        cmv.addRegisterButtonListener(new RegisterButtonListener());
+        cmv.addExitButtonListener(new ExitButtonListener());
+
     }
 
     public void searchAllCustomer() {
@@ -161,13 +173,19 @@ public class CustomerController {
     public void registerCustomer() {
         String cName = cmv.txtName.getText();
         String phoneNum = cmv.txtPhone.getText();
-        int cPoint = Integer.parseInt(cmv.txtPoint.getText());
-        customer = new CustomerDTO();
-        customer.setCName(cName);
-        customer.setPhoneNum(phoneNum);
-        customer.setCPoint(cPoint);
-        cdao.newCustomer(customer);
+        String cPoint = cmv.txtPoint.getText();
+        if (cName.equals("") || phoneNum.equals("") || cPoint.equals("")) {
+            JOptionPane.showMessageDialog(cmv, "빈 칸을 채워 주세요.");
+        }else {
+            int point = Integer.parseInt(cPoint);
+            customer = new CustomerDTO();
+            customer.setCName(cName);
+            customer.setPhoneNum(phoneNum);
+            customer.setCPoint(point);
+            cdao.newCustomer(customer);
+        }
     }
+
     public static void main(String[] args) {
         MainView mv = new MainView();
         CustomerViewPanel cvp= new CustomerViewPanel();

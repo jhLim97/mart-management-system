@@ -3,6 +3,7 @@ package com.company.View;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CustomerManageView extends JFrame {
     public JPanel mainPanel;
@@ -13,12 +14,8 @@ public class CustomerManageView extends JFrame {
     public JTextField txtPhone;//번호 텍스트필드
     public JTextField txtPoint;//포인트 텍스트필드
     public JButton btnRegister;//등록버튼
-    public JButton deleteBtn;//삭제버튼
-    public JButton btnUpdate;//업데이트버튼
+    public JButton btnExit;//업데이트버튼
     public JLabel customerMangeLab;//고객관리
-
-    public static void main(String[] args) { new CustomerManageView().drawView(); }
-
 
     public CustomerManageView(){
 
@@ -36,10 +33,8 @@ public class CustomerManageView extends JFrame {
         txtPoint = new JTextField("");
         //등록버튼
         btnRegister = new JButton("등록");
-        //수정버튼
-        btnUpdate = new JButton("수정");
-        //삭제버튼
-        btnUpdate = new JButton("닫기");
+        //닫기버튼
+        btnExit = new JButton("닫기");
 
     }
     public void drawView(){
@@ -98,18 +93,31 @@ public class CustomerManageView extends JFrame {
         mainPanel.add(btnRegister);
 
         //수정버튼
-        btnUpdate.setFont(new Font("",Font.BOLD,25));
-        btnUpdate.setBounds(135,290,100,50);
-        mainPanel.add(btnUpdate);
+        btnExit.setFont(new Font("",Font.BOLD,25));
+        btnExit.setBounds(135,290,100,50);
+        mainPanel.add(btnExit);
 
         //삭제버튼
-        btnUpdate.setFont(new Font("",Font.BOLD,25));
-        btnUpdate.setBounds(260,290,100,50);
-        mainPanel.add(btnUpdate);
-
+        btnExit.setFont(new Font("",Font.BOLD,25));
+        btnExit.setBounds(260,290,100,50);
+        mainPanel.add(btnExit);
 
         pack();
         this.setVisible(true);
+    }
+
+    public void refreshTextField() {
+        txtName.setText("");
+        txtPhone.setText("");
+        txtPoint.setText("");
+    }
+
+    public void addRegisterButtonListener(ActionListener listener) {
+        btnRegister.addActionListener(listener);
+    }
+
+    public void addExitButtonListener(ActionListener listener) {
+        btnExit.addActionListener(listener);
     }
 
 }
