@@ -45,7 +45,7 @@ public class CustomerManageView extends JFrame {
         stateTF = new JTextField("## 상태 : ");
 
     }
-    void drawView(){
+    public void drawView(){
         this.setSize(370,410);
         this.setTitle("고객 정보 관리");
         this.setResizable(false);

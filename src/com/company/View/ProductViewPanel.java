@@ -1,28 +1,32 @@
 package com.company.View;
 
+import com.company.Controller.ProductController;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ProductViewPanel extends JPanel {
-    JPanel menuBarPanel, bodyPanel, txtAreaPanel;
-    JTextField txtSearch;
+    public JPanel menuBarPanel, bodyPanel, txtAreaPanel;
+    public JTextField txtSearch;
     public JButton searchButton, addButton, updateButton, deleteButton;
-    JTable productTable;
-    JTextArea smallAMountArea, almostExpiredArea;
-    JScrollPane scroll1, scroll2, scroll3;
-    String tableHeader[] = {"", "Code","Name","Price","Location","Date","Count","State"}, tableContents[][];
+    public JTable productTable;
+    public JTextArea smallAMountArea, almostExpiredArea;
+    public JScrollPane scroll1, scroll2, scroll3;
+    public String tableHeader[] = { "Code","Name","Price","Location","Date","Count","State"}, tableContents[][];
+    public DefaultTableModel tableModel;
+    public JTextArea SUDtxt;
+    public JLabel SUDLab;
 
-    //controller
-    ProductController controller;
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         MainView app = new MainView();
         app.drawView();
         app.drawMainPanel();
         ProductViewPanel productView = new ProductViewPanel();
         productView.drawView();
-        productView.setController(); //컨트롤러 장착
+
         app.add(productView, BorderLayout.CENTER);
         app.setVisible(true);
 
@@ -30,6 +34,10 @@ public class ProductViewPanel extends JPanel {
 
     public ProductViewPanel() {
         setLayout(new BorderLayout());
+
+        SUDtxt = new JTextArea();
+        SUDLab = new JLabel("검색 정보 : ");
+
 
         menuBarPanel = new JPanel();
         menuBarPanel.setLayout(new FlowLayout());
@@ -42,15 +50,11 @@ public class ProductViewPanel extends JPanel {
         deleteButton = new JButton("삭제");
 
         bodyPanel = new JPanel();
-        bodyPanel.setLayout(new BorderLayout());
+        bodyPanel.setLayout(null);
 
-        tableContents = new String[][]{
-                {"1", " "," ", " ", " ", " ", " ", " "},
-            {"2", " "," ", " ", " ", " ", " ", " "},
-            {"3", " "," ", " ", " ", " ", " ", " "},
-            {"4", " "," ", " ", " ", " ", " ", " "}
-        };
-        productTable = new JTable(tableContents, tableHeader);
+        tableModel = new DefaultTableModel(tableHeader,0);
+
+        productTable = new JTable(tableModel);
 
         txtAreaPanel = new JPanel();
         txtAreaPanel.setLayout(new GridLayout(2,1));
@@ -58,12 +62,13 @@ public class ProductViewPanel extends JPanel {
         smallAMountArea = new JTextArea(15,30);
         almostExpiredArea = new JTextArea(15,30);
 
-
-
         setVisible(true);
     }
 
-    public void drawView() {
+    public void drawView() throws SQLException, ClassNotFoundException {
+
+        new ProductController(this);
+
         menuBarPanel.add(txtSearch);
         menuBarPanel.add(searchButton);
         menuBarPanel.add(addButton);
@@ -77,31 +82,41 @@ public class ProductViewPanel extends JPanel {
 
         scroll1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll1.setBounds(0, 0,800,550);
 
-        bodyPanel.add(scroll1, BorderLayout.CENTER);
+
+        bodyPanel.add(scroll1);
 
         scroll2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll3.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+        txtAreaPanel.setBounds(800,0,400,800);
+
+        SUDtxt.setBounds(10,600,780,35);
+        SUDtxt.setEditable(false);
+        SUDtxt.setBackground(Color.LIGHT_GRAY);
+
+        bodyPanel.add(SUDtxt);
 
         txtAreaPanel.add(scroll2);
         txtAreaPanel.add(scroll3);
 
-        bodyPanel.add(txtAreaPanel, BorderLayout.EAST);
+        SUDLab.setBounds(10,550,780,40);
+        SUDLab.setFont(new Font("",Font.BOLD,20));
+        bodyPanel.add(SUDLab);
+        bodyPanel.add(txtAreaPanel);
 
         add(bodyPanel, BorderLayout.CENTER);
-
     }
 
-    
+
+
     public void addActionListener(ActionListener listener){
         searchButton.addActionListener(listener);
         addButton.addActionListener(listener);
         updateButton.addActionListener(listener);
         deleteButton.addActionListener(listener);
     }
-
-
 }

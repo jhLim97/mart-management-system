@@ -1,11 +1,17 @@
 package com.company.Controller;
 
+import javax.swing.*;
+import java.sql.SQLException;
+
 public interface State {
 
+    public void drawFrame();
 
-    public void loginState();
-    public void productManageState();
-    public void customerManageState();
-    public void oderManageState();
+    public void drawPanel() throws SQLException, ClassNotFoundException;
+
+    public void applyListener();
+
+    public void update();
+
 
 }
