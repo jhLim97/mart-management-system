@@ -4,23 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
-    JPanel buttonPanel, bottomPanel, centerPanel;
-    JButton productButton, orderListButton, customerButton, shoppingButton, chatButton;
-    JLabel messageLabel, timeLabel, blinkLabel;
-    String date, time;
+    public JPanel buttonPanel, bottomPanel, centerPanel;
+    public JButton productButton, orderListButton, customerButton, shoppingButton, chatButton;
+    public JLabel messageLabel, timeLabel, blinkLabel;
+    public String date, time;
 
-    LoginViewPanel loginViewPanel;
-    OrderListViewPanel orderListViewPanel;
-    CustomerViewPanel customerViewPanel;
-    ProductViewPanel productViewPanel;
-    public static void main(String[] args) {
-        MainView app = new MainView(); // 메인뷰 프레임 생성
-        app.drawView();
-//        app.drawLoginPanel();
-        app.drawMainPanel();
-        app.drawOrderListViewPanel();
-        new productCRUDView().drawView();
-    }
+    public LoginViewPanel loginViewPanel;
+    public OrderListViewPanel orderListViewPanel;
+    public CustomerViewPanel customerViewPanel;
+    public ProductViewPanel productViewPanel;
 
     public MainView() {
 
@@ -69,19 +61,15 @@ public class MainView extends JFrame {
         setVisible(true);
     }
     public void drawProductViewPanel(){
-        ProductViewPanel productView = new ProductViewPanel();
-        productView.drawView();
-        add(productView, BorderLayout.CENTER);
+        if(productViewPanel == null) productViewPanel = new ProductViewPanel();
+        productViewPanel.drawView();
+        add(productViewPanel, BorderLayout.CENTER);
         setVisible(true);
-//        if(productViewPanel == null) productViewPanel = new ProductViewPanel();
-//        productViewPanel.drawView();
-//        getContentPane().add(productViewPanel,BorderLayout.CENTER);
-//        setVisible(true);
+
     }
     public void drawMainPanel() {
 
         buttonPanel.setLayout(new GridLayout(1, 5));
-
         buttonPanel.add(productButton);
         buttonPanel.add(orderListButton);
         buttonPanel.add(customerButton);
