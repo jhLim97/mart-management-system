@@ -9,9 +9,9 @@ public class MainController {
     public static void main(String[] args) {
 
         ProgramManager manager = ProgramManager.getInstance();
-        manager.setLoginState();
+//        manager.setLoginState();
 
-//        manager.setMainState();
+        manager.setMainState();
 //        manager.setCustomerManageState();
 //        manager.setOrderManageState();
 
