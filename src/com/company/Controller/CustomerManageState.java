@@ -39,6 +39,9 @@ public class CustomerManageState implements State {
             ProgramManager.getInstance().setCustomerManageState();
 
         });
+        CustomerViewPanel customerView = ProgramManager.getInstance().getMainView().customerViewPanel;
+        mmsListener.getInstance().customerViewPanelListener(customerView);
+
     }
 
     @Override

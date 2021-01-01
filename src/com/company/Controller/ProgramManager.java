@@ -14,6 +14,16 @@ public class ProgramManager {
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
+    CustomerController CC;
+
+    public CustomerController getCC() {
+        if(CC == null) CC = new CustomerController();
+        return CC;
+    }
+
+    public void setCC(CustomerController CC) {
+        this.CC = CC;
+    }
 
     public JoinView getJoinView() {
         if(joinView == null) joinView = new JoinView();
@@ -105,6 +115,7 @@ public class ProgramManager {
         if(customerManageState == null) customerManageState = new CustomerManageState();
         mainView.drawCustomerViewPanel();
         customerManageState.applyListener();
+        setCC(getCC());
     }
 
     private static ProgramManager s_Instance;
