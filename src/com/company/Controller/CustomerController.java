@@ -28,6 +28,7 @@ public class CustomerController extends Thread{
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
         while(true) {
             if(search) {
+                System.out.println("ok");
                 cvp.initDTModel();
                 String phoneNum = cvp.txtPhoneNum.getText();
                 if(phoneNum.equals("")) {
