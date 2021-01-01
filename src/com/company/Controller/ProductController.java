@@ -6,14 +6,11 @@ import com.company.View.MainView;
 import com.company.View.ProductViewPanel;
 import com.company.View.productCRUDView;
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
 
 
 public class ProductController extends Thread{
