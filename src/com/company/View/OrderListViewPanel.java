@@ -1,8 +1,9 @@
 package com.company.View;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class OrderListViewPanel extends JPanel {
     JPanel ListPanel;
@@ -19,15 +20,38 @@ public class OrderListViewPanel extends JPanel {
     JLabel total;//총합금액표기라벨
     JTable jt;
 
+    // --------- 최상단 라벨을 콤보 박스로.. ---------
+    public JComboBox cb;
+    public JButton btnSerach;
+
+    public JTable orderTable, orderHistoryTable;
+    public JScrollPane orderScroll, orderHistoryScroll;
+    public String orderHeader[] = { "orderCode","entryPrice","cName","phoneNum","buyDate"}, orderContents[][];
+    public String orderHistoryHeader[] = { "HistoryId", "orderCode","prCode","prName", "prCount", "prPrice"}, orderHistoryContents[][];
+    public DefaultTableModel orderModel;
+    public DefaultTableModel orderHistoryModel;
+    // -------------------------------------------
+
     public OrderListViewPanel() {
 
         //ListPanel
         ListPanel = new JPanel();
+
         //OrderLab
-        orderLab = new JLabel("판매 정보 및 매출");
+        //orderLab = new JLabel("판매 정보 및 매출");
+        String menu[] = {"요일별 조회", "월별 조회", "주문 내역", "주문 상세 내역"};
+        cb = new JComboBox(menu); // 상품을 콤보박스에서 조회할 수 있도록 생성
+        btnSerach = new JButton("조회");
 
         //orderHistory View
-        orderHistoryView = new JTextArea();
+        //orderHistoryView = new JTextArea();
+        orderModel = new DefaultTableModel(orderHeader,0);
+        orderHistoryModel = new DefaultTableModel(orderHistoryHeader,0);
+        orderTable = new JTable(orderModel);
+        orderHistoryTable = new JTable(orderHistoryModel);
+        orderScroll = new JScrollPane(orderTable);
+        orderHistoryScroll = new JScrollPane(orderHistoryTable);
+        //orderHistoryScroll = new JScrollPane(orderTable);
 
         //revenue panel + Label
         revenuePanel = new JPanel();
@@ -52,16 +76,32 @@ public class OrderListViewPanel extends JPanel {
         ListPanel.setBackground(Color.gray);
         ListPanel.setBounds(10,10,1170,50);
         //OrderLab
-        orderLab.setHorizontalAlignment(JLabel.LEFT);
-        orderLab.setVerticalAlignment(JLabel.CENTER);
-        orderLab.setFont(new Font("", Font.BOLD, 30));
-        orderLab.setBounds(10,00,300,50);
+        //orderLab.setHorizontalAlignment(JLabel.LEFT);
+        //orderLab.setVerticalAlignment(JLabel.CENTER);
+        //orderLab.setFont(new Font("", Font.BOLD, 30));
+        //orderLab.setBounds(10,00,300,50);
+
+        //cb.setHorizontalAlignment(JLabel.LEFT);
+        //cb.setVerticalAlignment(JLabel.CENTER);
+        cb.setBounds(30,5,130,40);
+        btnSerach.setBounds(170, 5, 70, 40);
+
         //TextArea
-        orderHistoryView.setBounds(10, 70, 800, 380);
-        orderHistoryView.setText("\n       주문정보\t    주문코드\t제품코드\t제품갯수\t제품가격\t판매날짜");
-        orderHistoryView.setEditable(false);
-        orderHistoryView.setBorder(new EtchedBorder(EtchedBorder.RAISED));
-        JScrollPane sp = new JScrollPane(orderHistoryView);
+        //orderHistoryView.setBounds(10, 70, 800, 380);
+        //orderHistoryView.setText("\n       주문정보\t    주문코드\t제품코드\t제품갯수\t제품가격\t판매날짜");
+        //orderHistoryView.setEditable(false);
+        //orderHistoryView.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        //JScrollPane sp = new JScrollPane(orderHistoryView);
+        orderScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        orderScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderScroll.setBounds(10, 70,800,380);
+        orderScroll.setVisible(true);
+
+        orderHistoryScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        orderHistoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderHistoryScroll.setBounds(10, 70,800,380);
+        orderHistoryScroll.setVisible(false);
+
         //revenuePanel
         revenuePanel.setBackground(Color.lightGray);
         revenuePanel.setBounds(820,70,360,380);
@@ -84,8 +124,12 @@ public class OrderListViewPanel extends JPanel {
 
         //add
         this.add(ListPanel);
-        ListPanel.add(orderLab);
-        this.add(orderHistoryView);
+        //ListPanel.add(orderLab);
+        ListPanel.add(cb);
+        ListPanel.add(btnSerach);
+        //this.add(orderHistoryView);
+        this.add(orderScroll);
+        this.add(orderHistoryScroll);
         this.add(revenuePanel);
         revenuePanel.add(revenueDay);
         revenuePanel.add(revenueMonth);
@@ -94,5 +138,23 @@ public class OrderListViewPanel extends JPanel {
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
 
+        // ------- 여기도 내가 임의로 추가 -------
+        setVisible(true);
+        // -----------------------------------
     }
+
+    // ------- 여기도 내가 임의로 추가 -------
+    public void addSearchActionListner(ActionListener listener) {
+        btnSerach.addActionListener(listener);
+        // 다른 리스너들은 추가하기...
+
+    } // addButtonActionListener()
+
+    /*
+    public static void main(String[] args) {
+        TestOrderListViewPanel testOrderListViewPanel = new TestOrderListViewPanel();
+        testOrderListViewPanel.drawView();
+    }*/
+    // -----------------------------------
 }
+

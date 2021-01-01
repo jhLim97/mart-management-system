@@ -10,29 +10,58 @@ public class ProgramManager {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
     Connection conn;
-
     MainState mainState;
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
     CustomerController CC;
 
+    private JoinView joinView;
+    private ProductCRUDView productCRUDView;
+    private ShoppingView shoppingView;
+    private CustomerManageView customerManageView;
+    private OrderListViewPanel orderListViewPanel;
+
+    private MainView mainView;
+    private State state;
+
+
+    // --------- 준혁 컨트롤러 접근 개체 생성 ------------
+    OrderController orderController;
+
+    public OrderController getOrderController() {
+        if(orderController == null) orderController = new OrderController();
+        return orderController;
+    }
+    // ----------------------------------------------
+
+
+    public ShoppingView getShoppingView() {
+        if(shoppingView == null) shoppingView = new ShoppingView();
+        return shoppingView;
+    }
+
+    public void setShoppingView(ShoppingView shoppingView) {
+        this.shoppingView = shoppingView;
+    }
     public CustomerController getCC() {
         if(CC == null) CC = new CustomerController();
         return CC;
+
     }
 
     public void setCC(CustomerController CC) {
         this.CC = CC;
     }
 
-    private JoinView joinView;
-    private ProductCRUDView productCRUDView;
-    private ShoppingView shoppingView;
-    private CustomerManageView customerManageView;
+    public OrderListViewPanel getOrderListViewPanel() {
+        if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
+        return orderListViewPanel;
+    }
 
-    private MainView mainView;
-    private State state;
+    public void setOrderListViewPanel(OrderListViewPanel orderListViewPanel) {
+        this.orderListViewPanel = orderListViewPanel;
+    }
 
     public MainView getMainView() {
         if(mainView == null) mainView = new MainView();
@@ -40,7 +69,6 @@ public class ProgramManager {
     }
 
     public void setMainState(){
-
         if(state instanceof LoginState) {
             mainState = new MainState();
             mainState.drawFrameInit();
@@ -93,7 +121,7 @@ public class ProgramManager {
             // 1단계 : JDBC 드라이버 로드
             Class.forName(jdbcDriver);
             // 2단계 : 데이터베이스 연결
-            conn = DriverManager.getConnection(jdbcUrl,"root","wlfkf132");
+            conn = DriverManager.getConnection(jdbcUrl,"root","root");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -133,14 +161,6 @@ public class ProgramManager {
         this.productCRUDView = productCRUDView;
     }
 
-    public ShoppingView getShoppingView() {
-        if(shoppingView == null) shoppingView = new ShoppingView();
-        return shoppingView;
-    }
-
-    public void setShoppingView(ShoppingView shoppingView) {
-        this.shoppingView = shoppingView;
-    }
 
     public CustomerManageView getCustomerManageView() {
         if(customerManageView == null) customerManageView = new CustomerManageView();
