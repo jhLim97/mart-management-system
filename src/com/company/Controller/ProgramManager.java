@@ -15,42 +15,6 @@ public class ProgramManager {
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
 
-    public JoinView getJoinView() {
-        if(joinView == null) joinView = new JoinView();
-        return joinView;
-    }
-
-    public void setJoinView(JoinView joinView) {
-        this.joinView = joinView;
-    }
-
-    public ProductCRUDView getProductCRUDView() {
-        if(productCRUDView == null) productCRUDView = new ProductCRUDView();
-        return productCRUDView;
-    }
-
-    public void setProductCRUDView(ProductCRUDView productCRUDView) {
-        this.productCRUDView = productCRUDView;
-    }
-
-    public ShoppingView getShoppingView() {
-        if(shoppingView == null) shoppingView = new ShoppingView();
-        return shoppingView;
-    }
-
-    public void setShoppingView(ShoppingView shoppingView) {
-        this.shoppingView = shoppingView;
-    }
-
-    public CustomerManageView getCustomerManageView() {
-        if(customerManageView == null) customerManageView = new CustomerManageView();
-        return customerManageView;
-    }
-
-    public void setCustomerManageView(CustomerManageView customerManageView) {
-        this.customerManageView = customerManageView;
-    }
-
     private JoinView joinView;
     private ProductCRUDView productCRUDView;
     private ShoppingView shoppingView;
@@ -68,12 +32,7 @@ public class ProgramManager {
         mainView.drawView();
     }
 
-    public State getState() {
-        return state;
-    }
-    public void setState(State state) {
-        this.state = state;
-    }
+
 
     public void setMainState(){
         this.state = mainState;
@@ -135,5 +94,47 @@ public class ProgramManager {
             e.printStackTrace();
         }
     }
+    public State getState() {
+        return state;
+    }
+    public void setState(State state) {
+        this.state = state;
+    }
+    public JoinView getJoinView() {
+        if(joinView == null) joinView = new JoinView();
+        return joinView;
+    }
+
+    public void setJoinView(JoinView joinView) {
+        this.joinView = joinView;
+    }
+
+    public ProductCRUDView getProductCRUDView() {
+        if(productCRUDView == null) productCRUDView = new ProductCRUDView();
+        return productCRUDView;
+    }
+
+    public void setProductCRUDView(ProductCRUDView productCRUDView) {
+        this.productCRUDView = productCRUDView;
+    }
+
+    public ShoppingView getShoppingView() {
+        if(shoppingView == null) shoppingView = new ShoppingView();
+        return shoppingView;
+    }
+
+    public void setShoppingView(ShoppingView shoppingView) {
+        this.shoppingView = shoppingView;
+    }
+
+    public CustomerManageView getCustomerManageView() {
+        if(customerManageView == null) customerManageView = new CustomerManageView();
+        return customerManageView;
+    }
+
+    public void setCustomerManageView(CustomerManageView customerManageView) {
+        this.customerManageView = customerManageView;
+    }
+
 
 }

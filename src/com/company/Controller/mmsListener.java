@@ -1,7 +1,10 @@
 package com.company.Controller;
 
 import com.company.Model.AccountDAO;
+import com.company.Model.AccountDTO;
 import com.company.View.*;
+
+import javax.swing.text.View;
 
 public class mmsListener {
     private static mmsListener s_Instance;
@@ -25,10 +28,26 @@ public class mmsListener {
         });
         panel.joinButton.addActionListener(e -> {
             ViewManager.getInstance().joinViewOpen();
+            joinViewListener(ViewManager.getInstance().joinView);
+
         });
 
     }
     public void joinViewListener(JoinView frame){
+        frame.joinButton.addActionListener(e -> {
+            String id = frame.txtId.getText();
+            String pw = frame.txtPw.getText();
+            String name = frame.txtName.getText();
+            AccountDTO account = new AccountDTO();
+            AccountDAO dao = new AccountDAO();
+            account.setIsStaff(true);
+            account.setId(id);
+            account.setPassword(pw);
+            account.setIsSupperUser(false);
+            account.setUserName(name);
+            System.out.println(name);
+            System.out.println(dao.makeAccount(account));
+        });
 
     }
     public void mainViewPanelListener(MainView frame){ // **********

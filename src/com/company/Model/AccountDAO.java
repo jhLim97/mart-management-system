@@ -17,6 +17,11 @@ public class AccountDAO {
     PreparedStatement pstmt;
     ResultSet rs;
     ArrayList<AccountDTO> accountList;
+
+    public AccountDAO(){
+        accountList = getAll();
+    }
+
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
@@ -37,7 +42,7 @@ public class AccountDAO {
     ArrayList<AccountDTO> getAll(){
         sql = "select * from accounts";
         connectDB();
-        accountList = new ArrayList<>();
+        ArrayList<AccountDTO> accountList = new ArrayList<>();
         try{
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
@@ -47,9 +52,10 @@ public class AccountDAO {
                 dto.setId(rs.getString("id"));
                 dto.setPassword(rs.getString("passwd"));
                 dto.setIsSupperUser(rs.getBoolean("is_superuser"));
-                dto.setIsStaff(rs.getBoolean("isStaff"));
+                dto.setIsStaff(rs.getBoolean("is_Staff"));
                 dto.setUserName(rs.getString("user_name"));
                 accountList.add(dto);
+
             }
 
         }catch (Exception e){
@@ -59,32 +65,22 @@ public class AccountDAO {
         return accountList;
     }
     public boolean loginProgram(String id, String PW){
-        sql = "select * from accounts where id = ?";
-        account = new AccountDTO();
-//        ProgramManager.getInstance().connectDB(conn);
-        connectDB();
-        try{
 
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,id);
-            rs = pstmt.executeQuery();
-            rs.next();
-            account.setId(rs.getString("id"));
-            account.setPassword(rs.getString("passwd"));
-            account.setIsSupperUser(rs.getBoolean("is_superuser"));
-            account.setIsStaff(rs.getBoolean("is_staff"));
-            account.setUserName(rs.getString("user_name"));
-
-        }catch(Exception e){
-            e.printStackTrace();
+        for(AccountDTO account : accountList) {
+            System.out.println("Check");
+            if( account.getId().equals(id) ) {
+                if (account.getPassword().equals(PW)) {
+                    System.out.println("로그인에 성공하였습니다!");
+                    return true;
+                } else {
+                    System.out.println("비밀번호가 틀렸습니다.");
+                    return false;
+                }
+            }
         }
-
-        //ProgramManager.getInstance().closeDB(conn,pstmt,rs);
-        closeDB();
-        if(account.getId().equals(id)  && account.getPassword().equals(PW)){
-            return true;
-        }
+        System.out.println("입력하신 아이디는 없는 아이디입니다.");
         return false;
+
     }
 
     public boolean makeAccount(AccountDTO account){
