@@ -9,11 +9,11 @@ public class OrderDAO {
     PreparedStatement pstmt;
     Statement stmt;
     ResultSet rs;
-    String Driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/madang?&serverTimezone=Asia/Seoul&useSSL=false";
-    String userid = "madang";
-    String pwd = "madang";
+    String userid = "root";
+    String pwd = "wlfkf132";
     String sql;
+    String jdbcDriver = "com.mysql.cj.jdbc.Driver";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
 
     public OrderDAO() {
 
@@ -21,7 +21,7 @@ public class OrderDAO {
 
     public void connectDB() {
         try {
-            Class.forName(Driver);
+            Class.forName(jdbcDriver);
             System.out.println("드라이버 로드 성공");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class OrderDAO {
 
         try {
             System.out.println("데이터베이스 연결 준비...");
-            con = DriverManager.getConnection(url, userid, pwd);
+            con = DriverManager.getConnection(jdbcUrl, userid, pwd);
             System.out.println("데이터베이스 연결 성공");
         } catch (SQLException e1) {
             e1.printStackTrace();

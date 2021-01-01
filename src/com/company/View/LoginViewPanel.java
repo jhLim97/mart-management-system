@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoginViewPanel extends JPanel{
-    JTextField txtId, txtPw;
-    JButton loginButton, joinButton;
-    JLabel idLabel, pwLabel;
+    public JTextField txtId, txtPw;
+    public JButton loginButton, joinButton;
+    public JLabel idLabel, pwLabel;
 
     public LoginViewPanel() {
         setPreferredSize(new Dimension(1200,800));
@@ -35,4 +35,8 @@ public class LoginViewPanel extends JPanel{
         joinButton.setBounds(610,380,80,20);
         add(joinButton);
     }
+    public void addActionListener(){
+
+    }
+
 }

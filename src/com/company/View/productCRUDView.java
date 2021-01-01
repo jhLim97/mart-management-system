@@ -2,6 +2,7 @@ package com.company.View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class productCRUDView extends JFrame {
     public JLabel codeLabel,nameLabel,priceLabel,locationLabel,expDateLabel,countLabel;
@@ -36,27 +37,67 @@ public class productCRUDView extends JFrame {
     public void drawView(){
 
         setTitle("상품 등록/수정/삭제");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700,700);
+        setSize(400,470);
         setLayout(new BorderLayout());
 
-        centerPanel.setSize(700,500);
-        centerPanel.setLayout(new GridLayout(0,2));
+        centerPanel.setSize(400,470);
+        centerPanel.setLayout(null);
+
+        codeLabel.setBounds(10,10,190,50);
+        codeLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(codeLabel);
+        codeText.setBounds(180,10,190,50);
+        codeText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(codeText);
+
+
+        nameLabel.setBounds(10,70,190,50);
+        nameLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(nameLabel);
+        nameText.setBounds(180,70,190,50);
+        nameText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(nameText);
+
+
+        priceLabel.setBounds(10,130,190,50);
+        priceLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(priceLabel);
+        priceText.setBounds(180,130,190,50);
+        priceText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(priceText);
+
+
+        locationLabel.setBounds(10,190,190,50);
+        locationLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(locationLabel);
+        locationText.setBounds(180,190,190,50);
+        locationText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(locationText);
+
+
+        expDateLabel.setBounds(10,250,190,50);
+        expDateLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(expDateLabel);
+        expDateText.setBounds(180,250,190,50);
+        expDateText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(expDateText);
+
+
+        countLabel.setBounds(10,310,190,50);
+        countLabel.setFont(new Font("", Font.BOLD, 20));
         centerPanel.add(countLabel);
+        countText.setBounds(180,310,190,50);
+        countText.setFont(new Font("", Font.BOLD, 17));
         centerPanel.add(countText);
+
+        completeButton.setBounds(125, 370, 150,50);
         centerPanel.add(completeButton);
         add(centerPanel,BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    public void addActionListener(ActionListener listener){
+        completeButton.addActionListener(listener);
     }
 }
