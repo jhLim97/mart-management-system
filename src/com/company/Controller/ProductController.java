@@ -4,7 +4,7 @@ import com.company.Model.ProductDAO;
 import com.company.Model.ProductDTO;
 import com.company.View.MainView;
 import com.company.View.ProductViewPanel;
-import com.company.View.productCRUDView;
+import com.company.View.ProductCRUDView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ProductController extends Thread{
     public ProductViewPanel v;
-    public productCRUDView CRUDv ;
+    public ProductCRUDView CRUDv ;
     ProductDAO dao;
     public ArrayList<ProductDTO> datas;
     public boolean editMode = false;
@@ -37,7 +37,7 @@ public class ProductController extends Thread{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == v.addButton){
-                    CRUDv = new productCRUDView();
+                    CRUDv = new ProductCRUDView();
                     CRUDv.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -128,7 +128,7 @@ public class ProductController extends Thread{
                 else if (e.getSource() == v.updateButton) {
 
                     if(editMode){
-                         CRUDv = new productCRUDView();
+                         CRUDv = new ProductCRUDView();
                          CRUDv.drawView();
                     try {
                         ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));

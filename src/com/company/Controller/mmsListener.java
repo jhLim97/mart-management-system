@@ -1,11 +1,7 @@
 package com.company.Controller;
 
 import com.company.Model.AccountDAO;
-import com.company.View.JoinView;
-import com.company.View.LoginViewPanel;
-import com.company.View.ViewManager;
-
-import javax.swing.*;
+import com.company.View.*;
 
 public class mmsListener {
     private static mmsListener s_Instance;
@@ -32,6 +28,29 @@ public class mmsListener {
         });
 
     }
+    public void joinViewListener(JoinView frame){
 
+    }
+    public void mainViewPanelListener(MainView frame){ // **********
 
+    }
+    public void productViewPanelListener(ProductViewPanel panel){
+
+    }
+
+    public void orderListViewPanelListener(OrderListViewPanel panel){
+
+    }
+    public void customerViewPanelListener(CustomerViewPanel panel){
+
+    }
+    public void productCRUDViewListener(ProductCRUDView frame){
+
+    }
+    public void shoppingViewListener(ShoppingView frame){
+
+    }
+    public void customerManageViewListener(CustomerManageView frame){
+
+    }
 }
