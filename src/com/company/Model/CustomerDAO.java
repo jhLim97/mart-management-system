@@ -15,7 +15,7 @@ public class CustomerDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
+            conn = DriverManager.getConnection(jdbcUrl, "root", "ghrja132!@");
         } catch (Exception e) {
             e.printStackTrace();
         }

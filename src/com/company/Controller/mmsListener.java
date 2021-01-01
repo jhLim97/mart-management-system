@@ -245,6 +245,7 @@ public class mmsListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
+                ProgramManager.getInstance().getCC().appMain();
             }
             public void mousePressed(MouseEvent e) { }
             public void mouseReleased(MouseEvent e) { }

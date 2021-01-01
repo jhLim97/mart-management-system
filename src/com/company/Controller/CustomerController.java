@@ -23,37 +23,41 @@ public class CustomerController extends Thread{
     boolean search = false, register = false, update = false, delete = false, isClick = false;
     private static CustomerController s_Instance;
 
-    @Override
-    public void run() {
+    public void appMain() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
         cmv = ProgramManager.getInstance().getCustomerManageView();
+        if(search) {
+            cvp.initDTModel();
+            String phoneNum = cvp.txtPhoneNum.getText();
+            if(phoneNum.equals("")) {
+                searchAllCustomer();
+            } else searchCustomer(phoneNum);
+            search = false;
+        }
+        if(register) {
+            registerCustomer();
+            register = false;
+        }
+        if(update) {
+            updateCustomer(bufferedString);
+            update = false;
+        }
+        if(delete) {
+            deleteCustomer();
+            delete = false;
+        }
+        if(isClick) {
+            int row = cvp.tblCustomerList.getSelectedRow();
+            bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
+            isClick = false;
+        }
+    }
+
+    @Override
+    public void run() {
         while(true) {
             System.out.println("ok");
-            if(search) {
-                cvp.initDTModel();
-                String phoneNum = cvp.txtPhoneNum.getText();
-                if(phoneNum.equals("")) {
-                    searchAllCustomer();
-                } else searchCustomer(phoneNum);
-                search = false;
-            }
-            if(register) {
-                registerCustomer();
-                register = false;
-            }
-            if(update) {
-                updateCustomer(bufferedString);
-                update = false;
-            }
-            if(delete) {
-                deleteCustomer();
-                delete = false;
-            }
-            if(isClick) {
-                int row = cvp.tblCustomerList.getSelectedRow();
-                bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
-                isClick = false;
-            }
+
         }
     }
 
