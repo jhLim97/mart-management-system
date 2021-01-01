@@ -208,11 +208,5 @@ public class OrderController {
         }
     }
 
-    public static void main(String[] args) {
-        TestOrderListViewPanel t  = new TestOrderListViewPanel();
-        new OrderController(t/*, new ShoppingView()*/);
-        t.drawView();
-
-    }
 
 }

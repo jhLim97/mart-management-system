@@ -9,6 +9,12 @@ import javax.swing.*;
 
 public class CustomerManageState implements State {
     MainView productView;
+    CustomerViewPanel customerViewPanel;
+    @Override
+    public void draw() {
+
+    }
+
     @Override
     public void drawFrame() {
 
@@ -16,29 +22,14 @@ public class CustomerManageState implements State {
 
     @Override
     public void drawPanel() {
-        ProgramManager.getInstance().getMainView().drawMainPanel();
         ProgramManager.getInstance().getMainView().drawCustomerViewPanel();
     }
 
 
     @Override
     public void applyListener() {
-        productView = ProgramManager.getInstance().getMainView();
-        productView.productButton.addActionListener(e -> {
-            productView.productViewPanel.setVisible(false);
-            ProgramManager.getInstance().setMainState();
-
-        });
-        productView.orderListButton.addActionListener(e -> {
-            productView.productViewPanel.setVisible(false);
-            ProgramManager.getInstance().setOrderManageState();
-
-        });
-        productView.customerButton.addActionListener(e -> {
-            productView.productViewPanel.setVisible(false);
-            ProgramManager.getInstance().setCustomerManageState();
-
-        });
+        customerViewPanel = ProgramManager.getInstance().getMainView().customerViewPanel;
+        mmsListener.getInstance().customerViewPanelListener(customerViewPanel);
     }
 
     @Override

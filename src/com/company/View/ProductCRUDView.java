@@ -10,7 +10,6 @@ public class ProductCRUDView extends JFrame {
     public JButton completeButton;
     public JPanel centerPanel,bottomPanel;
 
-    public static void main(String[] args) { new ProductCRUDView().drawView();}
 
     public ProductCRUDView(){
 
@@ -97,7 +96,4 @@ public class ProductCRUDView extends JFrame {
         setVisible(true);
     }
 
-    public void addActionListener(ActionListener listener){
-        completeButton.addActionListener(listener);
-    }
 }

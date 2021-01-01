@@ -8,9 +8,17 @@ import javax.swing.*;
 public class LoginState implements State{
 
     LoginViewPanel loginViewPanel;
+    MainView mainView;
+
+    public void draw(){
+        drawFrame();
+        drawPanel();
+        applyListener();
+    }
     @Override
     public void drawFrame() {
-
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.drawView();
     }
 
     @Override
@@ -22,7 +30,6 @@ public class LoginState implements State{
     public void applyListener() {
         loginViewPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
         mmsListener.getInstance().loginPanelListener(loginViewPanel);
-
     }
 
     @Override

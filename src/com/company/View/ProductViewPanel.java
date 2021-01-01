@@ -20,17 +20,7 @@ public class ProductViewPanel extends JPanel {
     public JTextArea SUDtxt;
     public JLabel SUDLab;
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        MainView app = new MainView();
-        app.drawView();
-        app.drawMainPanel();
-        ProductViewPanel productView = new ProductViewPanel();
-        productView.drawView();
 
-        app.add(productView, BorderLayout.CENTER);
-        app.setVisible(true);
-
-    }
     public ProductViewPanel() {
         setLayout(new BorderLayout());
 
@@ -112,10 +102,4 @@ public class ProductViewPanel extends JPanel {
         add(bodyPanel, BorderLayout.CENTER);
     }
 
-    public void addActionListener(ActionListener listener){
-        searchButton.addActionListener(listener);
-        addButton.addActionListener(listener);
-        updateButton.addActionListener(listener);
-        deleteButton.addActionListener(listener);
-    }
 }
