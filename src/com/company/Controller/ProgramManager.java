@@ -17,14 +17,22 @@ public class ProgramManager {
     CustomerManageState customerManageState;
     CustomerController CC;
 
+    ProductController PC;
+
     public CustomerController getCC() {
         if(CC == null) CC = new CustomerController();
         return CC;
     }
 
+    public ProductController getPC() throws SQLException, ClassNotFoundException {
+        if(PC ==null) PC= new ProductController(ProgramManager.getInstance().getMainView().productViewPanel);
+        return PC;
+    }
+
     public void setCC(CustomerController CC) {
         this.CC = CC;
     }
+    public void setPC(ProductController PC){ this.PC = PC;}
 
     private JoinView joinView;
     private ProductCRUDView productCRUDView;
@@ -45,6 +53,11 @@ public class ProgramManager {
             mainState = new MainState();
             mainState.drawFrameInit();
             this.state = mainState;
+            try {
+                setPC(getPC());
+            }catch(Exception e) {
+
+            }
             return;
         }
 

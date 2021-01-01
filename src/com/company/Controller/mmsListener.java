@@ -103,6 +103,7 @@ public class mmsListener {
         });
         panel.searchButton.addActionListener(e -> {
             searchProduct(dao, panel.editMode, panel);
+            panel.editMode = true;
         });
         panel.deleteButton.addActionListener(e -> {
             deleteProduct(dao,panel.editMode,panel, datas);
@@ -191,6 +192,7 @@ public class mmsListener {
         }
     }
     public void updateProduct(ProductDAO dao, ProductViewPanel panel, boolean editMode) throws SQLException, ClassNotFoundException {
+        System.out.println("마마마");
         if (editMode) {
             ProgramManager.getInstance().getProductCRUDView().drawView();
             ProgramManager.getInstance().getProductCRUDView().chk = 2;
