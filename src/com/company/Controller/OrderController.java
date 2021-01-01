@@ -137,17 +137,15 @@ public class OrderController {
 
             Object obj = e.getSource();
 
-            if(obj == testOrderListViewPanel.btnSerach) {
+            if (obj == testOrderListViewPanel.btnSerach) {
                 // 선택된 정보 가져오기
                 String s = (String) testOrderListViewPanel.cb.getSelectedItem();
 
-                if(s.equals("요일별 매출")) {
+                if (s.equals("요일별 매출")) {
 
-                }
-                else if(s.equals("월별 매출")){
+                } else if (s.equals("월별 매출")) {
 
-                }
-                else if(s.equals("주문 내역")) {
+                } else if (s.equals("주문 내역")) {
                     try {
                         refreshDataOrder();
                     } catch (SQLException e1) {
@@ -155,8 +153,7 @@ public class OrderController {
                     } catch (ClassNotFoundException classNotFoundException) {
                         classNotFoundException.printStackTrace();
                     }
-                }
-                else if(s.equals("주문 상세 내역")) {
+                } else if (s.equals("주문 상세 내역")) {
                     try {
                         refreshDataOrderHistory();
                     } catch (SQLException e1) {
@@ -165,9 +162,9 @@ public class OrderController {
                         classNotFoundException.printStackTrace();
                     }
                 }
-                }
             }
         }
+
     }
 
     public void refreshDataOrder() throws SQLException, ClassNotFoundException {
