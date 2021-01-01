@@ -18,7 +18,9 @@ public class MainState implements State{
         mainView.loginViewPanel.setVisible(false);
         mainView.drawMainPanel();
         mainView.drawProductViewPanel();
+
         applyListener();
+
     }
 
     @Override
@@ -33,7 +35,6 @@ public class MainState implements State{
     }
 
     public void drawPanel() {
-        ProgramManager.getInstance().getMainView().drawProductViewPanel();
 
 
     }
@@ -42,6 +43,9 @@ public class MainState implements State{
     public void applyListener() {
         mainView = ProgramManager.getInstance().getMainView();
         mmsListener.getInstance().mainViewPanelListener(mainView);
+        mmsListener.getInstance().productViewPanelListener(
+                (ProgramManager.getInstance().getMainView().productViewPanel));
+        mmsListener.getInstance().productCRUDViewListener(ProgramManager.getInstance().getProductCRUDView());
     }
 
     @Override

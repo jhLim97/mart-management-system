@@ -45,14 +45,22 @@ public class ProgramManager {
         if(shoppingView == null) shoppingView = new ShoppingView();
         return shoppingView;
     }
+    ProductController PC;
+
     public CustomerController getCC() {
         if(CC == null) CC = new CustomerController();
         return CC;
     }
 
+    public ProductController getPC() throws SQLException, ClassNotFoundException {
+        if(PC ==null) PC= new ProductController(ProgramManager.getInstance().getMainView().productViewPanel);
+        return PC;
+    }
+
     public void setCC(CustomerController CC) {
         this.CC = CC;
     }
+    public void setPC(ProductController PC){ this.PC = PC;}
 
     public OrderListViewPanel getOrderListViewPanel() {
         if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
@@ -69,6 +77,11 @@ public class ProgramManager {
         if(state instanceof LoginState) {
             mainState.drawFrameInit();
             this.state = mainState;
+            try {
+                setPC(getPC());
+            }catch(Exception e) {
+
+            }
             return;
         }
 
