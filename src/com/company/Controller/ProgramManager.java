@@ -73,7 +73,7 @@ public class ProgramManager {
     private ProductCRUDView productCRUDView;
     private ShoppingView shoppingView;
     private CustomerManageView customerManageView;
-    private OrderListViewPanel orderListViewPanel;
+    private OrderListViegiwPanel orderListViewPanel;
 
     private MainView mainView;
     private State state;
