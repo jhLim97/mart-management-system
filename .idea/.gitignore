@@ -6,8 +6,5 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-<<<<<<< HEAD
 libraries
-=======
-
->>>>>>> d186b9efd066412065510cd08dfb112d2ad6bc18
+dataSources.xml
