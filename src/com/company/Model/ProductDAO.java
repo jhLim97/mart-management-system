@@ -12,7 +12,7 @@ public class ProductDAO {
     public PreparedStatement pstmt;
     public ResultSet rs;
 
-    public  ProductDTO product;
+    public ProductDTO product;
     public Vector<String> items = null;
 
     public String sql;

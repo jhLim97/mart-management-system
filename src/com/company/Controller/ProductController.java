@@ -32,17 +32,16 @@ public class ProductController extends Thread{
         v.smallAMountArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
         v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
-    public void appMain(){
-        v.addButtonListener() implements ActionListener{
-            
+    public void appMain(){ //LISTENER 관련
+        v.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == v.addButton){
-                    CRUDv = new ProductCRUDView();
-                    CRUDv.addActionListener(new ActionListener() {
+                if(e.getSource() == v.addButton){ //ADDButton
+                    CRUDv = new ProductCRUDView(); 
+                    CRUDv.addActionListener(new ActionListener() { 
                         @Override
-                        public void actionPerformed(ActionEvent e) {
-                             if( e.getSource() == CRUDv.completeButton){
+                        public void actionPerformed(ActionEvent e) { //CRUDv Complete 버튼
+                            if( e.getSource() == CRUDv.completeButton){
                                 ProductDTO productDTO = new ProductDTO();
                                 productDTO.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
                                 productDTO.setPrName(CRUDv.nameText.getText());
@@ -74,14 +73,14 @@ public class ProductController extends Thread{
                                 }
 
 
-                                 v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+                                v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
                             }
                         }
                     });
                     appMain();
                     CRUDv.drawView();
                 }//add
-                else if(e.getSource() == v.deleteButton){
+                else if(e.getSource() == v.deleteButton){ //Delete 버튼
                     if(editMode){
                         try {
                             editMode = dao.delProduct(Integer.parseInt(v.txtSearch.getText()));
@@ -102,7 +101,7 @@ public class ProductController extends Thread{
 
                     v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
                 }//delete
-                else if(e.getSource() == v.searchButton){
+                else if(e.getSource() == v.searchButton){ //search 버튼
                     try {
                         ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
                         if(p.getPrCode() !=-1){
@@ -112,7 +111,7 @@ public class ProductController extends Thread{
                                     Integer.toString(p.getPrCode()) +"\t" + p.getPrName() +"\t"+ p.getPrice() +"\t"+ p.getLocation() +"\t"+ p.getExpDate() +"\t"+ p.getAmount() +"\t"
                                     + p.getState());;
 
-                                    editMode = true; //찾았으면 수정,삭제가능
+                            editMode = true; //찾았으면 수정,삭제가능
                         }else {
 
                             System.out.println(p.getPrCode());
@@ -126,59 +125,59 @@ public class ProductController extends Thread{
 
                     v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
                 }//search
-                else if (e.getSource() == v.updateButton) {
+                else if (e.getSource() == v.updateButton) { // update버튼
 
                     if(editMode){
-                         CRUDv = new ProductCRUDView();
-                         CRUDv.drawView();
-                    try {
-                        ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
+                        CRUDv = new ProductCRUDView();
+                        CRUDv.drawView();
+                        try {
+                            ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
 
-                        CRUDv.codeText.setText(Integer.toString(p.getPrCode()));
-                        CRUDv.nameText.setText(p.getPrName());
-                        CRUDv.priceText.setText(Integer.toString(p.getPrice()));
-                        CRUDv.locationText.setText(p.getLocation());
-                        CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
-                        CRUDv.countText.setText(Integer.toString(p.getAmount()));
+                            CRUDv.codeText.setText(Integer.toString(p.getPrCode()));
+                            CRUDv.nameText.setText(p.getPrName());
+                            CRUDv.priceText.setText(Integer.toString(p.getPrice()));
+                            CRUDv.locationText.setText(p.getLocation());
+                            CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
+                            CRUDv.countText.setText(Integer.toString(p.getAmount()));
 
-                        CRUDv.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                if( e.getSource() == CRUDv.completeButton){
-                                    try {
-                                        v.SUDtxt.setText("");
-                                        p.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
-                                        p.setPrName(CRUDv.nameText.getText());
-                                        p.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
-                                        p.setLocation(CRUDv.locationText.getText());
-                                        p.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
-                                        p.setAmount(Integer.parseInt(CRUDv.countText.getText()));
+                            CRUDv.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) { //CRUD CLEATETE버튼
+                                    if( e.getSource() == CRUDv.completeButton){
+                                        try {
+                                            v.SUDtxt.setText("");
+                                            p.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
+                                            p.setPrName(CRUDv.nameText.getText());
+                                            p.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
+                                            p.setLocation(CRUDv.locationText.getText());
+                                            p.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
+                                            p.setAmount(Integer.parseInt(CRUDv.countText.getText()));
 
-                                        dao.updateProduct(p);
-                                        refreshData();
-                                        editMode=false;
+                                            dao.updateProduct(p);
+                                            refreshData();
+                                            editMode=false;
 
-                                        v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
-                                                Integer.toString(p.getPrCode()) +"\t" + p.getPrName() +"\t"+ p.getPrice() +"\t"+ p.getLocation() +"\t"+ p.getExpDate() +"\t"+ p.getAmount() +"\t"
-                                                + p.getState());;
+                                            v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
+                                                    Integer.toString(p.getPrCode()) +"\t" + p.getPrName() +"\t"+ p.getPrice() +"\t"+ p.getLocation() +"\t"+ p.getExpDate() +"\t"+ p.getAmount() +"\t"
+                                                    + p.getState());;
 
-                                    } catch (SQLException throwables) {
-                                        throwables.printStackTrace();
-                                    } catch (ClassNotFoundException classNotFoundException) {
-                                        classNotFoundException.printStackTrace();
-                                    }//update try
+                                        } catch (SQLException throwables) {
+                                            throwables.printStackTrace();
+                                        } catch (ClassNotFoundException classNotFoundException) {
+                                            classNotFoundException.printStackTrace();
+                                        }//update try
 
 
-                                    v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+                                        v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    } catch (ClassNotFoundException classNotFoundException) {
-                        classNotFoundException.printStackTrace();
-                    } //try getProduct
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        } //try getProduct
 
 
 
@@ -224,7 +223,7 @@ public class ProductController extends Thread{
         String txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
         ArrayList<ProductDTO> data = null;
-        
+
         while(true){//while
             java.util.Date now = new java.util.Date();
 
@@ -278,15 +277,15 @@ public class ProductController extends Thread{
 
                     if(chk1){
                         if(chk2){
-                        System.out.print(1);
-                        p.setState("재고유통기한임박");
-                        try {
-                            dao.updateProduct(p);
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                            System.out.print(1);
+                            p.setState("재고유통기한임박");
+                            try {
+                                dao.updateProduct(p);
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            } catch (ClassNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }//상태변환 재고 유통기한 둘다 측정할떄 변화
 
