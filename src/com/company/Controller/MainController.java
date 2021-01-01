@@ -11,8 +11,5 @@ public class MainController {
         ProgramManager manager = ProgramManager.getInstance();
         manager.setLoginState();
 
-//        manager.setMainState();
-//        manager.setCustomerManageState();
-//        manager.setOrderManageState();
     }
 }

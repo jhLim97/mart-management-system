@@ -18,6 +18,8 @@ public class ProductViewPanel extends JPanel {
     public DefaultTableModel tableModel;
     public JTextArea SUDtxt;
     public JLabel SUDLab;
+    public boolean editMode=false;
+
 
 
     public ProductViewPanel() {

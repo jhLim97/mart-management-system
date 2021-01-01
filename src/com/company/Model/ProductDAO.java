@@ -12,7 +12,7 @@ public class ProductDAO {
     public PreparedStatement pstmt;
     public ResultSet rs;
 
-    public  ProductDTO product;
+    public ProductDTO product;
     public Vector<String> items = null;
 
     public String sql;
@@ -48,7 +48,10 @@ public class ProductDAO {
     }
 
     public ArrayList<ProductDTO> getAll() throws SQLException, ClassNotFoundException {
+
+        System.out.println(222);
         connectDB();
+        System.out.println(1);
         sql= "select * from Product";
 
         //전체 검색 데이터를 전달하는 ArrayList
