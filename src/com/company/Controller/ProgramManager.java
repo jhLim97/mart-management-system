@@ -1,6 +1,5 @@
 package com.company.Controller;
 
-import com.company.Main;
 import com.company.View.*;
 
 import java.sql.*;
@@ -8,7 +7,7 @@ import java.sql.*;
 public class ProgramManager {
 
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
     Connection conn;
     MainState mainState;
     LoginState loginState;
@@ -66,14 +65,13 @@ public class ProgramManager {
     }
 
     public void setMainState(){
+        if(mainState == null) mainState = new MainState();
         if(state instanceof LoginState) {
-            mainState = new MainState();
             mainState.drawFrameInit();
             this.state = mainState;
             return;
         }
 
-        if(mainState == null) mainState = new MainState();
         this.state = mainState;
         mainState.mainView.productViewPanel.setVisible(true);
         state.applyListener();
@@ -83,10 +81,8 @@ public class ProgramManager {
         if(loginState == null) loginState = new LoginState();
         this.state = loginState;
         state.draw();
-        state.applyListener();
     }
     public void setOrderManageState(){
-
         if(orderManageState == null) orderManageState = new OrderManageState();
         this.state = orderManageState;
         if(mainView.orderListViewPanel == null) { mainView.drawOrderListViewPanel();}
@@ -126,4 +122,7 @@ public class ProgramManager {
     }
 
 
+    public void setCustomerManageView(CustomerManageView customerManageView) {
+        this.customerManageView = customerManageView;
+    }
 }

@@ -88,5 +88,20 @@ public class CustomerViewPanel extends JPanel {
         dtmodel.addRow(line);
     }
 
+    public void addUpdateButtonListener(ActionListener listener) {
+        updateButton.addActionListener(listener);
+    }
+
+    public void addDeleteButtonListener(ActionListener listener) {
+        deleteButton.addActionListener(listener);
+    }
+
+    public void addSearchButtonListener(ActionListener listener) {
+        searchButton.addActionListener(listener);
+    }
+
+    public void addAddButtonListener(ActionListener listener) {
+        addButton.addActionListener(listener);
+    }
 }
 

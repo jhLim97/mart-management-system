@@ -3,6 +3,8 @@ package com.company.Controller;
 import com.company.Model.AccountDAO;
 import com.company.Model.AccountDTO;
 import com.company.View.*;
+
+import javax.swing.*;
 import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -219,26 +221,26 @@ public class mmsListener {
     }
     public void customerViewPanelListener(CustomerViewPanel panel){
 
-        panel.deleteButton.addActionListener(e -> {
-            ProgramManager.getInstance().getCC().delete =true;
-            System.out.println("delete");
-
-        });
-        panel.updateButton.addActionListener(e -> {
-            ProgramManager.getInstance().getCC().update = true;
-            System.out.println("update");
-        });
         panel.addButton.addActionListener(e -> {
-            ProgramManager.getInstance().getCC().register = true;
+            CustomerManageView cmv = ProgramManager.getInstance().getCC().makeCustomerManageView();
+            customerManageViewListener(cmv);
             System.out.println("register");
-
         });
         panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
             System.out.println("search");
         });
+        panel.updateButton.addActionListener(e -> {
+            ProgramManager.getInstance().getCC().update = true;
+            System.out.println("update");
+        });
+        panel.deleteButton.addActionListener(e -> {
+            ProgramManager.getInstance().getCC().delete =true;
+            System.out.println("delete");
+        });
 
         panel.tblCustomerList.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
             }
@@ -345,11 +347,13 @@ public class mmsListener {
     public void shoppingViewListener(ShoppingView frame){
     }
     public void customerManageViewListener(CustomerManageView frame){
-        frame.btnRegister.addActionListener(e -> {
 
+        frame.btnRegister.addActionListener(e -> {
+            ProgramManager.getInstance().setCustomerManageView(frame);
+            ProgramManager.getInstance().getCC().register =true;
         });
-        frame.btnRegister.addActionListener(e -> {
-
+        frame.btnExit.addActionListener(e -> {
+            frame.dispose();
         });
     }
 }
