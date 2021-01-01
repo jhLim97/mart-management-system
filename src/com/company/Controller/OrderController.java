@@ -4,6 +4,7 @@ import com.company.Model.OrderDAO;
 import com.company.Model.OrderDTO;
 import com.company.Model.OrderHistoryDAO;
 import com.company.Model.OrderHistoryDTO;
+import com.company.View.OrderListViewPanel;
 import com.company.View.ShoppingView;
 import com.company.View.TestOrderListViewPanel;
 
@@ -30,7 +31,7 @@ public class OrderController {
 
     public OrderController(TestOrderListViewPanel testOrderListViewPanel/*, ShoppingView shoppingView*/) {
         this.testOrderListViewPanel = testOrderListViewPanel;
-        this.testOrderListViewPanel.addSearchActionListner(new SearchActionListener());
+        //this.testOrderListViewPanel.addSearchActionListner(new SearchActionListener());
 
         //this.shoppingView = shoppingView;
         //this.shoppingView.addOrderActionListner(new OrderActionListener());
@@ -38,6 +39,24 @@ public class OrderController {
         orderDAO = new OrderDAO();
         orderHistoryDAO = new OrderHistoryDAO();
     }
+
+    public OrderController() {
+
+        orderDAO = new OrderDAO();
+        orderHistoryDAO = new OrderHistoryDAO();
+    }
+
+    /*
+    public OrderController(ShoppingView shoppingView) {
+        //this.testOrderListViewPanel = testOrderListViewPanel;
+        //this.testOrderListViewPanel.addSearchActionListner(new SearchActionListener());
+
+        this.shoppingView = shoppingView;
+        this.shoppingView.addOrderActionListner(new OrderActionListener());
+
+        orderDAO = new OrderDAO();
+        orderHistoryDAO = new OrderHistoryDAO();
+    }*/
 
     // 쇼핑 뷰에서 결제하기 누를 경우 주문 테이블과 주문 내역 테이블에 저장 --> 고객 포인트까지 처리해야 될듯....
     public class OrderActionListener implements ActionListener {
@@ -130,6 +149,7 @@ public class OrderController {
         }
     }
 
+    /*
     public class SearchActionListener implements ActionListener {
 
         @Override
@@ -165,12 +185,42 @@ public class OrderController {
             }
         }
 
+    }*/
+
+    public void searchOrder(OrderListViewPanel pn) {
+
+        // 선택된 정보 가져오기
+        String s = (String) pn.cb.getSelectedItem();
+
+        if (s.equals("요일별 매출")) {
+
+        } else if (s.equals("월별 매출")) {
+
+        } else if (s.equals("주문 내역")) {
+            try {
+                refreshDataOrder(pn);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
+        } else if (s.equals("주문 상세 내역")) {
+            try {
+                refreshDataOrderHistory(pn);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
+        }
     }
 
-    public void refreshDataOrder() throws SQLException, ClassNotFoundException {
+    public void refreshDataOrder(OrderListViewPanel pn) throws SQLException, ClassNotFoundException {
         orderDatas = orderDAO.getAll();
         Object record[] = new Object[5];
-        testOrderListViewPanel.orderModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
+        pn.orderModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
+        pn.orderHistoryScroll.setVisible(false);
+        pn.orderScroll.setVisible(true);
 
         if( orderDatas != null){
 
@@ -181,16 +231,18 @@ public class OrderController {
                 record[2] = o.getC_name();
                 record[3] = o.getPhone_num();
                 record[4] = o.getBuy_date();
-                testOrderListViewPanel.orderModel.addRow(record);
+                pn.orderModel.addRow(record);
 
             }
         }
     }
 
-    public void refreshDataOrderHistory() throws SQLException, ClassNotFoundException {
+    public void refreshDataOrderHistory(OrderListViewPanel pn) throws SQLException, ClassNotFoundException {
         orderHistoryDatas = orderHistoryDAO.getAll();
         Object record[] = new Object[6];
-        testOrderListViewPanel.orderHistoryModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
+        pn.orderHistoryModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
+        pn.orderScroll.setVisible(false);
+        pn.orderHistoryScroll.setVisible(true);
 
         if( orderHistoryDatas != null){
 
@@ -202,17 +254,18 @@ public class OrderController {
                 record[3] = o.getPr_name();
                 record[4] = o.getPr_count();
                 record[5] = o.getPr_price();
-                testOrderListViewPanel.orderHistoryModel.addRow(record);
+                pn.orderHistoryModel.addRow(record);
 
             }
         }
     }
 
+    /*
     public static void main(String[] args) {
         TestOrderListViewPanel t  = new TestOrderListViewPanel();
-        new OrderController(t/*, new ShoppingView()*/);
+        //new OrderController(t, new ShoppingView());
         t.drawView();
-
-    }
+        //new  OrderController(new ShoppingView());
+    }*/
 
 }

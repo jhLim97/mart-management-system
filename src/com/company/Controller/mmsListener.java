@@ -40,6 +40,10 @@ public class mmsListener {
 
     public void orderListViewPanelListener(OrderListViewPanel panel){
 
+        panel.btnSerach.addActionListener(e -> {
+            ProgramManager.getInstance().getOrderController().searchOrder(panel); // 주문 목록 조회
+        });
+
     }
     public void customerViewPanelListener(CustomerViewPanel panel){
 

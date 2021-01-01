@@ -10,10 +10,10 @@ public class OrderDAO {
     Statement stmt;
     ResultSet rs;
     String userid = "root";
-    String pwd = "wlfkf132";
+    String pwd = "root";
     String sql;
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
 
     public OrderDAO() {
 

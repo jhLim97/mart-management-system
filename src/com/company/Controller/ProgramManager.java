@@ -15,6 +15,15 @@ public class ProgramManager {
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
 
+    // --------- 준혁 컨트롤러 접근 개체 생성 ------------
+    OrderController orderController;
+
+    public OrderController getOrderController() {
+        if(orderController == null) orderController = new OrderController();
+        return orderController;
+    }
+    // ----------------------------------------------
+
     public JoinView getJoinView() {
         if(joinView == null) joinView = new JoinView();
         return joinView;
@@ -51,10 +60,20 @@ public class ProgramManager {
         this.customerManageView = customerManageView;
     }
 
+    public OrderListViewPanel getOrderListViewPanel() {
+        if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
+        return orderListViewPanel;
+    }
+
+    public void setOrderListViewPanel(OrderListViewPanel orderListViewPanel) {
+        this.orderListViewPanel = orderListViewPanel;
+    }
+
     private JoinView joinView;
     private ProductCRUDView productCRUDView;
     private ShoppingView shoppingView;
     private CustomerManageView customerManageView;
+    private OrderListViewPanel orderListViewPanel;
 
     private MainView mainView;
     private State state;
@@ -64,6 +83,11 @@ public class ProgramManager {
     }
 
     public void drawMainView() {
+        if(mainView == null) mainView = new MainView();
+        mainView.drawView();
+    }
+
+    public void drawOrderListView() {
         if(mainView == null) mainView = new MainView();
         mainView.drawView();
     }
@@ -119,7 +143,7 @@ public class ProgramManager {
             // 1단계 : JDBC 드라이버 로드
             Class.forName(jdbcDriver);
             // 2단계 : 데이터베이스 연결
-            conn = DriverManager.getConnection(jdbcUrl,"root","wlfkf132");
+            conn = DriverManager.getConnection(jdbcUrl,"root","root");
 
         }catch (Exception e){
             e.printStackTrace();

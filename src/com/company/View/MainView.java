@@ -51,7 +51,7 @@ public class MainView extends JFrame {
 
     public void drawOrderListViewPanel(){
          if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
-         orderListViewPanel.drawView();;
+         orderListViewPanel.drawView();
          getContentPane().add(orderListViewPanel,BorderLayout.CENTER);
          setVisible(true);
     }
