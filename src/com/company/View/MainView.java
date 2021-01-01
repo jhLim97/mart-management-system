@@ -51,7 +51,7 @@ public class MainView extends JFrame {
 
     public void drawOrderListViewPanel(){
          if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
-         orderListViewPanel.drawView();;
+         orderListViewPanel.drawView();
          getContentPane().add(orderListViewPanel,BorderLayout.CENTER);
          setVisible(true);
     }
@@ -61,11 +61,6 @@ public class MainView extends JFrame {
         getContentPane().add(customerViewPanel,BorderLayout.CENTER);
         setVisible(true);
     }
-//    public void drawProductViewPanel() throws SQLException, ClassNotFoundException {
-//        ProductViewPanel productView = new ProductViewPanel();
-//        productView.drawView();
-//        add(productView, BorderLayout.CENTER);
-//        setVisible(true);
 
     public void drawProductViewPanel(){
         if(productViewPanel == null) productViewPanel = new ProductViewPanel();

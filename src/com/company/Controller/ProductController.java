@@ -34,6 +34,7 @@ public class ProductController extends Thread{
         v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
 
+
     public void refreshData() throws SQLException, ClassNotFoundException {
         datas = dao.getAll();
         Object record[] = new Object[7];

@@ -1,6 +1,5 @@
 package com.company.Controller;
 
-import com.company.Main;
 import com.company.View.*;
 
 import java.sql.*;
@@ -8,31 +7,65 @@ import java.sql.*;
 public class ProgramManager {
 
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
     Connection conn;
-
     MainState mainState;
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
     CustomerController CC;
 
+    private JoinView joinView;
+    private ProductCRUDView productCRUDView;
+    private ShoppingView shoppingView;
+    private CustomerManageView customerManageView;
+    private OrderListViewPanel orderListViewPanel;
+
+    private MainView mainView;
+    private State state;
+
+    private static ProgramManager s_Instance;
+    public static ProgramManager getInstance(){
+        if (s_Instance == null) s_Instance = new ProgramManager();
+        return s_Instance;
+    }
+
+
+    // --------- 준혁 컨트롤러 접근 개체 생성 ------------
+    OrderController orderController;
+
+    public OrderController getOrderController() {
+        if(orderController == null) orderController = new OrderController();
+        return orderController;
+    }
+    // ----------------------------------------------
+
+
+    public ShoppingView getShoppingView() {
+        if(shoppingView == null) shoppingView = new ShoppingView();
+        return shoppingView;
+    }
+    ProductController PC;
+
     public CustomerController getCC() {
         if(CC == null) CC = new CustomerController();
         return CC;
     }
 
+    public ProductController getPC() throws SQLException, ClassNotFoundException {
+        if(PC ==null) PC= new ProductController(ProgramManager.getInstance().getMainView().productViewPanel);
+        return PC;
+    }
+
     public void setCC(CustomerController CC) {
         this.CC = CC;
     }
+    public void setPC(ProductController PC){ this.PC = PC;}
 
-    private JoinView joinView;
-    private ProductCRUDView productCRUDView;
-    private ShoppingView shoppingView;
-    private CustomerManageView customerManageView;
-
-    private MainView mainView;
-    private State state;
+    public OrderListViewPanel getOrderListViewPanel() {
+        if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
+        return orderListViewPanel;
+    }
 
     public MainView getMainView() {
         if(mainView == null) mainView = new MainView();
@@ -40,11 +73,15 @@ public class ProgramManager {
     }
 
     public void setMainState(){
-
         if(mainState == null) mainState = new MainState();
         if(state instanceof LoginState) {
             mainState.drawFrameInit();
             this.state = mainState;
+            try {
+                setPC(getPC());
+            }catch(Exception e) {
+
+            }
             return;
         }
 
@@ -59,7 +96,6 @@ public class ProgramManager {
         state.draw();
     }
     public void setOrderManageState(){
-
         if(orderManageState == null) orderManageState = new OrderManageState();
         this.state = orderManageState;
         if(mainView.orderListViewPanel == null) { mainView.drawOrderListViewPanel();}
@@ -77,34 +113,6 @@ public class ProgramManager {
         setCC(getCC());
     }
 
-    private static ProgramManager s_Instance;
-    public static ProgramManager getInstance(){
-        if (s_Instance == null) s_Instance = new ProgramManager();
-        return s_Instance;
-    }
-
-
-    public void connectDB(Connection conn){
-        try{
-            // 1단계 : JDBC 드라이버 로드
-            Class.forName(jdbcDriver);
-            // 2단계 : 데이터베이스 연결
-            conn = DriverManager.getConnection(jdbcUrl,"root","wlfkf132");
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public void closeDB(Connection conn, PreparedStatement pstmt, ResultSet rs){
-        try {
-            // 6단계 : 연결 해제
-            pstmt.close();
-            rs.close();
-            conn.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
     public State getState() {
         return state;
     }
@@ -116,26 +124,9 @@ public class ProgramManager {
         return joinView;
     }
 
-    public void setJoinView(JoinView joinView) {
-        this.joinView = joinView;
-    }
-
     public ProductCRUDView getProductCRUDView() {
         if(productCRUDView == null) productCRUDView = new ProductCRUDView();
         return productCRUDView;
-    }
-
-    public void setProductCRUDView(ProductCRUDView productCRUDView) {
-        this.productCRUDView = productCRUDView;
-    }
-
-    public ShoppingView getShoppingView() {
-        if(shoppingView == null) shoppingView = new ShoppingView();
-        return shoppingView;
-    }
-
-    public void setShoppingView(ShoppingView shoppingView) {
-        this.shoppingView = shoppingView;
     }
 
     public CustomerManageView getCustomerManageView() {
@@ -143,9 +134,8 @@ public class ProgramManager {
         return customerManageView;
     }
 
+
     public void setCustomerManageView(CustomerManageView customerManageView) {
         this.customerManageView = customerManageView;
     }
-
-
 }

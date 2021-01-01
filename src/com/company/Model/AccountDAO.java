@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class AccountDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
 
     private AccountDTO account;
     private String sql;
@@ -25,7 +25,7 @@ public class AccountDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "ghrja132!@");
+            conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
         } catch (Exception e) {
             e.printStackTrace();
         }

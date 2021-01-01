@@ -24,10 +24,10 @@ public class TestOrderListViewPanel extends JFrame {
     public JComboBox cb;
     public JButton btnSerach;
 
-    public JTable orderTable;
+    public JTable orderTable, orderHistoryTable;
     public JScrollPane orderScroll, orderHistoryScroll;
     public String orderHeader[] = { "orderCode","entryPrice","cName","phoneNum","buyDate"}, orderContents[][];
-    public String orderHistoryHeader[] = { "HistoryId", "orderCode","prCode","prName","prPrice"}, orderHistoryContents[][];
+    public String orderHistoryHeader[] = { "HistoryId", "orderCode","prCode","prName", "prCount", "prPrice"}, orderHistoryContents[][];
     public DefaultTableModel orderModel;
     public DefaultTableModel orderHistoryModel;
     // -------------------------------------------
@@ -48,7 +48,9 @@ public class TestOrderListViewPanel extends JFrame {
         orderModel = new DefaultTableModel(orderHeader,0);
         orderHistoryModel = new DefaultTableModel(orderHistoryHeader,0);
         orderTable = new JTable(orderModel);
+        orderHistoryTable = new JTable(orderHistoryModel);
         orderScroll = new JScrollPane(orderTable);
+        orderHistoryScroll = new JScrollPane(orderHistoryTable);
         //orderHistoryScroll = new JScrollPane(orderTable);
 
         //revenue panel + Label
@@ -98,6 +100,12 @@ public class TestOrderListViewPanel extends JFrame {
         orderScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         orderScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         orderScroll.setBounds(10, 70,800,380);
+        orderScroll.setVisible(true);
+
+        orderHistoryScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        orderHistoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        orderHistoryScroll.setBounds(10, 70,800,380);
+        orderHistoryScroll.setVisible(false);
 
         //revenuePanel
         revenuePanel.setBackground(Color.lightGray);
@@ -126,6 +134,7 @@ public class TestOrderListViewPanel extends JFrame {
         ListPanel.add(btnSerach);
         //this.add(orderHistoryView);
         this.add(orderScroll);
+        this.add(orderHistoryScroll);
         this.add(revenuePanel);
         revenuePanel.add(revenueDay);
         revenuePanel.add(revenueMonth);
@@ -134,23 +143,8 @@ public class TestOrderListViewPanel extends JFrame {
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
 
-        // ------- 여기도 내가 임의로 추가 -------
         setVisible(true);
-        // -----------------------------------
     }
 
-    // ------- 여기도 내가 임의로 추가 -------
-    public void addSearchActionListner(ActionListener listener) {
-        btnSerach.addActionListener(listener);
-        // 다른 리스너들은 추가하기...
-
-    } // addButtonActionListener()
-
-    /*
-    public static void main(String[] args) {
-        TestOrderListViewPanel testOrderListViewPanel = new TestOrderListViewPanel();
-        testOrderListViewPanel.drawView();
-    }*/
-    // -----------------------------------
 }
 

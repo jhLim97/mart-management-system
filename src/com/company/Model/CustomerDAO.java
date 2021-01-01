@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class CustomerDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
     Connection conn;
 
     PreparedStatement pstmt;
@@ -15,7 +15,7 @@ public class CustomerDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "ghrja132!@");
+            conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
         } catch (Exception e) {
             e.printStackTrace();
         }

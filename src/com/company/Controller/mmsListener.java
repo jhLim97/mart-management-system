@@ -105,6 +105,7 @@ public class mmsListener {
         });
         panel.searchButton.addActionListener(e -> {
             searchProduct(dao, panel.editMode, panel);
+            panel.editMode = true;
         });
         panel.deleteButton.addActionListener(e -> {
             deleteProduct(dao,panel.editMode,panel, datas);
@@ -193,6 +194,7 @@ public class mmsListener {
         }
     }
     public void updateProduct(ProductDAO dao, ProductViewPanel panel, boolean editMode) throws SQLException, ClassNotFoundException {
+        System.out.println("마마마");
         if (editMode) {
             ProgramManager.getInstance().getProductCRUDView().drawView();
             ProgramManager.getInstance().getProductCRUDView().chk = 2;
@@ -214,26 +216,27 @@ public class mmsListener {
 
     public void orderListViewPanelListener(OrderListViewPanel panel){
 
+        panel.btnSerach.addActionListener(e -> {
+            ProgramManager.getInstance().getOrderController().searchOrder(panel); // 주문 목록 조회
+        });
+
     }
     public void customerViewPanelListener(CustomerViewPanel panel){
 
-        panel.addAddButtonListener(e -> {
+        panel.addButton.addActionListener(e -> {
             CustomerManageView cmv = ProgramManager.getInstance().getCC().makeCustomerManageView();
             customerManageViewListener(cmv);
             System.out.println("register");
         });
-
-        panel.addSearchButtonListener(e -> {
+        panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
             System.out.println("search");
         });
-
-        panel.addUpdateButtonListener(e -> {
+        panel.updateButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().update = true;
             System.out.println("update");
         });
-
-        panel.addDeleteButtonListener(e-> {
+        panel.deleteButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().delete =true;
             System.out.println("delete");
         });
@@ -243,29 +246,12 @@ public class mmsListener {
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) { }
         });
     }
-
 
     public void productCRUDViewListener(ProductCRUDView frame){
         ProductDAO dao=new ProductDAO();
@@ -363,12 +349,12 @@ public class mmsListener {
     public void shoppingViewListener(ShoppingView frame){
     }
     public void customerManageViewListener(CustomerManageView frame){
-        frame.addRegisterButtonListener(e-> {
+
+        frame.btnRegister.addActionListener(e -> {
             ProgramManager.getInstance().setCustomerManageView(frame);
             ProgramManager.getInstance().getCC().register =true;
         });
-
-        frame.addExitButtonListener(e-> {
+        frame.btnExit.addActionListener(e -> {
             frame.dispose();
         });
     }
