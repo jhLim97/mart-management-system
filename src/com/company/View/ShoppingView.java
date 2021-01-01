@@ -155,12 +155,4 @@ public class ShoppingView extends JFrame {
         setVisible(true);
     }
 
-    public void addOrderActionListner(ActionListener listener) {
-        btnPay.addActionListener(listener);
-        // 다른 리스너들은 추가하기...
-
-    } // addButtonActionListener()
-
-
-
 }

@@ -143,23 +143,8 @@ public class TestOrderListViewPanel extends JFrame {
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
 
-        // ------- 여기도 내가 임의로 추가 -------
         setVisible(true);
-        // -----------------------------------
     }
 
-    // ------- 여기도 내가 임의로 추가 -------
-    public void addSearchActionListner(ActionListener listener) {
-        btnSerach.addActionListener(listener);
-        // 다른 리스너들은 추가하기...
-
-    } // addButtonActionListener()
-
-    /*
-    public static void main(String[] args) {
-        TestOrderListViewPanel testOrderListViewPanel = new TestOrderListViewPanel();
-        testOrderListViewPanel.drawView();
-    }*/
-    // -----------------------------------
 }
 

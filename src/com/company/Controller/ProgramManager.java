@@ -25,6 +25,12 @@ public class ProgramManager {
     private MainView mainView;
     private State state;
 
+    private static ProgramManager s_Instance;
+    public static ProgramManager getInstance(){
+        if (s_Instance == null) s_Instance = new ProgramManager();
+        return s_Instance;
+    }
+
 
     // --------- 준혁 컨트롤러 접근 개체 생성 ------------
     OrderController orderController;
@@ -40,14 +46,9 @@ public class ProgramManager {
         if(shoppingView == null) shoppingView = new ShoppingView();
         return shoppingView;
     }
-
-    public void setShoppingView(ShoppingView shoppingView) {
-        this.shoppingView = shoppingView;
-    }
     public CustomerController getCC() {
         if(CC == null) CC = new CustomerController();
         return CC;
-
     }
 
     public void setCC(CustomerController CC) {
@@ -57,10 +58,6 @@ public class ProgramManager {
     public OrderListViewPanel getOrderListViewPanel() {
         if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
         return orderListViewPanel;
-    }
-
-    public void setOrderListViewPanel(OrderListViewPanel orderListViewPanel) {
-        this.orderListViewPanel = orderListViewPanel;
     }
 
     public MainView getMainView() {
@@ -104,39 +101,9 @@ public class ProgramManager {
         if(mainView.customerViewPanel == null) mainView.drawCustomerViewPanel();
         else mainView.customerViewPanel.setVisible(true);
         state.applyListener();
-        mainView.drawCustomerViewPanel();
-        customerManageState.applyListener();
         setCC(getCC());
     }
 
-    private static ProgramManager s_Instance;
-    public static ProgramManager getInstance(){
-        if (s_Instance == null) s_Instance = new ProgramManager();
-        return s_Instance;
-    }
-
-
-    public void connectDB(Connection conn){
-        try{
-            // 1단계 : JDBC 드라이버 로드
-            Class.forName(jdbcDriver);
-            // 2단계 : 데이터베이스 연결
-            conn = DriverManager.getConnection(jdbcUrl,"root","root");
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    public void closeDB(Connection conn, PreparedStatement pstmt, ResultSet rs){
-        try {
-            // 6단계 : 연결 해제
-            pstmt.close();
-            rs.close();
-            conn.close();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
     public State getState() {
         return state;
     }
@@ -148,27 +115,14 @@ public class ProgramManager {
         return joinView;
     }
 
-    public void setJoinView(JoinView joinView) {
-        this.joinView = joinView;
-    }
-
     public ProductCRUDView getProductCRUDView() {
         if(productCRUDView == null) productCRUDView = new ProductCRUDView();
         return productCRUDView;
     }
 
-    public void setProductCRUDView(ProductCRUDView productCRUDView) {
-        this.productCRUDView = productCRUDView;
-    }
-
-
     public CustomerManageView getCustomerManageView() {
         if(customerManageView == null) customerManageView = new CustomerManageView();
         return customerManageView;
-    }
-
-    public void setCustomerManageView(CustomerManageView customerManageView) {
-        this.customerManageView = customerManageView;
     }
 
 
