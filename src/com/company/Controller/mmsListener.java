@@ -3,6 +3,8 @@ package com.company.Controller;
 import com.company.Model.AccountDAO;
 import com.company.Model.AccountDTO;
 import com.company.View.*;
+
+import javax.swing.*;
 import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -216,7 +218,8 @@ public class mmsListener {
     public void customerViewPanelListener(CustomerViewPanel panel){
 
         panel.addAddButtonListener(e -> {
-            ProgramManager.getInstance().getCC().register = true;
+            CustomerManageView cmv = ProgramManager.getInstance().getCC().makeCustomerManageView();
+            customerManageViewListener(cmv);
             System.out.println("register");
         });
 
@@ -358,9 +361,15 @@ public class mmsListener {
 
 
     public void shoppingViewListener(ShoppingView frame){
-
     }
     public void customerManageViewListener(CustomerManageView frame){
+        frame.addRegisterButtonListener(e-> {
+            ProgramManager.getInstance().setCustomerManageView(frame);
+            ProgramManager.getInstance().getCC().register =true;
+        });
 
+        frame.addExitButtonListener(e-> {
+            frame.dispose();
+        });
     }
 }

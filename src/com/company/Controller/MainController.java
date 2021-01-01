@@ -1,5 +1,7 @@
 package com.company.Controller;
 
+import com.company.View.ShoppingLogin;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
