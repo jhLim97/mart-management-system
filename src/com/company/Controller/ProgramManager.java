@@ -41,14 +41,13 @@ public class ProgramManager {
 
     public void setMainState(){
 
+        if(mainState == null) mainState = new MainState();
         if(state instanceof LoginState) {
-            mainState = new MainState();
             mainState.drawFrameInit();
             this.state = mainState;
             return;
         }
 
-        if(mainState == null) mainState = new MainState();
         this.state = mainState;
         mainState.mainView.productViewPanel.setVisible(true);
         state.applyListener();
@@ -58,7 +57,6 @@ public class ProgramManager {
         if(loginState == null) loginState = new LoginState();
         this.state = loginState;
         state.draw();
-        state.applyListener();
     }
     public void setOrderManageState(){
 
@@ -76,8 +74,6 @@ public class ProgramManager {
         if(mainView.customerViewPanel == null) mainView.drawCustomerViewPanel();
         else mainView.customerViewPanel.setVisible(true);
         state.applyListener();
-        mainView.drawCustomerViewPanel();
-        customerManageState.applyListener();
         setCC(getCC());
     }
 
