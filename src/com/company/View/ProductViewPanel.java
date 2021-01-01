@@ -1,6 +1,5 @@
 package com.company.View;
 
-import com.company.Controller.ProductController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -58,7 +57,7 @@ public class ProductViewPanel extends JPanel {
 
     public void drawView() throws SQLException, ClassNotFoundException {
 
-        new ProductController(this);
+        //new ProductController(this);
 
         menuBarPanel.add(txtSearch);
         menuBarPanel.add(searchButton);

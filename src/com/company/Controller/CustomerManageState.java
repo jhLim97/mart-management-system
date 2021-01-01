@@ -28,8 +28,10 @@ public class CustomerManageState implements State {
 
     @Override
     public void applyListener() {
+
         customerViewPanel = ProgramManager.getInstance().getMainView().customerViewPanel;
         mmsListener.getInstance().customerViewPanelListener(customerViewPanel);
+
     }
 
     @Override

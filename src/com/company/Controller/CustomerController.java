@@ -20,14 +20,43 @@ public class CustomerController extends Thread{
     CustomerDTO customer = null;
     CustomerManageView cmv;
     CustomerViewPanel cvp;
+    boolean search = false, register = false, update = false, delete = false, isClick = false;
+    private static CustomerController s_Instance;
 
-    public CustomerController(CustomerViewPanel cvp) {
-        this.cvp = cvp;
-        cvp.addSearchButtonListener(new SearchButtonListener());
-        cvp.addAddButtonListener(new AddButtonListener());
-        cvp.addDeleteButtonListener(new DeleteButtonListener());
-        cvp.tblCustomerList.addMouseListener(new TableClickListener());
-        cvp.addUpdateButtonListener(new UpdateButtonListener());
+    @Override
+    public void run() {
+        cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
+        while(true) {
+            if(search) {
+                cvp.initDTModel();
+                String phoneNum = cvp.txtPhoneNum.getText();
+                if(phoneNum.equals("")) {
+                    searchAllCustomer();
+                } else searchCustomer(phoneNum);
+                search = false;
+            }
+            if(register) {
+                makeCustomerManageView();
+                register = false;
+            }
+            if(update) {
+                updateCustomer(bufferedString);
+                update = false;
+            }
+            if(delete) {
+                deleteCustomer();
+                delete = false;
+            }
+            if(isClick) {
+                int row = cvp.tblCustomerList.getSelectedRow();
+                bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
+                isClick = false;
+            }
+        }
+    }
+
+    public CustomerController() {
+        this.start();
     }
 
     public class DeleteButtonListener implements  ActionListener {
@@ -187,14 +216,4 @@ public class CustomerController extends Thread{
         }
     }
 
-    public static void main(String[] args) {
-        MainView mv = new MainView();
-        CustomerViewPanel cvp= new CustomerViewPanel();
-        cvp.drawView();
-        mv.drawView();
-        mv.drawMainPanel();
-        mv.add(cvp, BorderLayout.CENTER);
-
-
-    }
 }
