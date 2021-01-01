@@ -4,15 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class productCRUDView extends JFrame {
+public class ProductCRUDView extends JFrame {
     public JLabel codeLabel,nameLabel,priceLabel,locationLabel,expDateLabel,countLabel;
     public JTextField codeText,nameText,priceText,locationText,expDateText,countText;
     public JButton completeButton;
     public JPanel centerPanel,bottomPanel;
 
-    public static void main(String[] args) { new productCRUDView().drawView();}
+    public static void main(String[] args) { new ProductCRUDView().drawView();}
 
-    public productCRUDView(){
+    public ProductCRUDView(){
 
         codeLabel = new JLabel("Code");
         nameLabel = new JLabel("Name");

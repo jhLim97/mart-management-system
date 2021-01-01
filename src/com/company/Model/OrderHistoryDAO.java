@@ -61,6 +61,7 @@ public class OrderHistoryDAO {
                 ordHis.setHistory_id(rs.getInt("history_id"));
                 ordHis.setOrder_code(rs.getInt("order_code"));
                 ordHis.setPr_code(rs.getInt("pr_code"));
+                ordHis.setPr_name(rs.getString("pr_name"));
                 ordHis.setPr_count(rs.getInt("pr_count"));
                 ordHis.setPr_price(rs.getInt("pr_price"));
                 datas.add(ordHis);
@@ -90,6 +91,7 @@ public class OrderHistoryDAO {
             ordHis.setHistory_id(rs.getInt("history_id"));
             ordHis.setOrder_code(rs.getInt("order_code"));
             ordHis.setPr_code(rs.getInt("pr_code"));
+            ordHis.setPr_name(rs.getString("pr_name"));
             ordHis.setPr_count(rs.getInt("pr_count"));
             ordHis.setPr_price(rs.getInt("pr_price"));
 
@@ -104,14 +106,15 @@ public class OrderHistoryDAO {
 
     public boolean addOrderHistory(OrderHistoryDTO ordHis) {
         connectDB();
-        sql = "insert into OrderHistory(order_code, pr_code, pr_count, pr_price) value(?, ?, ?, ?)";
+        sql = "insert into OrderHistory(order_code, pr_code, pr_name, pr_count, pr_price) value(?, ?, ?, ?, ?)";
 
         try {
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, ordHis.getOrder_code());
             pstmt.setInt(2, ordHis.getPr_code());
-            pstmt.setInt(3, ordHis.getPr_count());
-            pstmt.setInt(4, ordHis.getPr_price());
+            pstmt.setString(3, ordHis.getPr_name());
+            pstmt.setInt(4, ordHis.getPr_count());
+            pstmt.setInt(5, ordHis.getPr_price());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,15 +148,16 @@ public class OrderHistoryDAO {
     // ------- 아래 함수는 사용 여부 미정 -------
     public boolean updateOrderHistory(OrderHistoryDTO ordHis) { // 파라미터의 객체 정보로 업데이트
         connectDB();
-        sql = "update OrderHistory set order_code = ?, pr_code = ?, pr_count = ?, pr_price = ? where history_id = ?";
+        sql = "update OrderHistory set order_code = ?, pr_code = ?, pr_name = ?, pr_count = ?, pr_price = ? where history_id = ?";
 
         try {
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, ordHis.getOrder_code());
             pstmt.setInt(2, ordHis.getPr_code());
-            pstmt.setInt(3, ordHis.getPr_count());
-            pstmt.setInt(4, ordHis.getPr_price());
-            pstmt.setInt(5, ordHis.getHistory_id());
+            pstmt.setString(3, ordHis.getPr_name());
+            pstmt.setInt(4, ordHis.getPr_count());
+            pstmt.setInt(5, ordHis.getPr_price());
+            pstmt.setInt(6, ordHis.getHistory_id());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
