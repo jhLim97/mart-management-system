@@ -9,10 +9,12 @@ public class ProductCRUDView extends JFrame {
     public JTextField codeText,nameText,priceText,locationText,expDateText,countText;
     public JButton completeButton;
     public JPanel centerPanel,bottomPanel;
+    public int chk=0;
+
+    public boolean editMode;
 
 
     public ProductCRUDView(){
-
         codeLabel = new JLabel("Code");
         nameLabel = new JLabel("Name");
         priceLabel = new JLabel("Price");
@@ -31,7 +33,6 @@ public class ProductCRUDView extends JFrame {
 
         centerPanel = new JPanel();
         bottomPanel = new JPanel();
-
     }
     public void drawView(){
 
@@ -95,5 +96,4 @@ public class ProductCRUDView extends JFrame {
 
         setVisible(true);
     }
-
 }

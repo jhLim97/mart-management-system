@@ -34,13 +34,14 @@ public class MainState implements State{
 
     public void drawPanel() {
         ProgramManager.getInstance().getMainView().drawProductViewPanel();
+
+
     }
 
     @Override
     public void applyListener() {
         mainView = ProgramManager.getInstance().getMainView();
         mmsListener.getInstance().mainViewPanelListener(mainView);
-
     }
 
     @Override
