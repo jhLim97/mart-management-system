@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class AccountDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+
     private AccountDTO account;
     private String sql;
 
