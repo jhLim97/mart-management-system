@@ -3,3 +3,5 @@ MartManagymentSystem.iml
 .project
 .classpath
 .DS_Store
+*.xml
+*.meta

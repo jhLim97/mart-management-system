@@ -24,7 +24,7 @@ public class AccountDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
+            conn = DriverManager.getConnection(jdbcUrl, "root", "root");
         } catch (Exception e) {
             e.printStackTrace();
         }

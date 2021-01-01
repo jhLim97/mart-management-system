@@ -24,7 +24,7 @@ public class ProductDAO {
 
         //2단계 : 데이터베이스 연결
 
-        conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
+        conn = DriverManager.getConnection(jdbcUrl, "root", "root");
 
     }
 

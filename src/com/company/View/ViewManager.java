@@ -11,10 +11,19 @@ public class ViewManager {
     }
 
     public JoinView joinView;
+    public ShoppingView shoppingView;
 
     public void joinViewOpen(){
         if(joinView == null) joinView = new JoinView();
         joinView.drawView();
     }
+
+    public void shoppingViewOpen(){
+        if(shoppingView != null) shoppingView.dispose();
+        shoppingView = new ShoppingView();
+        shoppingView.drawView();
+    }
+
+
 
 }

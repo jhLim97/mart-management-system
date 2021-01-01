@@ -33,6 +33,21 @@ public class ProgramManager {
         if(orderController == null) orderController = new OrderController();
         return orderController;
     }
+
+    ShoppingController shoppingController;
+
+    public ShoppingController getShoppingController() {
+        if(shoppingController == null) {
+            try {
+                shoppingController = new ShoppingController();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return shoppingController;
+    }
     // ----------------------------------------------
 
 
