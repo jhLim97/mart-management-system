@@ -77,8 +77,6 @@ public class CustomerViewPanel extends JPanel {
         add(optionPanel, BorderLayout.PAGE_START);
         add(cusInfoPanel, BorderLayout.CENTER);
 
-        new CustomerController(this);
-
         setVisible(true);
     }
 
