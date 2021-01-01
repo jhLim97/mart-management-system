@@ -128,8 +128,8 @@ public class CustomerController extends Thread{
     public void makeCustomerManageView() {
         cmv = new CustomerManageView();
         cmv.drawView();
-        cmv.addRegisterButtonListener(new RegisterButtonListener());
-        cmv.addExitButtonListener(new ExitButtonListener());
+//        cmv.addRegisterButtonListener(new RegisterButtonListener());
+//        cmv.addExitButtonListener(new ExitButtonListener());
 
     }
 
