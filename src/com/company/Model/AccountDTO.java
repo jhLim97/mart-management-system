@@ -4,6 +4,11 @@ public class AccountDTO {
     private String id,password,userName;
     private boolean isSupperUser,isStaff;
 
+    public boolean isLogin() { return isLogin; }
+
+    public void setLogin(boolean login) { isLogin = login; }
+
+    private boolean isLogin;
     public String getId() {
         return id;
     }
