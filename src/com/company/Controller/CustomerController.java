@@ -115,31 +115,14 @@ public class CustomerController extends Thread{
 
     public class TableClickListener implements MouseListener {
 
-        @Override
         public void mouseClicked(MouseEvent e) {
             int row = cvp.tblCustomerList.getSelectedRow();
             bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
         }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
+        public void mousePressed(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) { }
     }
 
     public void makeCustomerManageView() {

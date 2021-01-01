@@ -219,54 +219,35 @@ public class mmsListener {
     }
     public void customerViewPanelListener(CustomerViewPanel panel){
 
-        panel.addAddButtonListener(e -> {
+        panel.deleteButton.addActionListener(e -> {
+            ProgramManager.getInstance().getCC().delete =true;
+            System.out.println("delete");
+
+        });
+        panel.updateButton.addActionListener(e -> {
+            ProgramManager.getInstance().getCC().update = true;
+            System.out.println("update");
+        });
+        panel.addButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().register = true;
             System.out.println("register");
-        });
 
-        panel.addSearchButtonListener(e -> {
+        });
+        panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
             System.out.println("search");
         });
 
-        panel.addUpdateButtonListener(e -> {
-            ProgramManager.getInstance().getCC().update = true;
-            System.out.println("update");
-        });
-
-        panel.addDeleteButtonListener(e-> {
-            ProgramManager.getInstance().getCC().delete =true;
-            System.out.println("delete");
-        });
-
         panel.tblCustomerList.addMouseListener(new MouseListener() {
-            @Override
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) { }
         });
     }
-
 
     public void productCRUDViewListener(ProductCRUDView frame){
         ProductDAO dao=new ProductDAO();
@@ -362,9 +343,13 @@ public class mmsListener {
 
 
     public void shoppingViewListener(ShoppingView frame){
-
     }
     public void customerManageViewListener(CustomerManageView frame){
+        frame.btnRegister.addActionListener(e -> {
 
+        });
+        frame.btnRegister.addActionListener(e -> {
+
+        });
     }
 }
