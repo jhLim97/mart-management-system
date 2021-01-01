@@ -19,6 +19,8 @@ public class ProductViewPanel extends JPanel {
     public DefaultTableModel tableModel;
     public JTextArea SUDtxt;
     public JLabel SUDLab;
+    public boolean editMode=false;
+
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         MainView app = new MainView();
@@ -118,13 +120,13 @@ public class ProductViewPanel extends JPanel {
         updateButton.addActionListener(listener);
         deleteButton.addActionListener(listener);
     }
-    public void searchButtonlistener(ActionListener listener){
+    public void addsearchButtonlistener(ActionListener listener){
         searchButton.addActionListener(listener);
     }
 
-    public void addButtonListener(ActionListener listener){ addButton.addActionListener(listener);}
+    public void addaddButtonListener(ActionListener listener){ addButton.addActionListener(listener);}
 
-    public void updateButtonListener(ActionListener listener){ updateButton.addActionListener(listener);}
+    public void addupdateButtonListener(ActionListener listener){ updateButton.addActionListener(listener);}
 
-    public void deleteButtonListener(ActionListener listener){ deleteButton.addActionListener(listener);}
+    public void adddeleteButtonListener(ActionListener listener){ deleteButton.addActionListener(listener);}
 }

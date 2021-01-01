@@ -24,11 +24,16 @@ public class MainState implements State{
     public void drawPanel() throws SQLException, ClassNotFoundException {
         ProgramManager.getInstance().getMainView().drawMainPanel();
         ProgramManager.getInstance().getMainView().drawProductViewPanel();
+
+
     }
 
     @Override
     public void applyListener() {
         productView = ProgramManager.getInstance().getMainView();
+
+        mmsListener.getInstance().productViewPanelListener(productView.productViewPanel);
+
         productView.productButton.addActionListener(e -> {
 
         });

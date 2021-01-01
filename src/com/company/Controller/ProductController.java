@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -25,177 +26,208 @@ public class ProductController extends Thread{
     public ProductController(ProductViewPanel v) throws SQLException, ClassNotFoundException {
         this.v=v;
         dao=new ProductDAO();
-        appMain();
         refreshData();
         mainView = new MainView();
         start();
         v.smallAMountArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
         v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
-    public void appMain(){ //LISTENER 관련
-        v.addActionListener(new ActionListener() {
-            @Override
+
+
+
+    public class searchButtonListener implements  ActionListener{
+
             public void actionPerformed(ActionEvent e) {
-                if(e.getSource() == v.addButton){ //ADDButton
-                    CRUDv = new ProductCRUDView(); 
-                    CRUDv.addActionListener(new ActionListener() { 
-                        @Override
-                        public void actionPerformed(ActionEvent e) { //CRUDv Complete 버튼
-                            if( e.getSource() == CRUDv.completeButton){
-                                ProductDTO productDTO = new ProductDTO();
-                                productDTO.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
-                                productDTO.setPrName(CRUDv.nameText.getText());
-                                productDTO.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
-                                productDTO.setLocation(CRUDv.locationText.getText());
-                                productDTO.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
-                                productDTO.setAmount(Integer.parseInt(CRUDv.countText.getText()));
-                                productDTO.setState("판매");
-                                try {
-                                    if(dao.newProduct(productDTO)) { //상품등록 완료
-                                        System.out.println("상품등록 완료");
-                                        CRUDv.codeText.setText("");
-                                        CRUDv.nameText.setText("");
-                                        CRUDv.priceText.setText("");
-                                        CRUDv.locationText.setText("");
-                                        CRUDv.expDateText.setText("");
-                                        CRUDv.countText.setText("");
-                                        mainView.messageLabel.setText("메시지 : 상품 등록 완료");
-                                        editMode = false;
-                                        refreshData();
-                                    }
-                                    else{
-                                        System.out.println("실패");
-                                    }
-                                } catch (SQLException throwables) {
-                                    throwables.printStackTrace();
-                                } catch (ClassNotFoundException classNotFoundException) {
-                                    classNotFoundException.printStackTrace();
-                                }
+                searchProduct();
+            }
+        } //SearchButtonListener
 
+    public void searchProduct(){
+            try {
+                ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
+                if (p.getPrCode() != -1) {
+                    System.out.println(p.getPrCode());
+                    v.SUDtxt.setText("");
+                    v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
+                            Integer.toString(p.getPrCode()) + "\t" + p.getPrName() + "\t" + p.getPrice() + "\t" + p.getLocation() + "\t" + p.getExpDate() + "\t" + p.getAmount() + "\t"
+                            + p.getState());
+                    ;
 
-                                v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-                            }
-                        }
-                    });
-                    appMain();
-                    CRUDv.drawView();
-                }//add
-                else if(e.getSource() == v.deleteButton){ //Delete 버튼
-                    if(editMode){
-                        try {
-                            editMode = dao.delProduct(Integer.parseInt(v.txtSearch.getText()));
-                            refreshData();
-                            v.SUDtxt.setText("삭제되었습니다.");
-                            v.txtSearch.setText("");
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        } catch (ClassNotFoundException classNotFoundException) {
-                            classNotFoundException.printStackTrace();
-                        }
-                        editMode = true;
+                    editMode = true; //찾았으면 수정,삭제가능
+                } else {
 
-                    }
-                    else{
-                        v.SUDtxt.setText("삭제할 수 없습니다.");
-                    }
+                    System.out.println(p.getPrCode());
+                    v.SUDtxt.setText("검색하는 코드에 대한 정보가 없음");
+                }
 
-                    v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-                }//delete
-                else if(e.getSource() == v.searchButton){ //search 버튼
-                    try {
-                        ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
-                        if(p.getPrCode() !=-1){
-                            System.out.println(p.getPrCode());
-                            v.SUDtxt.setText("");
-                            v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
-                                    Integer.toString(p.getPrCode()) +"\t" + p.getPrName() +"\t"+ p.getPrice() +"\t"+ p.getLocation() +"\t"+ p.getExpDate() +"\t"+ p.getAmount() +"\t"
-                                    + p.getState());;
-
-                            editMode = true; //찾았으면 수정,삭제가능
-                        }else {
-
-                            System.out.println(p.getPrCode());
-                            v.SUDtxt.setText("검색하는 코드에 대한 정보가 없음");
-                        }
-
-                    } catch (SQLException | ClassNotFoundException throwables) {
-                        throwables.printStackTrace();
-                    }
-
-
-                    v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-                }//search
-                else if (e.getSource() == v.updateButton) { // update버튼
-
-                    if(editMode){
-                        CRUDv = new ProductCRUDView();
-                        CRUDv.drawView();
-                        try {
-                            ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
-
-                            CRUDv.codeText.setText(Integer.toString(p.getPrCode()));
-                            CRUDv.nameText.setText(p.getPrName());
-                            CRUDv.priceText.setText(Integer.toString(p.getPrice()));
-                            CRUDv.locationText.setText(p.getLocation());
-                            CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
-                            CRUDv.countText.setText(Integer.toString(p.getAmount()));
-
-                            CRUDv.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) { //CRUD CLEATETE버튼
-                                    if( e.getSource() == CRUDv.completeButton){
-                                        try {
-                                            v.SUDtxt.setText("");
-                                            p.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
-                                            p.setPrName(CRUDv.nameText.getText());
-                                            p.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
-                                            p.setLocation(CRUDv.locationText.getText());
-                                            p.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
-                                            p.setAmount(Integer.parseInt(CRUDv.countText.getText()));
-
-                                            dao.updateProduct(p);
-                                            refreshData();
-                                            editMode=false;
-
-                                            v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
-                                                    Integer.toString(p.getPrCode()) +"\t" + p.getPrName() +"\t"+ p.getPrice() +"\t"+ p.getLocation() +"\t"+ p.getExpDate() +"\t"+ p.getAmount() +"\t"
-                                                    + p.getState());;
-
-                                        } catch (SQLException throwables) {
-                                            throwables.printStackTrace();
-                                        } catch (ClassNotFoundException classNotFoundException) {
-                                            classNotFoundException.printStackTrace();
-                                        }//update try
-
-
-                                        v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-                                    }
-                                }
-                            });
-
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        } catch (ClassNotFoundException classNotFoundException) {
-                            classNotFoundException.printStackTrace();
-                        } //try getProduct
-
-
-
-                    }
-                    else{
-                        v.SUDtxt.setText("수정 할 수 없습니다.");
-                    }
-
-
-                    v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-                }//update
-
+            } catch (SQLException | ClassNotFoundException throwables) {
+                throwables.printStackTrace();
             }
 
-        });
+
+            v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+        }//search한후 텍스트area에 정보띄우기
+
+    public class deleteButtonListener implements  ActionListener{
+            public void actionPerformed(ActionEvent e){
+                deleteProduct();
+            }
+        } //deleteButtonListener
+
+    public void deleteProduct(){
+                if (editMode) {
+                    try {
+                        editMode = dao.delProduct(Integer.parseInt(v.txtSearch.getText()));
+                        refreshData();
+                        v.SUDtxt.setText("삭제되었습니다.");
+                        v.txtSearch.setText("");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    } catch (ClassNotFoundException classNotFoundException) {
+                        classNotFoundException.printStackTrace();
+                    }
+                    editMode = true;
+
+                } else {
+                    v.SUDtxt.setText("삭제할 수 없습니다.");
+                }
+
+                v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+        }//정보 검색후 삭제하면 삭제
+
+    public class addButtonListener implements  ActionListener{
+
+            public void actionPerformed(ActionEvent e) {
+                addProduct();
+            }
+        }//addButtonListener
+
+    public void addProduct(){
+                CRUDv = new ProductCRUDView();
+                CRUDv.drawView();
+                CRUDv.addCompleteButtonListener(new completeButtonListener());
+        } //CRUD창 추가후 버튼리스너 추가
+
+    public class completeButtonListener implements  ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            addProduct_inCRUD();
+        }
+    } //CRUD Complete 버튼 리스너
+
+    public void addProduct_inCRUD(){
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
+            productDTO.setPrName(CRUDv.nameText.getText());
+            productDTO.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
+            productDTO.setLocation(CRUDv.locationText.getText());
+            productDTO.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
+            productDTO.setAmount(Integer.parseInt(CRUDv.countText.getText()));
+            productDTO.setState("판매");
+            try {
+                if(dao.newProduct(productDTO)) { //상품등록 완료
+                    System.out.println("상품등록 완료");
+                    CRUDv.codeText.setText("");
+                    CRUDv.nameText.setText("");
+                    CRUDv.priceText.setText("");
+                    CRUDv.locationText.setText("");
+                    CRUDv.expDateText.setText("");
+                    CRUDv.countText.setText("");
+                    mainView.messageLabel.setText("메시지 : 상품 등록 완료");
+                    editMode = false;
+                    refreshData();
+                }
+                else{
+                    System.out.println("실패");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            }
 
 
+            v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+
+    } //addProduct_inCRUD complete누르면 정보 추가
+
+    public class updateListener implements  ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            updateProduct();
+        }
+    } //SearchButtonListener
+
+    public void updateProduct() {
+        if (editMode) {
+            CRUDv = new ProductCRUDView();
+            CRUDv.drawView(); //CRUD패널추가
+            CRUDv.addCompleteButtonListener(new completeButtonListener2());
+        }
     }
+
+    public class completeButtonListener2 implements  ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            update_inCRUD();
+        }
+    } //CRUD Complete_update 버튼 리스너
+
+    public void update_inCRUD(){
+        if(editMode){
+        try {
+                ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
+                System.out.println("asdf");
+
+                CRUDv.codeText.setText(Integer.toString(p.getPrCode()));
+                CRUDv.nameText.setText(p.getPrName());
+                CRUDv.priceText.setText(Integer.toString(p.getPrice()));
+                CRUDv.locationText.setText(p.getLocation());
+                CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
+                CRUDv.countText.setText(Integer.toString(p.getAmount()));
+
+                try {
+                    v.SUDtxt.setText("");
+                    p.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
+                    p.setPrName(CRUDv.nameText.getText());
+                    p.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
+                    p.setLocation(CRUDv.locationText.getText());
+                    p.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
+                    p.setAmount(Integer.parseInt(CRUDv.countText.getText()));
+                    dao.updateProduct(p);
+                    refreshData();
+                    editMode = false;
+
+                    v.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
+                            Integer.toString(p.getPrCode()) + "\t" + p.getPrName() + "\t" + p.getPrice() + "\t" + p.getLocation() + "\t" + p.getExpDate() + "\t" + p.getAmount() + "\t"
+                            + p.getState());
+                    ;
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }//update try
+
+            v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException classNotFoundException) {
+                classNotFoundException.printStackTrace();
+            } //try getProduct
+
+
+        } else {
+            v.SUDtxt.setText("수정 할 수 없습니다.");
+        }
+
+        v.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
+    }
+
+
+
+
+
     public void refreshData() throws SQLException, ClassNotFoundException {
         datas = dao.getAll();
         Object record[] = new Object[7];

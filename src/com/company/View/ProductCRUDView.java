@@ -9,10 +9,15 @@ public class ProductCRUDView extends JFrame {
     public JTextField codeText,nameText,priceText,locationText,expDateText,countText;
     public JButton completeButton;
     public JPanel centerPanel,bottomPanel;
+    public int chk=0;
+
+    public boolean editMode;
 
     public static void main(String[] args) { new ProductCRUDView().drawView();}
 
     public ProductCRUDView(){
+
+
 
         codeLabel = new JLabel("Code");
         nameLabel = new JLabel("Name");
@@ -100,4 +105,6 @@ public class ProductCRUDView extends JFrame {
     public void addActionListener(ActionListener listener){
         completeButton.addActionListener(listener);
     }
+
+    public void addCompleteButtonListener(ActionListener listener){ completeButton.addActionListener(listener);}
 }
