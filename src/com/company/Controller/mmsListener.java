@@ -52,6 +52,37 @@ public class mmsListener {
     }
     public void mainViewPanelListener(MainView frame){ // **********
 
+        MainView mainView = ProgramManager.getInstance().getMainView();
+        frame.productButton.addActionListener(e -> {
+            if(ProgramManager.getInstance().getState() instanceof OrderManageState){
+                mainView.orderListViewPanel.setVisible(false);
+                ProgramManager.getInstance().setMainState();
+            }
+            else if(ProgramManager.getInstance().getState() instanceof CustomerManageState){
+                mainView.customerViewPanel.setVisible(false);
+                ProgramManager.getInstance().setMainState();
+            }
+        });
+        frame.orderListButton.addActionListener(e-> {
+            if(ProgramManager.getInstance().getState() instanceof MainState) {
+                mainView.productViewPanel.setVisible(false);
+                ProgramManager.getInstance().setOrderManageState();
+            }
+            else if(ProgramManager.getInstance().getState() instanceof CustomerManageState){
+                mainView.customerViewPanel.setVisible(false);
+                ProgramManager.getInstance().setOrderManageState();
+            }
+        });
+        frame.customerButton.addActionListener(e->{
+            if(ProgramManager.getInstance().getState() instanceof MainState) {
+                mainView.productViewPanel.setVisible(false);
+                ProgramManager.getInstance().setCustomerManageState();
+            }
+            else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
+                mainView.orderListViewPanel.setVisible(false);
+                ProgramManager.getInstance().setCustomerManageState();
+            }
+        });
     }
     public void productViewPanelListener(ProductViewPanel panel){
 

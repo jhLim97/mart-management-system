@@ -1,5 +1,6 @@
 package com.company.Controller;
 
+import com.company.Main;
 import com.company.View.*;
 
 import java.sql.*;
@@ -24,46 +25,47 @@ public class ProgramManager {
     private State state;
 
     public MainView getMainView() {
+        if(mainView == null) mainView = new MainView();
         return mainView;
     }
 
-    public void drawMainView() {
-        if(mainView == null) mainView = new MainView();
-        mainView.drawView();
-    }
-
-
-
     public void setMainState(){
-        this.state = mainState;
-        if(mainState == null) mainState = new MainState();
-        mainView.loginViewPanel.setVisible(false);
-        drawMainView();
-        mainView.drawMainPanel();
-        mainView.drawProductViewPanel();
-        mainState.applyListener();
 
+        if(state instanceof LoginState) {
+            mainState = new MainState();
+            mainState.drawFrameInit();
+            this.state = mainState;
+            return;
+        }
+
+        if(mainState == null) mainState = new MainState();
+        this.state = mainState;
+        mainState.mainView.productViewPanel.setVisible(true);
+        state.applyListener();
     }
     public void setLoginState() {
-        this.state = loginState;
-        if(loginState == null) loginState = new LoginState();
-        drawMainView();
-        mainView.drawLoginPanel();
-        loginState.applyListener();
 
+        if(loginState == null) loginState = new LoginState();
+        this.state = loginState;
+        state.draw();
+        state.applyListener();
     }
     public void setOrderManageState(){
-        this.state = orderManageState;
+
         if(orderManageState == null) orderManageState = new OrderManageState();
-        mainView.drawOrderListViewPanel();
-        orderManageState.applyListener();
+        this.state = orderManageState;
+        if(mainView.orderListViewPanel == null) { mainView.drawOrderListViewPanel();}
+        else mainView.orderListViewPanel.setVisible(true);
+        state.applyListener();
 
     }
     public void setCustomerManageState(){
-        this.state = customerManageState;
+
         if(customerManageState == null) customerManageState = new CustomerManageState();
-        mainView.drawCustomerViewPanel();
-        customerManageState.applyListener();
+        this.state = customerManageState;
+        if(mainView.customerViewPanel == null) mainView.drawCustomerViewPanel();
+        else mainView.customerViewPanel.setVisible(true);
+        state.applyListener();
     }
 
     private static ProgramManager s_Instance;

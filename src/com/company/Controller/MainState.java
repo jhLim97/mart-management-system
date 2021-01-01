@@ -10,38 +10,36 @@ import java.sql.SQLException;
 public class MainState implements State{
 
     ProgramManager manager;
-    MainView productView;
+    MainView mainView;
     ProductViewPanel productViewPanel;
-    public MainState(){
 
-
+    public void drawFrameInit(){
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.loginViewPanel.setVisible(false);
+        mainView.drawMainPanel();
+        mainView.drawProductViewPanel();
+        applyListener();
     }
+
+    @Override
+    public void draw() {
+        drawPanel();
+        applyListener();
+    }
+
     @Override
     public void drawFrame() {
 
     }
 
-    public void drawPanel() throws SQLException, ClassNotFoundException {
-        ProgramManager.getInstance().getMainView().drawMainPanel();
+    public void drawPanel() {
         ProgramManager.getInstance().getMainView().drawProductViewPanel();
     }
 
     @Override
     public void applyListener() {
-        productView = ProgramManager.getInstance().getMainView();
-        productView.productButton.addActionListener(e -> {
-
-        });
-        productView.orderListButton.addActionListener(e -> {
-            productView.productViewPanel.setVisible(false);
-            ProgramManager.getInstance().setOrderManageState();
-
-        });
-        productView.customerButton.addActionListener(e -> {
-            productView.productViewPanel.setVisible(false);
-            ProgramManager.getInstance().setCustomerManageState();
-
-        });
+        mainView = ProgramManager.getInstance().getMainView();
+        mmsListener.getInstance().mainViewPanelListener(mainView);
 
     }
 
@@ -49,12 +47,4 @@ public class MainState implements State{
     public void update() {
 
     }
-//    public static void main(String[] args) {
-//        MainState state = new MainState();
-//        ProgramManager.getInstance().setState(state);
-//        ProgramManager.getInstance().drawMainView();
-//        ProgramManager.getInstance().getMainView().drawMainPanel();
-//        ProgramManager.getInstance().getMainView().drawProductViewPanel();
-//        state.applyListener();
-//    }
 }
