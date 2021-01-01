@@ -1,6 +1,6 @@
 package com.company.Controller;
 
-import com.company.View.MainView;
+import com.company.View.*;
 
 import java.sql.*;
 
@@ -14,6 +14,47 @@ public class ProgramManager {
     LoginState loginState;
     OrderManageState orderManageState;
     CustomerManageState customerManageState;
+
+    public JoinView getJoinView() {
+        if(joinView == null) joinView = new JoinView();
+        return joinView;
+    }
+
+    public void setJoinView(JoinView joinView) {
+        this.joinView = joinView;
+    }
+
+    public ProductCRUDView getProductCRUDView() {
+        if(productCRUDView == null) productCRUDView = new ProductCRUDView();
+        return productCRUDView;
+    }
+
+    public void setProductCRUDView(ProductCRUDView productCRUDView) {
+        this.productCRUDView = productCRUDView;
+    }
+
+    public ShoppingView getShoppingView() {
+        if(shoppingView == null) shoppingView = new ShoppingView();
+        return shoppingView;
+    }
+
+    public void setShoppingView(ShoppingView shoppingView) {
+        this.shoppingView = shoppingView;
+    }
+
+    public CustomerManageView getCustomerManageView() {
+        if(customerManageView == null) customerManageView = new CustomerManageView();
+        return customerManageView;
+    }
+
+    public void setCustomerManageView(CustomerManageView customerManageView) {
+        this.customerManageView = customerManageView;
+    }
+
+    private JoinView joinView;
+    private ProductCRUDView productCRUDView;
+    private ShoppingView shoppingView;
+    private CustomerManageView customerManageView;
 
     private MainView mainView;
     private State state;
