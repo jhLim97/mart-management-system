@@ -210,6 +210,7 @@ public class mmsListener {
         CRUDv.locationText.setText(p.getLocation());
         CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
         CRUDv.countText.setText(Integer.toString(p.getAmount()));
+
     }
     ////////////메소드///////////////
 
