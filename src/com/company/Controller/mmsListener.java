@@ -24,7 +24,7 @@ public class mmsListener {
             }
         });
         panel.joinButton.addActionListener(e -> {
-            ViewManager.getInstance().joinViewOpen();
+           // ViewManager.getInstance().joinViewOpen();
         });
 
     }
