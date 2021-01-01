@@ -20,6 +20,8 @@ public class CustomerController extends Thread{
     CustomerDTO customer = null;
     CustomerManageView cmv;
     CustomerViewPanel cvp;
+    boolean flag = false;
+
 
     public CustomerController(CustomerViewPanel cvp) {
         this.cvp = cvp;
