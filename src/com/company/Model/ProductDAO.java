@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class ProductDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/javadb?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
     public Connection conn;
 
     public PreparedStatement pstmt;
@@ -23,7 +23,7 @@ public class ProductDAO {
         Class.forName(jdbcDriver);
 
         //2단계 : 데이터베이스 연결
-        conn = DriverManager.getConnection(jdbcUrl, "javabook", "0dpfznlsptm");
+        conn = DriverManager.getConnection(jdbcUrl, "root", "wlfkf132");
     }
 
 

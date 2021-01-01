@@ -10,7 +10,7 @@ public class ViewManager {
         return s_Instance;
     }
 
-    JoinView joinView;
+    public JoinView joinView;
 
     public void joinViewOpen(){
         if(joinView == null) joinView = new JoinView();
