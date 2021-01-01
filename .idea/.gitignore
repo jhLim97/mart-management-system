@@ -7,3 +7,7 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 libraries
+<<<<<<< HEAD
+dataSources.xml
+=======
+>>>>>>> d844b89218d4f575edcb20f09dd76f1394ad2013

@@ -12,8 +12,6 @@ public class CustomerDAO {
     PreparedStatement pstmt;
     ResultSet rs;
 
-    Vector<String> items = null;
-
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
@@ -33,14 +31,11 @@ public class CustomerDAO {
         }
     }
 
-    ArrayList<CustomerDTO> getAll() {
-        String sql = "select * from product";
+    public ArrayList<CustomerDTO> getAll() {
+        String sql = "select * from customer";
         connectDB();
 
         ArrayList<CustomerDTO> datas = new ArrayList<CustomerDTO>();
-
-        items = new Vector<String>();
-        items.add("전체");
 
         try {
             pstmt = conn.prepareStatement(sql);
@@ -51,7 +46,6 @@ public class CustomerDAO {
                 c.setPhoneNum(rs.getString("phone_num"));
                 c.setCPoint(rs.getInt("c_point"));
                 datas.add(c);
-                items.add(String.valueOf(rs.getInt("phone_num")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,11 +62,12 @@ public class CustomerDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, phone_num);
             rs = pstmt.executeQuery();
-            rs.next();
-            c = new CustomerDTO();
-            c.setPhoneNum(rs.getString("phone_num"));
-            c.setCName(rs.getString("c_name"));
-            c.setCPoint(rs.getInt("c_point"));
+            if(rs.next()) {
+                c = new CustomerDTO();
+                c.setPhoneNum(rs.getString("phone_num"));
+                c.setCName(rs.getString("c_name"));
+                c.setCPoint(rs.getInt("c_point"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,7 +120,7 @@ public class CustomerDAO {
         return false;
     }
 
-    public boolean updateCustomer(CustomerDTO customer) {
+    public boolean updateCustomer(CustomerDTO customer, String previousPhoneNum) {
         CustomerDTO c = customer;
         String sql = "update customer set phone_num = ?, c_name = ?, c_point = ? where phone_num = ?";
         connectDB();
@@ -135,7 +130,7 @@ public class CustomerDAO {
             pstmt.setString(1, c.getPhoneNum());
             pstmt.setString(2, c.getCName());
             pstmt.setInt(3, c.getCPoint());
-            pstmt.setString(4, c.getPhoneNum());
+            pstmt.setString(4, previousPhoneNum);
 
             if(pstmt.executeUpdate() != 0) {
                 closeDB();
@@ -147,10 +142,6 @@ public class CustomerDAO {
 
         closeDB();
         return false;
-    }
-
-    Vector<String> getItems() {
-        return items;
     }
 
 }
