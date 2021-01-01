@@ -56,6 +56,7 @@ public class CustomerController extends Thread{
         public void actionPerformed(ActionEvent e) {
             registerCustomer();
             cmv.refreshTextField();
+            cvp.taNewCustomer.append(customer.getCName() + "님이 새로 등록되었습니다." + "\n");
         }
     }
 
