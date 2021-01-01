@@ -33,7 +33,8 @@ public class ProductController extends Thread{
         v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
     public void appMain(){
-        v.addActionListener(new ActionListener() {
+        v.addButtonListener() implements ActionListener{
+            
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == v.addButton){

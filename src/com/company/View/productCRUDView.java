@@ -97,7 +97,7 @@ public class productCRUDView extends JFrame {
         setVisible(true);
     }
 
-    public void addActionListener(ActionListener listener){
+    public void completeButtonListener(ActionListener listener){
         completeButton.addActionListener(listener);
     }
 }

@@ -118,4 +118,13 @@ public class ProductViewPanel extends JPanel {
         updateButton.addActionListener(listener);
         deleteButton.addActionListener(listener);
     }
+    public void searchButtonlistener(ActionListener listener){
+        searchButton.addActionListener(listener);
+    }
+
+    public void addButtonListener(ActionListener listener){ addButton.addActionListener(listener);}
+
+    public void updateButtonListener(ActionListener listener){ updateButton.addActionListener(listener);}
+
+    public void deleteButtonListener(ActionListener listener){ deleteButton.addActionListener(listener);}
 }
