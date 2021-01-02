@@ -49,7 +49,6 @@ public class ProductController extends Thread{
         datas = dao.getAll();
         Object record[] = new Object[7];
         v.tableModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
-
         if( datas != null){
 
             for(ProductDTO p : datas) {
@@ -86,12 +85,10 @@ public class ProductController extends Thread{
 
             if(data!=null) {
                 for (ProductDTO p : data) {
-
                     boolean chk1=false,chk2=false;
 
                     long diff = p.getExpDate().getTime() - now.getTime();
                     long sec = diff / 1000;
-
 
                     if ( sec < 604800) {//시간측정 일주일
                         p.setState("유통기한임박");
@@ -147,13 +144,7 @@ public class ProductController extends Thread{
             txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
             txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
-            try {
-                refreshData();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+
         }
     }
 
