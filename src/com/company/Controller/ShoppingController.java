@@ -42,8 +42,39 @@ public class ShoppingController {
         v.lblMsg.setText("결제 금액 : " + total +"원");
     }//상품담기
 
-
     public void payment(ShoppingView v) throws SQLException, ClassNotFoundException {
+
+        int prCode;
+        String prName;
+        int price;
+        String location;
+
+        for(ProductDTO p : datas2){ // 담은 리스트
+            for(ProductDTO p2 : datas) { // 재고 리스트
+
+                if (p.getPrCode() == p2.getPrCode()) {
+                    p2.setAmount(p2.getAmount() - p.getAmount());
+                    //dao.updateProduct(p2);
+                }
+            }
+        }
+
+    } // 상품결제
+
+    // 결제 성공 시 수행하는 함수
+    public void payComplete(ShoppingView v) throws SQLException, ClassNotFoundException {
+
+        refreshData(v); // itemList JTable 리프레쉬
+        datas2.clear();
+        refreshData2(v);
+
+        total=0;
+        v.lblMsg.setText("결제 금액 : 0원");
+    }
+
+    /*
+    public void payment(ShoppingView v) throws SQLException, ClassNotFoundException {
+
         for(ProductDTO p : datas2){ // 담은 리스트
             for(ProductDTO p2 : datas) { // 재고 리스트
 
@@ -61,7 +92,9 @@ public class ShoppingController {
 
         total=0;
         v.lblMsg.setText("결제 금액 : 0원");
-    }//상품결제
+
+
+    }//상품결제*/
 
 
     public void refreshData(ShoppingView v) throws SQLException, ClassNotFoundException {
