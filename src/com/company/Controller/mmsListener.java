@@ -350,8 +350,8 @@ public class mmsListener {
 
     public void shoppingViewListener(ShoppingView frame){
 
-
         frame.btnEnter.addActionListener(e -> {
+
             String name = frame.txtName.getText();
             String phone = frame.txtPhone.getText();
 
@@ -382,13 +382,15 @@ public class mmsListener {
             } catch (ClassNotFoundException e2) {
                 e2.printStackTrace();
             }
-
         });
 
         frame.btnPay.addActionListener(e -> {
             ProgramManager.getInstance().getOrderController().OrderItems(frame);
             try {
+                int total = ProgramManager.getInstance().getShoppingController().getTotal();
                 ProgramManager.getInstance().getShoppingController().payment(frame);
+                System.out.println(frame.txtPhone.getText() + " " + total + " " + (int)(total*0.01));
+                ProgramManager.getInstance().getCC().savePoint(frame.txtPhone.getText(), (int)(total*0.01));
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } catch (ClassNotFoundException e2) {
