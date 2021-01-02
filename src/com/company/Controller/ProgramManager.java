@@ -32,6 +32,18 @@ public class ProgramManager {
 
 
     // --------- 준혁 컨트롤러 접근 개체 생성 ------------
+    MainController mainController;
+
+
+    public MainController getMainController() {
+        if(mainController == null) mainController = new MainController();
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     OrderController orderController;
 
     public OrderController getOrderController() {
