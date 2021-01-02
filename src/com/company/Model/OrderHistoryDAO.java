@@ -10,9 +10,9 @@ public class OrderHistoryDAO {
     Statement stmt;
     ResultSet rs;
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
-    String userid = "root";
-    String pwd = "root";
+    String jdbcUrl = "jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com/mms?user=jaewon&password=wlfkf132";
+    String userid = "jaewon";
+    String pwd = "wlfkf132";
     String sql;
 
     public OrderHistoryDAO() {

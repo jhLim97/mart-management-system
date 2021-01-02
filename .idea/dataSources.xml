@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MMS@localhost" uuid="93c5f503-271d-4d4b-a1ac-70a72606d9a8">
+    <data-source source="LOCAL" name="mms@localhost" uuid="8647924c-2c9d-4eca-adda-56b33ceedf44">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="MMS@localhost [2]" uuid="bfa6ec07-f88f-47c3-9271-33005ab2cc96">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/mms</jdbc-url>
       <driver-properties>
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="mms@localhost" uuid="eecce6bf-693f-4508-b297-0a08c37da9c8">
+    <data-source source="LOCAL" name="jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com :3306" uuid="febfd1fe-f64d-4f34-a459-2b5f11373ebd">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com :3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com" uuid="0db29930-e0e1-4c80-a280-daecf23e4639">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="mms@localhost [2]" uuid="f6283212-cc63-4737-8707-1f0d46b7b484">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

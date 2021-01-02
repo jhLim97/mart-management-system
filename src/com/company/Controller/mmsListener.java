@@ -3,6 +3,8 @@ package com.company.Controller;
 import com.company.Model.AccountDAO;
 import com.company.Model.AccountDTO;
 import com.company.View.*;
+
+import javax.swing.*;
 import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -109,6 +111,7 @@ public class mmsListener {
         });
         panel.searchButton.addActionListener(e -> {
             searchProduct(dao, panel.editMode, panel);
+            panel.editMode = true;
         });
         panel.deleteButton.addActionListener(e -> {
             deleteProduct(dao,panel.editMode,panel, datas);
@@ -197,6 +200,7 @@ public class mmsListener {
         }
     }
     public void updateProduct(ProductDAO dao, ProductViewPanel panel, boolean editMode) throws SQLException, ClassNotFoundException {
+        System.out.println("마마마");
         if (editMode) {
             ProgramManager.getInstance().getProductCRUDView().drawView();
             ProgramManager.getInstance().getProductCRUDView().chk = 2;
@@ -212,6 +216,7 @@ public class mmsListener {
         CRUDv.locationText.setText(p.getLocation());
         CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
         CRUDv.countText.setText(Integer.toString(p.getAmount()));
+
     }
     ////////////메소드///////////////
 
@@ -225,22 +230,20 @@ public class mmsListener {
     }
     public void customerViewPanelListener(CustomerViewPanel panel){
 
-        panel.addAddButtonListener(e -> {
-            ProgramManager.getInstance().getCC().register = true;
+        panel.addButton.addActionListener(e -> {
+            CustomerManageView cmv = ProgramManager.getInstance().getCC().makeCustomerManageView();
+            customerManageViewListener(cmv);
             System.out.println("register");
         });
-
-        panel.addSearchButtonListener(e -> {
+        panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
             System.out.println("search");
         });
-
-        panel.addUpdateButtonListener(e -> {
+        panel.updateButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().update = true;
             System.out.println("update");
         });
-
-        panel.addDeleteButtonListener(e-> {
+        panel.deleteButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().delete =true;
             System.out.println("delete");
         });
@@ -250,29 +253,12 @@ public class mmsListener {
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
             }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
+            public void mousePressed(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) { }
         });
     }
-
 
     public void productCRUDViewListener(ProductCRUDView frame){
         ProductDAO dao=new ProductDAO();
@@ -369,6 +355,7 @@ public class mmsListener {
 
     public void shoppingViewListener(ShoppingView frame){
 
+
         frame.btnEnter.addActionListener(e -> {
             String name = frame.txtName.getText();
             String phone = frame.txtPhone.getText();
@@ -425,9 +412,15 @@ public class mmsListener {
 
         });
 
-
     }
     public void customerManageViewListener(CustomerManageView frame){
 
+        frame.btnRegister.addActionListener(e -> {
+            ProgramManager.getInstance().setCustomerManageView(frame);
+            ProgramManager.getInstance().getCC().register =true;
+        });
+        frame.btnExit.addActionListener(e -> {
+            frame.dispose();
+        });
     }
 }

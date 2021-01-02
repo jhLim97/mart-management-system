@@ -6,19 +6,25 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import java.sql.SQLException;
 
 public class ShoppingView extends JFrame {
 
     //private JPanel selectProductPanel, productListPanel, myShoppingPanel;
+
     public JLabel lblEnterName, lblEnterPhoneNum, lblProduct, lblSearch, lblCount, lblItemList, lblMyList, lblMsg, lblCname, lblCphoneNum, lblstate;
     public JTextField jtfSearch, jtfCount, txtName, txtPhone;
+
     public JComboBox cb;
     //public JTable tbItem, tbMyList;
     public JScrollPane jspItem, jspMyList;
+
     public JButton btnDelete, btnPay, btnEnter, btnEnroll;
+
     public Font fnt, fntDelete;
     //public DefaultTableModel modelItemList, modelMyList;
     public JPanel pn1, pn2;
@@ -26,6 +32,7 @@ public class ShoppingView extends JFrame {
     public JTable productTable,productTable2;
     public DefaultTableModel tableModel,tableModel2;
     public String tableHeader[] = { "Code","Name","Price","Count","State"};
+
 
     public ShoppingView() {
 
@@ -53,10 +60,12 @@ public class ShoppingView extends JFrame {
 
         jtfSearch = new JTextField();
         jtfCount = new JTextField();
-
+        
+        
         // -----------ItemList-----------
         lblItemList = new JLabel("구매 할 수 있는 물품 List");
         lblstate = new JLabel("상태 : ");
+
 
         btnEnroll = new JButton("담기");
 
@@ -74,10 +83,12 @@ public class ShoppingView extends JFrame {
         lblMyList = new JLabel("내가 담은 List(장바구니)");
 
         // table에 들어갈 rows, columns 정의
+
         String MyListcolumns[]={"Code", "Name", "Price", "Count"};
         tableModel2 = new DefaultTableModel(MyListcolumns, 0);
         productTable2 = new JTable(tableModel2);
         jspMyList = new JScrollPane(productTable2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 
         btnDelete = new JButton("삭제");
 
@@ -120,6 +131,7 @@ public class ShoppingView extends JFrame {
 
         // -----------shoppingView---------------
         // -----------label, textfield add-----------
+
         pn2.setBounds(0, 0, 400, 550);
         pn2.setLayout(null);
 
@@ -131,6 +143,7 @@ public class ShoppingView extends JFrame {
         lblCount.setBounds(155, 75, 60, 40);
         pn2.add(lblCount);
 
+
         lblCname.setFont(fnt);
         lblCname.setBounds(20, 15, 120, 30);
         pn2.add(lblCname);
@@ -138,6 +151,7 @@ public class ShoppingView extends JFrame {
         lblCphoneNum.setFont(fnt);
         lblCphoneNum.setBounds(175, 15, 300, 30);
         pn2.add(lblCphoneNum);
+
 
 
         jtfSearch.setBounds(45, 75, 100, 40);
@@ -161,6 +175,10 @@ public class ShoppingView extends JFrame {
         add(lblstate);
 
 
+        lblstate.setFont(fnt);
+        lblstate.setBounds(210,145,140,30);
+        add(lblstate);
+
         // -----------ItemList add-----------
         jspItem.setBounds(10, 180, 360, 160);
         pn2.add(jspItem);
@@ -175,7 +193,9 @@ public class ShoppingView extends JFrame {
 
         btnDelete.setFont(fntDelete);
         btnDelete.setBounds(320, 390, 60, 40);
+
         pn2.add(btnDelete);
+
 
         // -----------PayMsg-----------
         lblMsg.setFont(fnt);
@@ -190,6 +210,7 @@ public class ShoppingView extends JFrame {
         //pack();
         setVisible(true);
     }
+
 
     public void addOrderActionListner(ActionListener listener) {
         btnPay.addActionListener(listener);
@@ -211,8 +232,10 @@ public class ShoppingView extends JFrame {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         ShoppingView shoppingView = new ShoppingView();
         shoppingView.drawView();
-        new ShoppingController(/*shoppingView*/);
+        new ShoppingController();
     }
+
+
 
 
 }

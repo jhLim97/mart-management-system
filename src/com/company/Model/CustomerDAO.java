@@ -6,8 +6,7 @@ import java.util.Vector;
 
 public class CustomerDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
-    Connection conn;
+    String jdbcUrl = "jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com/mms?user=jaewon&password=wlfkf132";    Connection conn;
 
     PreparedStatement pstmt;
     ResultSet rs;
@@ -15,7 +14,7 @@ public class CustomerDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "root");
+            conn = DriverManager.getConnection(jdbcUrl, "jaewon", "wlfkf132");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,7 +23,7 @@ public class CustomerDAO {
     public void closeDB() {
         try {
             pstmt.close();
-            rs.close();
+            if(rs !=null) rs.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,7 +31,7 @@ public class CustomerDAO {
     }
 
     public ArrayList<CustomerDTO> getAll() {
-        String sql = "select * from customer";
+        String sql = "select * from Customer";
         connectDB();
 
         ArrayList<CustomerDTO> datas = new ArrayList<CustomerDTO>();
@@ -55,7 +54,7 @@ public class CustomerDAO {
     }
 
     public CustomerDTO getCustomer(String phone_num) {
-        String sql = "select * from customer where phone_num = ?";
+        String sql = "select * from Customer where phone_num = ?";
         CustomerDTO c = null;
         connectDB();
         try {
@@ -79,7 +78,7 @@ public class CustomerDAO {
 
     public boolean newCustomer(CustomerDTO customer) {
         CustomerDTO c = customer;
-        String sql = "insert into customer(phone_num, c_name, c_point) values(?, ?, ?)";
+        String sql = "insert into Customer(phone_num, c_name, c_point) values(?, ?, ?)";
 
         connectDB();
 
@@ -102,7 +101,7 @@ public class CustomerDAO {
     }
 
     public boolean delCustomer(String phone_num) {
-        String sql = "delete from customer where phone_num = ?";
+        String sql = "delete from Customer where phone_num = ?";
         connectDB();
 
         try {
@@ -122,7 +121,7 @@ public class CustomerDAO {
 
     public boolean updateCustomer(CustomerDTO customer, String previousPhoneNum) {
         CustomerDTO c = customer;
-        String sql = "update customer set phone_num = ?, c_name = ?, c_point = ? where phone_num = ?";
+        String sql = "update Customer set phone_num = ?, c_name = ?, c_point = ? where phone_num = ?";
         connectDB();
 
         try {

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 public class AccountDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/MMS?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com/mms?user=jaewon&password=wlfkf132";
+
     private AccountDTO account;
     private String sql;
 
@@ -24,7 +25,9 @@ public class AccountDAO {
     public void connectDB() {
         try {
             Class.forName(jdbcDriver);
-            conn = DriverManager.getConnection(jdbcUrl, "root", "root");
+
+            conn = DriverManager.getConnection(jdbcUrl, "jaewon", "wlfkf132");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,14 +35,14 @@ public class AccountDAO {
     public void closeDB() {
         try {
             pstmt.close();
-            rs.close();
+            if(rs != null) rs.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     ArrayList<AccountDTO> getAll(){
-        sql = "select * from accounts";
+        sql = "select * from Accounts";
         connectDB();
         ArrayList<AccountDTO> accountList = new ArrayList<>();
         try{
@@ -53,6 +56,7 @@ public class AccountDAO {
                 dto.setIsSupperUser(rs.getBoolean("is_superuser"));
                 dto.setIsStaff(rs.getBoolean("is_Staff"));
                 dto.setUserName(rs.getString("user_name"));
+                dto.setLogin(rs.getBoolean("is_login"));
                 accountList.add(dto);
 
             }

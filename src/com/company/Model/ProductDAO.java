@@ -6,7 +6,7 @@ import java.util.Vector;
 
 public class ProductDAO {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
-    String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
+    String jdbcUrl = "jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com/mms?user=jaewon&password=wlfkf132";
     public Connection conn;
 
     public PreparedStatement pstmt;
@@ -24,7 +24,9 @@ public class ProductDAO {
 
         //2단계 : 데이터베이스 연결
 
-        conn = DriverManager.getConnection(jdbcUrl, "root", "root");
+
+        conn = DriverManager.getConnection(jdbcUrl, "jaewon", "wlfkf132");
+
 
     }
 
@@ -145,7 +147,7 @@ public class ProductDAO {
 
     public void updateProduct(ProductDTO product) throws SQLException, ClassNotFoundException {
         ProductDTO p = product;
-        String sql = "update product set pr_name = ?, PRICE = ?, location = ?, exp_date = ?, amount = ?, state = ? where pr_code = ?";
+        String sql = "update Product set pr_name = ?, PRICE = ?, location = ?, exp_date = ?, amount = ?, state = ? where pr_code = ?";
         connectDB();
 
         try {
@@ -199,9 +201,13 @@ public class ProductDAO {
         }
     }//new
 
-    public void closeDB() throws SQLException {
-        //6단계 : 연결 해제
-        pstmt.close();;
-        conn.close();
+    public void closeDB() {
+        try {
+            pstmt.close();
+            if(rs != null) rs.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

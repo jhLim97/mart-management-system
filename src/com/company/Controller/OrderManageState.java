@@ -28,7 +28,6 @@ public class OrderManageState implements State{
 
     @Override
     public void applyListener() {
-
         listViewPanel = ProgramManager.getInstance().getMainView().orderListViewPanel;
         mmsListener.getInstance().orderListViewPanelListener(listViewPanel);
     }

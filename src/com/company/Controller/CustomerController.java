@@ -26,7 +26,9 @@ public class CustomerController extends Thread{
     @Override
     public void run() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
+        cmv = ProgramManager.getInstance().getCustomerManageView();
         while(true) {
+            System.out.println("ok");
             if(search) {
                 cvp.initDTModel();
                 String phoneNum = cvp.txtPhoneNum.getText();
@@ -36,7 +38,7 @@ public class CustomerController extends Thread{
                 search = false;
             }
             if(register) {
-                makeCustomerManageView();
+                registerCustomer();
                 register = false;
             }
             if(update) {
@@ -115,39 +117,22 @@ public class CustomerController extends Thread{
 
     public class TableClickListener implements MouseListener {
 
-        @Override
         public void mouseClicked(MouseEvent e) {
             int row = cvp.tblCustomerList.getSelectedRow();
             bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
         }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
+        public void mousePressed(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) { }
+        public void mouseEntered(MouseEvent e) { }
+        public void mouseExited(MouseEvent e) { }
     }
 
-    public void makeCustomerManageView() {
+    public CustomerManageView makeCustomerManageView() {
         cmv = new CustomerManageView();
         cmv.drawView();
-        cmv.addRegisterButtonListener(new RegisterButtonListener());
-        cmv.addExitButtonListener(new ExitButtonListener());
+        mmsListener.getInstance().customerManageViewListener(cmv);
 
+        return cmv;
     }
 
     public void searchAllCustomer() {
