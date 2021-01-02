@@ -161,11 +161,13 @@ public class CustomerController extends Thread{
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
             int cPoint = Integer.parseInt((String)cvp.dtmodel.getValueAt(row, 2));
-            customer = new CustomerDTO();
-            customer.setPhoneNum(phoneNum);
-            customer.setCName(cName);
-            customer.setCPoint(cPoint);
-            cdao.updateCustomer(customer, bufferedString);
+//            customer = new CustomerDTO();
+//            customer.setPhoneNum(phoneNum);
+//            customer.setCName(cName);
+//            customer.setCPoint(cPoint);
+//            cdao.updateCustomer(customer, bufferedString);
+            String msg = cName  + "/" + "update Customer set phone_num = " + phoneNum + ", c_name = " + cName + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
+            ProgramManager.getInstance().getMainController().msgSend(msg, 9);
         }
     }
 
@@ -175,8 +177,10 @@ public class CustomerController extends Thread{
             JOptionPane.showMessageDialog(cvp, "삭제할 정보를 조회 후 선택해 주세요.");
         } else {
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
-            cdao.delCustomer(phoneNum);
-            cvp.dtmodel.removeRow(row);
+            String cName = (String)cvp.dtmodel.getValueAt(row, 1);
+//            cdao.delCustomer(phoneNum);
+//            cvp.dtmodel.removeRow(row);
+//            String msg =
         }
     }
 

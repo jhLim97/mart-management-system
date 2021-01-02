@@ -1,14 +1,9 @@
 package com.company.Controller;
 
 import com.company.Model.Message;
-import com.company.Server.JunhyukServer;
-import com.company.View.ShoppingLogin;
-import java.sql.SQLException;
-import java.util.Scanner;
+import com.google.gson.Gson;
 
 //import com.google.gson.Gson;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,7 +17,7 @@ public class MainController extends Thread {
     private Logger logger; // 모르면 사용한해도 될듯..
 
     // Message 객체를 json 객체로 파싱하기 위한 Gson 객체 생성
-    //private Gson gson = new Gson();
+    private Gson gson = new Gson();
 
     private Socket s;
 
@@ -49,7 +44,7 @@ public class MainController extends Thread {
             inMsg = new BufferedReader(new InputStreamReader(s.getInputStream()));
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
-            //m = new Message(v.id, "", "", "login");
+//            m = new Message(v.id, "", "", "login");
             //outMsg.println(gson.toJson(m));
 
             thread = new Thread(this);
@@ -62,8 +57,8 @@ public class MainController extends Thread {
     }
 
     // 각 컨트롤로에서 maincontroller의 객체를 사용해 msgSend
-    public void msgSend(String msg) {
-            outMsg.println(msg);
+    public void msgSend(String msg, int type) {
+            outMsg.println(new Message("", "", msg, type));
     }
 
     public void run() {
@@ -73,10 +68,10 @@ public class MainController extends Thread {
         while (status) {
             try {
                 msg = inMsg.readLine();
-                //m = gson.fromJson(msg, Message.class);
+                m = gson.fromJson(msg, Message.class);
 
                 // MultiChatDat 객체로 데이터 갱신
-                //chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");
+//                chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");
 
                 // 커서를 현재 대화 메세지에 표시
                 //v.msgOut.setCaretPosition(v.msgOut.getDocument().getLength());
