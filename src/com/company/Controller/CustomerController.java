@@ -197,4 +197,9 @@ public class CustomerController extends Thread{
         }
     }
 
+    public void savePoint(String phone, int point) {
+        customer = cdao.getCustomer(phone);
+        cdao.updateCustomer(customer, point);
+    }
+
 }
