@@ -101,6 +101,7 @@ public class OrderDAO {
         return order;
     }
 
+    /*
     public boolean addOrder(OrderDTO order) { // 날짜는 추후 수정...
         connectDB();
         sql = "insert into Orders(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
@@ -129,6 +130,28 @@ public class OrderDAO {
         closeDB();
 
         return true;
+    }*/
+
+    public boolean addOrder(String msg) { // 날짜는 추후 수정...
+        connectDB();
+        //sql = "insert into Orders(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
+
+        try {
+            pstmt = con.prepareStatement(msg);
+            //pstmt.setInt(1, order.getEntry_price());
+            //pstmt.setString(2, order.getC_name());
+            //pstmt.setString(3, order.getPhone_num());
+            //pstmt.setString(4, order.getBuy_date());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        closeDB();
+
+        return true;
     }
 
     public boolean updateOrder(OrderDTO order) { // 파라미터의 객체 정보로 업데이트
@@ -139,6 +162,25 @@ public class OrderDAO {
             pstmt = con.prepareStatement(sql);
             pstmt.setInt(1, order.getEntry_price());
             pstmt.setInt(2, order.getOrder_code());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        closeDB();
+
+        return true;
+    }
+
+    public boolean updateOrder(String msg) { // 파라미터의 객체 정보로 업데이트
+        connectDB();
+        sql = "update Orders set entry_price = ? where order_code = ?";
+
+        try {
+            pstmt = con.prepareStatement(sql);
+            //pstmt.setInt(1, order.getEntry_price());
+            //pstmt.setInt(2, order.getOrder_code());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

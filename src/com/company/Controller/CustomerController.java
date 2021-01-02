@@ -194,9 +194,10 @@ public class CustomerController extends Thread{
         }
     }
 
-    public void savePoint(String phone, int point) {
-        String msg = "아무개" + "/" + "update Customer set c_point = " + point + " where phone_num = " + phone;
-        ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg, 9));
+    public void savePoint(String phone, int point) { // 규빈이랑 합병하면 적용하기
+        //String savePointMsg = "update Customer set c_point =" + point + "where phone_num =" + "'" + phone + "'";
+        //Message msg = new Message(" ", " ", savePointMsg, 11);
+        //ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
     }
 
 }
