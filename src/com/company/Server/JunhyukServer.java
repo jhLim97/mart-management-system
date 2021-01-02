@@ -50,7 +50,7 @@ public class JunhyukServer {
 
     public static void main(String args[]) {
         GyubinServer multiChatServer = new GyubinServer();
-        multiChatServer.start();
+//        multiChatServer.start();
     }
 
     class MMSThread extends Thread {

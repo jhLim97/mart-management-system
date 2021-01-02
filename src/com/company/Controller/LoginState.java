@@ -15,6 +15,7 @@ public class LoginState implements State{
         drawPanel();
         applyListener();
     }
+
     @Override
     public void drawFrame() {
         mainView = ProgramManager.getInstance().getMainView();

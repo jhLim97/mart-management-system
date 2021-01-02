@@ -57,8 +57,8 @@ public class MainController extends Thread {
     }
 
     // 각 컨트롤로에서 maincontroller의 객체를 사용해 msgSend
-    public void msgSend(String msg, int type) {
-            outMsg.println(new Message("", "", msg, type));
+    public void msgSend(Message msg) {
+        outMsg.println(gson.toJson(msg));
     }
 
     public void run() {

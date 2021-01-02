@@ -9,15 +9,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import com.company.View.*;
+import com.google.gson.Gson;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class mmsListener {
+    private Gson gson = new Gson();
+    private Message msg;
+    private Socket socket;
+    private BufferedReader inMsg = null;
+    private PrintWriter outMsg = null;
+    static final int INSERT_ACCOUNT = 1, LOGIN = 2, LOGOUT = 3, CHAT_MESSAGE = 4;
+
     private static mmsListener s_Instance;
     public static mmsListener getInstance(){
         if (s_Instance == null) s_Instance = new mmsListener();
@@ -31,9 +42,13 @@ public class mmsListener {
             AccountDAO dao = new AccountDAO();
 
             if(dao.loginProgram(id,pw)){
+                ProgramManager.getInstance().id = id;
+                ProgramManager.getInstance().pw = pw;
                 ProgramManager.getInstance().setMainState();
-            }
+                msg = new Message(id,pw,"로그인",LOGIN);
+                ProgramManager.getInstance().getMainController().msgSend(msg);
 
+            }
             else{
                 panel.txtId.setText("");
                 panel.txtPw.setText("");
@@ -49,22 +64,25 @@ public class mmsListener {
             String id = frame.txtId.getText();
             String pw = frame.txtPw.getText();
             String name = frame.txtName.getText();
-            AccountDTO account = new AccountDTO();
-            AccountDAO dao = new AccountDAO();
-            account.setIsStaff(true);
-            account.setId(id);
-            account.setPassword(pw);
-            account.setIsSupperUser(false);
-            account.setUserName(name);
-            System.out.println(name);
-            System.out.println(dao.makeAccount(account));
+            if(id != null && pw != null && name != null) {
+                msg = new Message(id, pw, name, INSERT_ACCOUNT);
+                ProgramManager.getInstance().getMainController().msgSend(msg);
+                frame.dispose();
+
+            }
+            else {
+
+                JOptionPane.showMessageDialog(frame, "잘못된 양식입니다.");
+
+            }
+
         });
 
     }
-    public void mainViewPanelListener(MainView frame){ // **********
+    public void mainViewPanelListener(MainViewPanel panel){ // **********
 
         MainView mainView = ProgramManager.getInstance().getMainView();
-        frame.productButton.addActionListener(e -> {
+        panel.productButton.addActionListener(e -> {
             if(ProgramManager.getInstance().getState() instanceof OrderManageState){
                 mainView.orderListViewPanel.setVisible(false);
                 ProgramManager.getInstance().setMainState();
@@ -74,7 +92,7 @@ public class mmsListener {
                 ProgramManager.getInstance().setMainState();
             }
         });
-        frame.orderListButton.addActionListener(e-> {
+        panel.orderListButton.addActionListener(e-> {
             if(ProgramManager.getInstance().getState() instanceof MainState) {
                 mainView.productViewPanel.setVisible(false);
                 ProgramManager.getInstance().setOrderManageState();
@@ -84,7 +102,7 @@ public class mmsListener {
                 ProgramManager.getInstance().setOrderManageState();
             }
         });
-        frame.customerButton.addActionListener(e->{
+        panel.customerButton.addActionListener(e->{
             if(ProgramManager.getInstance().getState() instanceof MainState) {
                 mainView.productViewPanel.setVisible(false);
                 ProgramManager.getInstance().setCustomerManageState();
@@ -94,11 +112,24 @@ public class mmsListener {
                 ProgramManager.getInstance().setCustomerManageState();
             }
         });
-        frame.shoppingButton.addActionListener(e -> {
+        panel.shoppingButton.addActionListener(e -> {
             ViewManager.getInstance().shoppingViewOpen();
             ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
 
             shoppingViewListener(shoppingView);
+        });
+        panel.logoutButton.addActionListener(e -> {
+            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw, "로그아웃",LOGOUT);
+            ProgramManager.getInstance().getMainController().msgSend(msg);
+            if(ProgramManager.getInstance().getState() instanceof MainState) {
+                mainView.productViewPanel.setVisible(false);
+            } else if(ProgramManager.getInstance().getState() instanceof CustomerManageState) {
+                mainView.customerViewPanel.setVisible(false);
+            }else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
+                mainView.orderListViewPanel.setVisible(false);
+            }
+            panel.setVisible(false);
+            ProgramManager.getInstance().setLoginState();
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -152,7 +183,7 @@ public class mmsListener {
         }else {
             int prCode = (int) (ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0));
             try {
-                dao.delProduct(prCode);
+                 dao.delProduct(prCode);
             } catch (Exception e) {
             }
             try {
