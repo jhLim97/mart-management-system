@@ -52,9 +52,7 @@ public class ProductDAO {
 
     public ArrayList<ProductDTO> getAll() throws SQLException, ClassNotFoundException {
 
-        System.out.println(222);
         connectDB();
-        System.out.println(1);
         sql= "select * from Product";
 
         //전체 검색 데이터를 전달하는 ArrayList
@@ -181,13 +179,13 @@ public class ProductDAO {
 
         try {
             pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(7, a);
             pstmt.setString(1, p.getPrName());
             pstmt.setInt(2, p.getPrice());
             pstmt.setString(3, p.getLocation());
             pstmt.setDate(4, (Date) p.getExpDate());
             pstmt.setInt(5, p.getAmount());
             pstmt.setString(6, p.getState());
-            pstmt.setInt(7, a);
 
 
             if(pstmt.executeUpdate() == 0) {
