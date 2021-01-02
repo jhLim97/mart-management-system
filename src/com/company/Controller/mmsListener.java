@@ -1,15 +1,13 @@
 package com.company.Controller;
 
-import com.company.Model.AccountDAO;
-import com.company.Model.AccountDTO;
+import com.company.Model.*;
 import com.company.View.*;
 
 import javax.swing.*;
 import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import com.company.Model.ProductDAO;
-import com.company.Model.ProductDTO;
+
 import com.company.View.*;
 
 import java.awt.event.ActionEvent;
@@ -118,37 +116,58 @@ public class mmsListener {
         });
         panel.updateButton.addActionListener(e -> {
             try {
-                updateProduct(dao, panel, panel.editMode);
+                updateProduct(datas, dao, ProgramManager.getInstance().getPC().bufferedString);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (ClassNotFoundException classNotFoundException) {
                 classNotFoundException.printStackTrace();
             }
         });
+
+        panel.productTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    ProgramManager.getInstance().getPC().isClick =true;
+                    int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
+                    ProgramManager.getInstance().getPC().bufferedString =Integer.parseInt( ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row,0).toString());
+                    System.out.println(ProgramManager.getInstance().getPC().bufferedString+"asdasd");
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
+            public void mousePressed(MouseEvent e) { }
+            public void mouseReleased(MouseEvent e) { }
+            public void mouseEntered(MouseEvent e) { }
+            public void mouseExited(MouseEvent e) { }
+        });
     } //ProductViewPaneListener
 
 
     //ProductViewPanelListener Method //메소드/////////////////
     public void deleteProduct(ProductDAO dao, boolean editMode, ProductViewPanel panel, ArrayList<ProductDTO> datas){
-        if (editMode) {
-            try {
-                editMode = dao.delProduct(Integer.parseInt(panel.txtSearch.getText()));
-                refreshData(datas,dao,panel);
-                panel.SUDtxt.setText("삭제되었습니다.");
-                panel.txtSearch.setText("");
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
-            editMode = true;
+        int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
+        if(row == -1 ){
+            JOptionPane.showMessageDialog(ProgramManager.getInstance().getMainView().productViewPanel, " 삭제할 정보를 조회 후 선택해 주세요.");
 
-        } else {
-            panel.SUDtxt.setText("삭제할 수 없습니다.");
+        }else {
+            int prCode = (int) (ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0));
+            try {
+                dao.delProduct(prCode);
+            } catch (Exception e) {
+            }
+            try {
+                refreshData(datas, dao, ProgramManager.getInstance().getMainView().productViewPanel);
+            }catch (Exception e) {
+
+            }
         }
 
         panel.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
-    }//정보 검색후 삭제하면 삭제
+    }//테이블 누르고 삭제
+
     public void searchProduct(ProductDAO dao, boolean editMode,ProductViewPanel panel){
         try {
 
@@ -199,24 +218,40 @@ public class mmsListener {
             }
         }
     }
-    public void updateProduct(ProductDAO dao, ProductViewPanel panel, boolean editMode) throws SQLException, ClassNotFoundException {
-        System.out.println("마마마");
-        if (editMode) {
-            ProgramManager.getInstance().getProductCRUDView().drawView();
-            ProgramManager.getInstance().getProductCRUDView().chk = 2;
-            update_setText(dao,panel,ProgramManager.getInstance().getProductCRUDView());
+    public void updateProduct(ArrayList<ProductDTO> datas, ProductDAO dao, int bufferedString ) {
+        int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
+        if(row == -1 ) {
+            JOptionPane.showMessageDialog(ProgramManager.getInstance().getMainView().productViewPanel, "수정할 정보를 선택해 주세요.");
+        } else {
+            int prcode = Integer.parseInt((ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0).toString()));
+            String prName = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 1);
+            int price = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 2).toString());
+            String location = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 3);
+            Date date = (Date)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4);
+            int amount = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
+            String state = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
+
+
+            ProductDTO p = new ProductDTO();
+            p.setPrCode(prcode);
+            p.setPrName(prName);
+            p.setPrice(price);
+            p.setLocation(location);
+            p.setExpDate(date);
+            p.setAmount(amount);
+            p.setState(state);
+
+            try {
+                System.out.println("야호");
+                dao.updateProduct2(p, bufferedString);
+                System.out.println("야호");
+
+            }catch (Exception e){}
+
+            try {
+                refreshData(datas, dao, ProgramManager.getInstance().getMainView().productViewPanel);
+            }catch(Exception e){}
         }
-    }
-    public void update_setText(ProductDAO dao, ProductViewPanel v, ProductCRUDView CRUDv) throws SQLException, ClassNotFoundException {
-
-        ProductDTO p = dao.getProduct(Integer.parseInt(v.txtSearch.getText()));
-        CRUDv.codeText.setText(Integer.toString(p.getPrCode()));
-        CRUDv.nameText.setText(p.getPrName());
-        CRUDv.priceText.setText(Integer.toString(p.getPrice()));
-        CRUDv.locationText.setText(p.getLocation());
-        CRUDv.expDateText.setText(String.valueOf(p.getExpDate()));
-        CRUDv.countText.setText(Integer.toString(p.getAmount()));
-
     }
     ////////////메소드///////////////
 
@@ -271,8 +306,7 @@ public class mmsListener {
         frame.completeButton.addActionListener(e -> {
             if(frame.chk==1)
                 addProduct_inCRUD(frame, dao, ProgramManager.getInstance().getMainView().productViewPanel.editMode, datas);
-            else
-                update_inCRUD(dao, frame,datas);
+
         });
     }//productCRUDViewListener
 
@@ -311,49 +345,6 @@ public class mmsListener {
         ProgramManager.getInstance().getMainView().productViewPanel.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
 
     } //addProduct_inCRUD complete누르면 정보 추가
-    public void update_inCRUD(ProductDAO dao, ProductCRUDView CRUDv, ArrayList<ProductDTO> datas){
-        if(ProgramManager.getInstance().getMainView().productViewPanel.editMode){
-            try {
-                ProductDTO p = dao.getProduct(Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.txtSearch.getText()));
-
-
-                try {
-                    ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("");
-                    p.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
-                    p.setPrName(CRUDv.nameText.getText());
-                    p.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
-                    p.setLocation(CRUDv.locationText.getText());
-                    p.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
-                    p.setAmount(Integer.parseInt(CRUDv.countText.getText()));
-                    dao.updateProduct(p);
-                    refreshData(datas, dao, ProgramManager.getInstance().getMainView().productViewPanel);
-                    ProgramManager.getInstance().getMainView().productViewPanel.editMode = false;
-
-                    ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.append("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n" +
-                            Integer.toString(p.getPrCode()) + "\t" + p.getPrName() + "\t" + p.getPrice() + "\t" + p.getLocation() + "\t" + p.getExpDate() + "\t" + p.getAmount() + "\t"
-                            + p.getState());
-                    ;
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (ClassNotFoundException classNotFoundException) {
-                    classNotFoundException.printStackTrace();
-                }//update try
-
-                ProgramManager.getInstance().getMainView().productViewPanel.SUDLab.setText("검색 정보 :                                                         EditMode : " + ProgramManager.getInstance().getMainView().productViewPanel.editMode);
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            } //try getProduct
-
-
-        } else {
-            ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("수정 할 수 없습니다.");
-        }
-
-        ProgramManager.getInstance().getMainView().productViewPanel.SUDLab.setText("검색 정보 :                                                         EditMode : " + ProgramManager.getInstance().getMainView().productViewPanel.editMode);
-    } //
     //메소드///////////////////////////////
 
 

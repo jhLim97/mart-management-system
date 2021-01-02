@@ -17,7 +17,10 @@
       </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="mms@localhost" uuid="eecce6bf-693f-4508-b297-0a08c37da9c8">
+<<<<<<< HEAD
+=======
 
+>>>>>>> 7aa45cd085d3c0f9d71bc05a075dc97554da0666
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
