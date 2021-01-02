@@ -98,7 +98,6 @@ public class GyubinServer {
     class MMSThread extends Thread {
 
         String msg;
-
         Message m = new Message();
 
         Gson gson = new Gson(); // Message 객체를 json 객체로 파싱하기 위한 Gson 객체 생성

@@ -56,7 +56,7 @@ public class AccountDAO {
                 dto.setIsSupperUser(rs.getBoolean("is_superuser"));
                 dto.setIsStaff(rs.getBoolean("is_Staff"));
                 dto.setUserName(rs.getString("user_name"));
-                dto.setLogin(rs.getBoolean("is_login"));
+                dto.setIsLogin(rs.getBoolean("is_login"));
                 accountList.add(dto);
 
             }
@@ -66,6 +66,44 @@ public class AccountDAO {
         }
         closeDB();
         return accountList;
+    }
+    public boolean setLogin(String id, String PW){
+        int check=0;
+        sql = "update Accounts set is_login = ? where id = ? and passwd = ?";
+        connectDB();
+        try {
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setBoolean(1,true);
+            pstmt.setString(2,id);
+            pstmt.setString(3,PW);
+            check = pstmt.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeDB();
+        if(check != 0) return true;
+        return false;
+    }
+    public boolean setLogout(String id, String PW){
+        int check=0;
+        sql = "update Accounts set is_login = ? where id = ? and passwd = ?";
+        connectDB();
+        try {
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setBoolean(1,false);
+            pstmt.setString(2,id);
+            pstmt.setString(3,PW);
+            check = pstmt.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeDB();
+        if(check != 0) return true;
+        return false;
     }
     public boolean loginProgram(String id, String PW){
 
@@ -83,13 +121,12 @@ public class AccountDAO {
         }
         System.out.println("입력하신 아이디는 없는 아이디입니다.");
         return false;
-
     }
+
 
     public boolean makeAccount(AccountDTO account){
         int check = 0;
-        sql = "insert into accounts(id, passwd, is_superuser, is_staff, user_name) values(?, ?, ?, ?, ?)";
-        //ProgramManager.getInstance().connectDB(conn);
+        sql = "insert into Accounts(id, passwd, is_superuser, is_staff, user_name, is_login) values(?, ?, ?, ?, ?, ?)";
         connectDB();
         try{
             pstmt = conn.prepareStatement(sql);
@@ -98,11 +135,11 @@ public class AccountDAO {
             pstmt.setBoolean(3,account.getIsSupperUser());
             pstmt.setBoolean(4,account.getIsStaff());
             pstmt.setString(5,account.getUserName());
+            pstmt.setBoolean(6,account.getIsLogin());
             check = pstmt.executeUpdate();
         } catch(Exception e){
             e.printStackTrace();
         }
-//        ProgramManager.getInstance().closeDB(conn,pstmt,rs);
         if(check != 0) return true;
         return false;
     }

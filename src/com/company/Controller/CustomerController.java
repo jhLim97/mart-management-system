@@ -167,7 +167,7 @@ public class CustomerController extends Thread{
 //            customer.setCPoint(cPoint);
 //            cdao.updateCustomer(customer, bufferedString);
             String msg = cName  + "/" + "update Customer set phone_num = " + phoneNum + ", c_name = " + cName + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
-            ProgramManager.getInstance().getMainController().msgSend(msg, 9);
+//            ProgramManager.getInstance().getMainController().msgSend(msg, 9);
         }
     }
 
