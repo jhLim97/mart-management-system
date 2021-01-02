@@ -155,15 +155,15 @@ public class ShoppingView extends JFrame {
 
 
         jtfSearch.setBounds(45, 75, 100, 40);
-        add(jtfSearch);
+        pn2.add(jtfSearch);
 
         jtfCount.setBounds(190, 75, 100, 40);
-        add(jtfCount);
+        pn2.add(jtfCount);
 
         //ENROLL BTN
         btnEnroll.setBounds(300,75,60,40);
         btnEnroll.setFont(new Font("",Font.BOLD, 13));
-        add(btnEnroll);
+        pn2.add(btnEnroll);
 
 
         lblItemList.setFont(fnt);
@@ -172,12 +172,12 @@ public class ShoppingView extends JFrame {
 
         lblstate.setFont(fnt);
         lblstate.setBounds(210,145,140,30);
-        add(lblstate);
+        pn2.add(lblstate);
 
 
         lblstate.setFont(fnt);
         lblstate.setBounds(210,145,140,30);
-        add(lblstate);
+        pn2.add(lblstate);
 
         // -----------ItemList add-----------
         jspItem.setBounds(10, 180, 360, 160);

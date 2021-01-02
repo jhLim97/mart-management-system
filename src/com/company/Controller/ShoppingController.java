@@ -107,7 +107,7 @@ public class ShoppingController {
 
     public void deleteMy(ShoppingView v) throws SQLException, ClassNotFoundException {
         ProductDTO p = datas2.get(datas2.size()-1);
-        total -= p.getPrice();
+        total -= (p.getPrice()*p.getAmount());
         v.lblMsg.setText("결제 금액 : " + total +"원");
         datas2.remove(datas2.size()-1);
         refreshData2(v);
