@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class mmsListener {
     private static mmsListener s_Instance;
@@ -129,9 +130,7 @@ public class mmsListener {
             public void mouseClicked(MouseEvent e) {
                 try {
                     ProgramManager.getInstance().getPC().isClick =true;
-                    int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
-                    ProgramManager.getInstance().getPC().bufferedString =Integer.parseInt( ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row,0).toString());
-                    System.out.println(ProgramManager.getInstance().getPC().bufferedString+"asdasd");
+                    ProgramManager.getInstance().getPC().appMain();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (ClassNotFoundException classNotFoundException) {
@@ -144,8 +143,6 @@ public class mmsListener {
             public void mouseExited(MouseEvent e) { }
         });
     } //ProductViewPaneListener
-
-
     //ProductViewPanelListener Method //메소드/////////////////
     public void deleteProduct(ProductDAO dao, boolean editMode, ProductViewPanel panel, ArrayList<ProductDTO> datas){
         int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
@@ -167,7 +164,6 @@ public class mmsListener {
 
         panel.SUDLab.setText("검색 정보 :                                                         EditMode : " + editMode);
     }//테이블 누르고 삭제
-
     public void searchProduct(ProductDAO dao, boolean editMode,ProductViewPanel panel){
         try {
 
@@ -219,6 +215,7 @@ public class mmsListener {
         }
     }
     public void updateProduct(ArrayList<ProductDTO> datas, ProductDAO dao, int bufferedString ) {
+
         int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
         if(row == -1 ) {
             JOptionPane.showMessageDialog(ProgramManager.getInstance().getMainView().productViewPanel, "수정할 정보를 선택해 주세요.");
@@ -227,7 +224,7 @@ public class mmsListener {
             String prName = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 1);
             int price = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 2).toString());
             String location = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 3);
-            Date date = (Date)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4);
+            Date date = Date.valueOf(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4).toString());
             int amount = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
             String state = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
 
@@ -242,7 +239,7 @@ public class mmsListener {
             p.setState(state);
 
             try {
-                System.out.println("야호");
+
                 dao.updateProduct2(p, bufferedString);
                 System.out.println("야호");
 
@@ -251,6 +248,8 @@ public class mmsListener {
             try {
                 refreshData(datas, dao, ProgramManager.getInstance().getMainView().productViewPanel);
             }catch(Exception e){}
+
+            ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("수정이 완료되었습니다.");
         }
     }
     ////////////메소드///////////////

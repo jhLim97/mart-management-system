@@ -36,6 +36,14 @@ public class ProductController extends Thread{
         v.almostExpiredArea.setText("코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n");
     }
 
+    public void appMain(){
+
+        if(isClick){
+            int row = v.productTable.getSelectedRow();
+            bufferedString = Integer.parseInt(v.tableModel.getValueAt(row, 0).toString());
+            isClick = false;
+        }
+    }
 
     public void refreshData() throws SQLException, ClassNotFoundException {
         datas = dao.getAll();
@@ -130,7 +138,7 @@ public class ProductController extends Thread{
                 }
 
             }try {
-                sleep(3000);
+                sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -139,13 +147,13 @@ public class ProductController extends Thread{
             txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
             txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
-//            try {
-//                refreshData();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                refreshData();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
