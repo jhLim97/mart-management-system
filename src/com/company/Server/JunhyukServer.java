@@ -127,9 +127,7 @@ public class JunhyukServer {
                         case LOGIN : System.out.println("로그인 성공!!") ;break; // 준혁 테스트 중
                         case ORDER : {
                             connectDB();
-                            //String str[] = m.getMsg().split("/");
                             try {
-                                //sql = str[0] + orderCode + str[1];
                                 pstmt = con.prepareStatement(m.getMsg());
                                 pstmt.executeUpdate();
 
@@ -144,45 +142,53 @@ public class JunhyukServer {
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-                            /*
-                            String str[] = m.getMsg().split("/");
-                            try {
-
-                                sql = "insert into Orders(entry_price, c_name, phone_num, buy_date) value(?, ?, ?, ?)";
-                                pstmt = con.prepareStatement(sql);
-                                pstmt.setInt(1, Integer.parseInt(str[0]));
-                                pstmt.setString(2, str[1]);
-                                pstmt.setString(3, str[2]);
-                                pstmt.setString(4, str[3]);
-                                System.out.println(m.getMsg());
-                                pstmt.executeUpdate();
-
-                                // 가장 최신의 입력된 auto_increment 값 가져오기
-                                // --> mysql에서는 해당 값을 컨넥션 별로 관리하므로 멀티 스레드 구현 시 race condition같은 문제를 걱정할 필요없음
-                                // 즉, 락을 걸거나 트랜잭션을 구현할 필요가 X
-                                sql = "select last_insert_id()";
-                                pstmt = con.prepareStatement(sql);
-                                rs = pstmt.executeQuery();
-
-                                if(rs.next()) orderCode = rs.getInt(1);
-
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }*/
                             closeDB();
                             break;
                         }
                         case PRODUCTDELETE : {
                             connectDB();
-                            /*
-                            String str[] = m.getMsg().split("/");
-                            try {
-                                sql = str[0] + orderCode + str[1];
-                                pstmt = con.prepareStatement(sql);
-                                pstmt.executeUpdate();
-                            } catch (SQLException e)) {
-                                e.printStackTrace();
-                            }*/
+                            String str[] = m.getMsg().split("@");
+                            int cnt = Integer.parseInt(str[1]); // 구매 예정인 즉, 업데이트 할 품목 개수
+                            System.out.println("품목개수 : " + cnt);
+                            boolean canBuy = true;
+                            String str1[] = str[0].split("/");
+                            for(int i=1; i<=cnt; i++) {
+                                try {
+                                    sql = "select * from Product where pr_code = ?";
+                                    pstmt = con.prepareStatement(sql);
+                                    pstmt.setInt(1, Integer.parseInt(str1[i*3-1]));
+                                    System.out.println("코드번호 : " + Integer.parseInt(str1[i*3-1]));
+                                    rs = pstmt.executeQuery();
+
+                                    if(rs.next()) {
+                                        if(rs.getInt("amount") < Integer.parseInt(str1[i*3-2])) {
+                                            System.out.println("품목별 재고 : " + rs.getInt("pr_code"));
+                                            canBuy = false;
+                                        }
+                                    }
+                                } catch (SQLException e){
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println(canBuy);
+
+                            if(canBuy) {
+                                for(int i=1; i<=cnt; i++) {
+                                    try {
+                                        sql = "update Product set amount = ? where pr_code = ?";
+                                        pstmt = con.prepareStatement(sql);
+                                        pstmt.setInt(1, Integer.parseInt(str1[i*3-3]));
+                                        pstmt.setInt(2, Integer.parseInt(str1[i*3-1]));
+                                        System.out.println(Integer.parseInt(str1[i*3-3]) + "/" + Integer.parseInt(str1[i*3-2]) + "/" + Integer.parseInt(str1[i*3-1]));
+                                        pstmt.executeUpdate();
+                                    } catch (SQLException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            //else msgSendAll();
+
                             closeDB();
                             break;
                         }

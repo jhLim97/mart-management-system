@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.Model.CustomerDAO;
 import com.company.Model.CustomerDTO;
+import com.company.Model.Message;
 import com.company.View.CustomerManageView;
 import com.company.View.CustomerViewPanel;
 import com.company.View.MainView;
@@ -197,9 +198,10 @@ public class CustomerController extends Thread{
         }
     }
 
-    public void savePoint(String phone, int point) {
-        customer = cdao.getCustomer(phone);
-        cdao.updateCustomer(customer, point);
+    public void savePoint(String phone, int point) { // 규빈이랑 합병하면 적용하기
+        //String savePointMsg = "update Customer set c_point =" + point + "where phone_num =" + "'" + phone + "'";
+        //Message msg = new Message(" ", " ", savePointMsg, 11);
+        //ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
     }
 
 }
