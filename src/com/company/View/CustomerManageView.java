@@ -111,11 +111,4 @@ public class CustomerManageView extends JFrame {
         txtPhone.setText("");
         txtPoint.setText("");
     }
-//    public void addRegisterButtonListener(ActionListener listener) {
-//        btnRegister.addActionListener(listener);
-//    }
-//
-//    public void addExitButtonListener(ActionListener listener) {
-//        btnExit.addActionListener(listener);
-//    }
 }

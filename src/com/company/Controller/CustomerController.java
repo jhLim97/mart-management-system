@@ -26,6 +26,7 @@ public class CustomerController extends Thread{
     public void appMain() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
         cmv = ProgramManager.getInstance().getCustomerManageView();
+
         if(search) {
             cvp.initDTModel();
             String phoneNum = cvp.txtPhoneNum.getText();
@@ -53,16 +54,7 @@ public class CustomerController extends Thread{
         }
     }
 
-    @Override
-    public void run() {
-        while(true) {
-            System.out.println("ok");
-
-        }
-    }
-
     public CustomerController() {
-        this.start();
     }
 
     public class DeleteButtonListener implements  ActionListener {
@@ -134,7 +126,6 @@ public class CustomerController extends Thread{
     public CustomerManageView makeCustomerManageView() {
         cmv = new CustomerManageView();
         cmv.drawView();
-        mmsListener.getInstance().customerManageViewListener(cmv);
 
         return cmv;
     }
@@ -202,6 +193,7 @@ public class CustomerController extends Thread{
             customer.setPhoneNum(phoneNum);
             customer.setCPoint(point);
             cdao.newCustomer(customer);
+            cmv.refreshTextField();
         }
     }
 
