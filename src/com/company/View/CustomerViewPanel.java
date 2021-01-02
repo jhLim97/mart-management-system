@@ -80,6 +80,10 @@ public class CustomerViewPanel extends JPanel {
         setVisible(true);
     }
 
+    public void drawTextArea(String text) {
+        taNewCustomer.append(text + "\n");
+    }
+
     public void initDTModel() {
         dtmodel.setNumRows(0);
     }

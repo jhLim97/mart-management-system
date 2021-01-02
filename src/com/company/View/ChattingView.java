@@ -9,8 +9,8 @@ public class ChattingView extends JFrame{
     JPanel chatNamePanel;
     JLabel chatNameLabel;
     JPanel msgPanel;
-    JTextField msgInput;
-    JButton enterButton;
+    public JTextField msgInput;
+    public JButton exitButton;
     JTextArea msgOut;
 
     String id;
@@ -25,10 +25,20 @@ public class ChattingView extends JFrame{
 
         chatNameLabel = new JLabel("대화명:");
 
+        msgOut = new JTextArea(10,30);
+
+        msgPanel = new JPanel();
+        msgPanel.setLayout(new BorderLayout());
+
+        msgInput = new JTextField();
+        exitButton = new JButton("닫기");
+    }
+
+    public void drawView() {
+
         chatNamePanel.add(chatNameLabel, BorderLayout.WEST);
         add(chatNamePanel, BorderLayout.PAGE_START);
 
-        msgOut = new JTextArea(10,30);
         msgOut.setEditable(false);
 
         JScrollPane scroll = new JScrollPane(msgOut);
@@ -36,23 +46,16 @@ public class ChattingView extends JFrame{
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(scroll, BorderLayout.CENTER);
 
-        msgPanel = new JPanel();
-        msgPanel.setLayout(new BorderLayout());
-
-        msgInput = new JTextField();
-        enterButton = new JButton("입력");
-
         msgPanel.add(msgInput, BorderLayout.CENTER);
-        msgPanel.add(enterButton, BorderLayout.EAST);
+        msgPanel.add(exitButton, BorderLayout.EAST);
 
         add(msgPanel, BorderLayout.PAGE_END);
 
         setSize(400,300);
-        setVisible(true);
     }
 
     public void refreshData(String msg) {
-        msgOut.append(msg);
+        msgOut.append(msg + "\n");
     }
 
     public static void main(String[] args) {
@@ -60,7 +63,7 @@ public class ChattingView extends JFrame{
     }
 
     public void addButtonActionListener(ActionListener listener) {
-        enterButton.addActionListener(listener);
+        exitButton.addActionListener(listener);
         msgInput.addActionListener(listener);
     }
 }

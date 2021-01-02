@@ -4,18 +4,12 @@ import com.company.Model.*;
 import com.company.View.*;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import com.company.View.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class mmsListener {
     private static mmsListener s_Instance;
@@ -99,6 +93,9 @@ public class mmsListener {
             ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
 
             shoppingViewListener(shoppingView);
+        });
+        frame.chatButton.addActionListener(e -> {
+            ProgramManager.getInstance().getChattingView().setVisible(true);
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -419,5 +416,13 @@ public class mmsListener {
         frame.btnExit.addActionListener(e -> {
             frame.dispose();
         });
+    }
+    public void chattingViewListener(ChattingView frame) {
+        frame.exitButton.addActionListener(e-> {
+            ProgramManager.getInstance().getChattingController().exitChatting();
+        });
+        frame.msgInput.addActionListener((e -> {
+            ProgramManager.getInstance().getChattingController().sendTextMessage("아무개" + "/" + frame.msgInput.getText());
+        }));
     }
 }

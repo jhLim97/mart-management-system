@@ -20,6 +20,8 @@ public class ProgramManager {
     private ShoppingView shoppingView;
     private CustomerManageView customerManageView;
     private OrderListViewPanel orderListViewPanel;
+    private ChattingView chattingView;
+    private ChattingController chattingController;
 
     private MainView mainView;
     private State state;
@@ -28,6 +30,16 @@ public class ProgramManager {
     public static ProgramManager getInstance(){
         if (s_Instance == null) s_Instance = new ProgramManager();
         return s_Instance;
+    }
+
+    public ChattingView getChattingView() {
+        if(chattingView == null) chattingView = new ChattingView();
+        return chattingView;
+    }
+
+    public ChattingController getChattingController() {
+        if(chattingController == null) chattingController = new ChattingController();
+        return chattingController;
     }
 
 

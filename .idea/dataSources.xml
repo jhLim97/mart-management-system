@@ -1,33 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MMS@localhost" uuid="93c5f503-271d-4d4b-a1ac-70a72606d9a8">
+    <data-source source="LOCAL" name="mms" uuid="e6459a18-8269-49e0-88c0-2da1e54c373e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="MMS@localhost [2]" uuid="bfa6ec07-f88f-47c3-9271-33005ab2cc96">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/MMS</jdbc-url>
-      <driver-properties>
-        <property name="serverTimezone" value="UTC" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="mms@localhost" uuid="eecce6bf-693f-4508-b297-0a08c37da9c8">
-<<<<<<< HEAD
-=======
-
->>>>>>> 7aa45cd085d3c0f9d71bc05a075dc97554da0666
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/mms</jdbc-url>
-      <driver-properties>
-        <property name="serverTimezone" value="UTC" />
-      </driver-properties>
+      <jdbc-url>jdbc:mysql:// mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>
