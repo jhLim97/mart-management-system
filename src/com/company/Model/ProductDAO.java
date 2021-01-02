@@ -169,6 +169,35 @@ public class ProductDAO {
         }
     }
 
+    public void updateProduct2(ProductDTO product, int a)  {
+        ProductDTO p = product;
+        String sql = "update Product set pr_name = ?, PRICE = ?, location = ?, exp_date = ?, amount = ?, state = ? where pr_code = ?";
+        try {
+            connectDB();
+        }catch (Exception e){}
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, p.getPrName());
+            pstmt.setInt(2, p.getPrice());
+            pstmt.setString(3, p.getLocation());
+            pstmt.setDate(4, (Date) p.getExpDate());
+            pstmt.setInt(5, p.getAmount());
+            pstmt.setString(6, p.getState());
+            pstmt.setInt(7, a);
+
+
+            if(pstmt.executeUpdate() == 0) {
+                closeDB();
+            } else {
+                closeDB();
+            }
+        } catch (SQLException e) {
+            closeDB();
+            e.printStackTrace();
+        }
+    }
+
     public boolean newProduct(ProductDTO product) throws SQLException, ClassNotFoundException {
         ProductDTO p = product;
         String sql = "insert into Product(pr_code, pr_name, price, location, exp_date, amount, state) values(?, ?, ?, ?, ?, ?, ?)";

@@ -23,6 +23,8 @@ public class ProductController extends Thread{
     public boolean editMode = false;
     MainView mainView ;
     Date date ;
+    public boolean isClick = false;
+    public int bufferedString =-1;
 
     public ProductController(ProductViewPanel v) throws SQLException, ClassNotFoundException {
         this.v=v;
@@ -85,7 +87,6 @@ public class ProductController extends Thread{
 
                     if ( sec < 604800) {//시간측정 일주일
                         p.setState("유통기한임박");
-                        System.out.print(3);
                         try {
                             dao.updateProduct(p);
                         } catch (SQLException throwables) {
@@ -99,7 +100,6 @@ public class ProductController extends Thread{
                     }//if 시간측정
 
                     if( p.getAmount() < 10){//재고측정
-                        System.out.print(2);
                         p.setState("재고부족임박");
                         try {
                             dao.updateProduct(p);
@@ -116,7 +116,6 @@ public class ProductController extends Thread{
 
                     if(chk1){
                         if(chk2){
-                            System.out.print(1);
                             p.setState("재고유통기한임박");
                             try {
                                 dao.updateProduct(p);
@@ -140,13 +139,13 @@ public class ProductController extends Thread{
             txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
             txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
-            try {
-                refreshData();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                refreshData();
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
