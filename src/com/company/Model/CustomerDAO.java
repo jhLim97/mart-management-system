@@ -143,4 +143,26 @@ public class CustomerDAO {
         return false;
     }
 
+    public boolean updateCustomer(CustomerDTO customer, int point) {
+        CustomerDTO c= customer;
+        String sql = "update Customer set c_point = ? where phone_num = ?";
+        connectDB();
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, c.getCPoint() + point);
+            pstmt.setString(2, c.getPhoneNum());
+            if(pstmt.executeUpdate() != 0) {
+                closeDB();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeDB();
+        return false;
+
+    }
+
 }
