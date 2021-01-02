@@ -237,14 +237,17 @@ public class mmsListener {
         });
         panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("search");
         });
         panel.updateButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().update = true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("update");
         });
         panel.deleteButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().delete =true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("delete");
         });
 
@@ -252,6 +255,7 @@ public class mmsListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
+                ProgramManager.getInstance().getCC().appMain();
             }
             public void mousePressed(MouseEvent e) { }
             public void mouseReleased(MouseEvent e) { }
@@ -418,6 +422,7 @@ public class mmsListener {
         frame.btnRegister.addActionListener(e -> {
             ProgramManager.getInstance().setCustomerManageView(frame);
             ProgramManager.getInstance().getCC().register =true;
+            ProgramManager.getInstance().getCC().appMain();
         });
         frame.btnExit.addActionListener(e -> {
             frame.dispose();
