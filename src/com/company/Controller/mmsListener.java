@@ -224,7 +224,7 @@ public class mmsListener {
             String prName = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 1);
             int price = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 2).toString());
             String location = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 3);
-            Date date = Date.valueOf((String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4));
+            Date date = Date.valueOf(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4).toString());
             int amount = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
             String state = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
 
