@@ -84,7 +84,11 @@ public class ProductViewPanel extends JPanel {
         scroll3.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll3.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        txtAreaPanel.setBounds(800,0,400,800);
+        //여기
+
+        txtAreaPanel.setBounds(800,0,375,640);
+
+        //여기///////
 
         SUDtxt.setBounds(10,600,780,35);
         SUDtxt.setEditable(false);
