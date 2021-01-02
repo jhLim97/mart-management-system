@@ -32,7 +32,7 @@ public class LoginViewPanel extends JPanel{
         add(pwLabel);
         txtPw.setBounds(440,345,150,30);
         add(txtPw);
-        joinButton.setBounds(610,380,80,20);
+        joinButton.setBounds(440,385,250,30);
         add(joinButton);
     }
 

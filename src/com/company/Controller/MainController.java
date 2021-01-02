@@ -81,7 +81,22 @@ public class MainController extends Thread {
                     case 4 :
                         ProgramManager.getInstance().getChattingView().refreshData(m.getMsg());
                         break;
-
+                    //여기
+                    case 5 :
+                        try {
+                            ProgramManager.getInstance().getPC().refreshData();}
+                        catch(Exception e1){}
+                        break;
+                    case 6 :
+                        try {
+                            ProgramManager.getInstance().getPC().refreshData();}
+                        catch(Exception e1){}
+                        break;
+                    case 7 :
+                        try {
+                            ProgramManager.getInstance().getPC().refreshData();}
+                        catch(Exception e1){}
+                        break;
                     case 8 :
                         ProgramManager.getInstance().getMainView().customerViewPanel.drawTextArea(m.getMsg());
                         break;
