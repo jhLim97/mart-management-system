@@ -370,8 +370,8 @@ public class mmsListener {
     public void shoppingViewListener(ShoppingView frame){
 
         frame.btnEnter.addActionListener(e -> {
-            String name = frame.lblEnterName.getText();
-            String phone = frame.lblEnterPhoneNum.getText();
+            String name = frame.txtName.getText();
+            String phone = frame.txtPhone.getText();
 
             if(name != null && phone != null) {
                 try {
@@ -382,8 +382,8 @@ public class mmsListener {
                     e2.printStackTrace();
                 }
 
-                frame.txtName.setText("고객이름 : " + name);
-                frame.txtPhone.setText("고객 번호 : " + phone);
+                frame.lblCname.setText("고객이름 : " + name);
+                frame.lblCphoneNum.setText("고객 번호 : " + phone);
 
                 frame.pn1.setVisible(false);
                 frame.pn2.setVisible(true);
