@@ -22,6 +22,8 @@ public class ShoppingController {
         datas2 = new ArrayList<ProductDTO>();
     }
 
+    public int getTotal(){ return total; }
+
     public void addMyList(ShoppingView v) throws SQLException, ClassNotFoundException {
 
         ProductDTO p = dao.getProduct(Integer.parseInt(v.jtfSearch.getText()));
