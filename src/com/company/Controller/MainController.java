@@ -3,7 +3,12 @@ package com.company.Controller;
 import com.company.Model.Message;
 import com.google.gson.Gson;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 //import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,8 +49,10 @@ public class MainController extends Thread {
             inMsg = new BufferedReader(new InputStreamReader(s.getInputStream()));
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
-//            m = new Message(v.id, "", "", "login");
-            //outMsg.println(gson.toJson(m));
+
+            m = new Message("v.id", "", "", 1); // 여기 내가 테스트용으로 임시 수정.. (임준)
+            outMsg.println(gson.toJson(m));
+
 
             thread = new Thread(this);
             thread.start();
@@ -68,6 +75,7 @@ public class MainController extends Thread {
         while (status) {
             try {
                 msg = inMsg.readLine();
+
                 m = gson.fromJson(msg, Message.class);
                 switch (m.getType()) {
                     case 4 :
@@ -80,6 +88,7 @@ public class MainController extends Thread {
                     case 9 : break;
                     case 10 : break;
                 }
+
 
                 // MultiChatDat 객체로 데이터 갱신
 //                chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");

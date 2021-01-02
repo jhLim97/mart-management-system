@@ -400,11 +400,11 @@ public class mmsListener {
         });
 
         frame.btnPay.addActionListener(e -> {
-            ProgramManager.getInstance().getOrderController().OrderItems(frame);
+
             try {
                 int total = ProgramManager.getInstance().getShoppingController().getTotal();
-                ProgramManager.getInstance().getShoppingController().payment(frame);
-                System.out.println(frame.txtPhone.getText() + " " + total + " " + (int)(total*0.01));
+                ProgramManager.getInstance().getShoppingController().payment(frame); // 여기를 통과해야 되게끔..
+                ProgramManager.getInstance().getOrderController().OrderItems(frame, total); // 주문, 주문 내역 쿼리 실행
                 ProgramManager.getInstance().getCC().savePoint(frame.txtPhone.getText(), (int)(total*0.01));
             } catch (SQLException e1) {
                 e1.printStackTrace();
