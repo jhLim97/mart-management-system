@@ -100,24 +100,24 @@ public class CustomerDAO {
         return false;
     }
 
-    public boolean delCustomer(String phone_num) {
-        String sql = "delete from Customer where phone_num = ?";
-        connectDB();
-
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, phone_num);
-
-            if(pstmt.executeUpdate() != 0) {
-                closeDB();
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        closeDB();
-        return false;
-    }
+//    public boolean delCustomer(String phone_num) {
+//        String sql = "delete from Customer where phone_num = ?";
+//        connectDB();
+//
+//        try {
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, phone_num);
+//
+//            if(pstmt.executeUpdate() != 0) {
+//                closeDB();
+//                return true;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        closeDB();
+//        return false;
+//    }
 
     public boolean updateCustomer(CustomerDTO customer, String previousPhoneNum) {
         CustomerDTO c = customer;
@@ -152,6 +152,59 @@ public class CustomerDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, c.getCPoint() + point);
             pstmt.setString(2, c.getPhoneNum());
+            if(pstmt.executeUpdate() != 0) {
+                closeDB();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        closeDB();
+        return false;
+
+    }
+
+    public boolean newCustomer(String msg) {
+        connectDB();
+
+        try {
+            pstmt = conn.prepareStatement(msg);
+
+            if(pstmt.executeUpdate() != 0) {
+                closeDB();
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeDB();
+        return false;
+    }
+
+    public boolean delCustomer(String msg) {
+        connectDB();
+
+        try {
+            pstmt = conn.prepareStatement(msg);
+
+            if(pstmt.executeUpdate() != 0) {
+                closeDB();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeDB();
+        return false;
+    }
+
+    public boolean updateCustomer(String msg) {
+        connectDB();
+
+        try {
+            pstmt = conn.prepareStatement(msg);
             if(pstmt.executeUpdate() != 0) {
                 closeDB();
                 return true;

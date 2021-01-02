@@ -1,14 +1,14 @@
 package com.company.Controller;
 
 import com.company.Model.Message;
-import com.company.Server.JunhyukServer;
-import com.company.View.ShoppingLogin;
-import java.sql.SQLException;
-import java.util.Scanner;
-
 import com.google.gson.Gson;
+
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+//import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,8 +49,10 @@ public class MainController extends Thread {
             inMsg = new BufferedReader(new InputStreamReader(s.getInputStream()));
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
+
             m = new Message("v.id", "", "", 1); // 여기 내가 테스트용으로 임시 수정.. (임준)
             outMsg.println(gson.toJson(m));
+
 
             thread = new Thread(this);
             thread.start();
@@ -73,9 +75,12 @@ public class MainController extends Thread {
         while (status) {
             try {
                 msg = inMsg.readLine();
-                //m = gson.fromJson(msg, Message.class);
+
+                m = gson.fromJson(msg, Message.class);
+
+
                 // MultiChatDat 객체로 데이터 갱신
-                //chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");
+//                chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");
 
                 // 커서를 현재 대화 메세지에 표시
                 //v.msgOut.setCaretPosition(v.msgOut.getDocument().getLength());

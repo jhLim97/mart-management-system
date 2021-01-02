@@ -16,8 +16,10 @@ public class MainState implements State{
     public void drawFrameInit(){
         mainView = ProgramManager.getInstance().getMainView();
         mainView.loginViewPanel.setVisible(false);
-        mainView.drawMainPanel();
-        mainView.drawProductViewPanel();
+        if(mainView.mainViewPanel == null) mainView.drawMainPanel();
+        else mainView.mainViewPanel.setVisible(true);
+        if(mainView.productViewPanel == null) mainView.drawProductViewPanel();
+        else mainView.productViewPanel.setVisible(true);
 
         applyListener();
 
@@ -42,7 +44,7 @@ public class MainState implements State{
     @Override
     public void applyListener() {
         mainView = ProgramManager.getInstance().getMainView();
-        mmsListener.getInstance().mainViewPanelListener(mainView);
+        mmsListener.getInstance().mainViewPanelListener(mainView.mainViewPanel);
         mmsListener.getInstance().productViewPanelListener(
                 (ProgramManager.getInstance().getMainView().productViewPanel));
         mmsListener.getInstance().productCRUDViewListener(ProgramManager.getInstance().getProductCRUDView());

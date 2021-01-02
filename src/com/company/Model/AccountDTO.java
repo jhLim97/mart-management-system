@@ -2,13 +2,12 @@ package com.company.Model;
 
 public class AccountDTO {
     private String id,password,userName;
-    private boolean isSupperUser,isStaff;
+    private boolean isSupperUser,isStaff,isLogin;
 
-    public boolean isLogin() { return isLogin; }
+    public boolean getIsLogin() { return isLogin; }
 
-    public void setLogin(boolean login) { isLogin = login; }
+    public void setIsLogin(boolean login) { isLogin = login; }
 
-    private boolean isLogin;
     public String getId() {
         return id;
     }
