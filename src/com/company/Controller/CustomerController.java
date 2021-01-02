@@ -23,42 +23,38 @@ public class CustomerController extends Thread{
     boolean search = false, register = false, update = false, delete = false, isClick = false;
     private static CustomerController s_Instance;
 
-    @Override
-    public void run() {
+    public void appMain() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
         cmv = ProgramManager.getInstance().getCustomerManageView();
-        while(true) {
-            System.out.println("ok");
-            if(search) {
-                cvp.initDTModel();
-                String phoneNum = cvp.txtPhoneNum.getText();
-                if(phoneNum.equals("")) {
-                    searchAllCustomer();
-                } else searchCustomer(phoneNum);
-                search = false;
-            }
-            if(register) {
-                registerCustomer();
-                register = false;
-            }
-            if(update) {
-                updateCustomer(bufferedString);
-                update = false;
-            }
-            if(delete) {
-                deleteCustomer();
-                delete = false;
-            }
-            if(isClick) {
-                int row = cvp.tblCustomerList.getSelectedRow();
-                bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
-                isClick = false;
-            }
+
+        if(search) {
+            cvp.initDTModel();
+            String phoneNum = cvp.txtPhoneNum.getText();
+            if(phoneNum.equals("")) {
+                searchAllCustomer();
+            } else searchCustomer(phoneNum);
+            search = false;
+        }
+        if(register) {
+            registerCustomer();
+            register = false;
+        }
+        if(update) {
+            updateCustomer(bufferedString);
+            update = false;
+        }
+        if(delete) {
+            deleteCustomer();
+            delete = false;
+        }
+        if(isClick) {
+            int row = cvp.tblCustomerList.getSelectedRow();
+            bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
+            isClick = false;
         }
     }
 
     public CustomerController() {
-        this.start();
     }
 
     public class DeleteButtonListener implements  ActionListener {
@@ -130,7 +126,6 @@ public class CustomerController extends Thread{
     public CustomerManageView makeCustomerManageView() {
         cmv = new CustomerManageView();
         cmv.drawView();
-        mmsListener.getInstance().customerManageViewListener(cmv);
 
         return cmv;
     }
@@ -198,6 +193,7 @@ public class CustomerController extends Thread{
             customer.setPhoneNum(phoneNum);
             customer.setCPoint(point);
             cdao.newCustomer(customer);
+            cmv.refreshTextField();
         }
     }
 

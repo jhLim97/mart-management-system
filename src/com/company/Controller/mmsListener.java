@@ -93,6 +93,12 @@ public class mmsListener {
                 ProgramManager.getInstance().setCustomerManageState();
             }
         });
+        frame.shoppingButton.addActionListener(e -> {
+            ViewManager.getInstance().shoppingViewOpen();
+            ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
+
+            shoppingViewListener(shoppingView);
+        });
     }
     public void productViewPanelListener(ProductViewPanel panel){
         ProductDAO dao = new ProductDAO();
@@ -266,14 +272,17 @@ public class mmsListener {
         });
         panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("search");
         });
         panel.updateButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().update = true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("update");
         });
         panel.deleteButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().delete =true;
+            ProgramManager.getInstance().getCC().appMain();
             System.out.println("delete");
         });
 
@@ -281,6 +290,7 @@ public class mmsListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ProgramManager.getInstance().getCC().isClick =true;
+                ProgramManager.getInstance().getCC().appMain();
             }
             public void mousePressed(MouseEvent e) { }
             public void mouseReleased(MouseEvent e) { }
@@ -339,12 +349,71 @@ public class mmsListener {
 
 
     public void shoppingViewListener(ShoppingView frame){
+
+
+        frame.btnEnter.addActionListener(e -> {
+            String name = frame.txtName.getText();
+            String phone = frame.txtPhone.getText();
+
+            if(name != null && phone != null) {
+                try {
+                    ProgramManager.getInstance().getShoppingController().refreshData(frame);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e2) {
+                    e2.printStackTrace();
+                }
+
+                frame.lblCname.setText("고객이름 : " + name);
+                frame.lblCphoneNum.setText("고객 번호 : " + phone);
+
+                frame.pn1.setVisible(false);
+                frame.pn2.setVisible(true);
+            }
+            else System.out.println("이름과 번호를 모두 입력하세요!");
+
+        });
+
+        frame.btnEnroll.addActionListener(e -> {
+            try {
+                ProgramManager.getInstance().getShoppingController().addMyList(frame);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e2) {
+                e2.printStackTrace();
+            }
+
+        });
+
+        frame.btnPay.addActionListener(e -> {
+            ProgramManager.getInstance().getOrderController().OrderItems(frame);
+            try {
+                ProgramManager.getInstance().getShoppingController().payment(frame);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e2) {
+                e2.printStackTrace();
+            }
+        });
+
+        frame.btnDelete.addActionListener(e -> {
+            try {
+                ProgramManager.getInstance().getShoppingController().deleteMy(frame);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            } catch (ClassNotFoundException e2) {
+                e2.printStackTrace();
+            }
+
+        });
+
     }
     public void customerManageViewListener(CustomerManageView frame){
 
         frame.btnRegister.addActionListener(e -> {
             ProgramManager.getInstance().setCustomerManageView(frame);
             ProgramManager.getInstance().getCC().register =true;
+            ProgramManager.getInstance().getCC().appMain();
         });
         frame.btnExit.addActionListener(e -> {
             frame.dispose();

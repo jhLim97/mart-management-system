@@ -13,35 +13,17 @@ import java.util.ArrayList;
 public class ShoppingController {
     public ArrayList<ProductDTO> datas ;
     public ProductDAO dao;
-    public ShoppingView v;
+
     public ArrayList<ProductDTO> datas2 ; //마이리스트 출력 어레이리스트
     public int total=0;
 
-    public ShoppingController(ShoppingView v) throws SQLException, ClassNotFoundException {
-        this.v=v;
+    public ShoppingController() throws SQLException, ClassNotFoundException {
         dao=new ProductDAO();
-        refreshData();
-        v.btnEnroll.addActionListener(new EnrollBtnListener());
-        v.btnPay.addActionListener(new PaymentBtnListener());
-        v.btnDelete.addActionListener(new deleteBtnListener());
         datas2 = new ArrayList<ProductDTO>();
     }
 
-    public class EnrollBtnListener implements ActionListener {
+    public void addMyList(ShoppingView v) throws SQLException, ClassNotFoundException {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                addMyList();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
-        }
-    }//상품담기버튼리스너
-
-    public void addMyList() throws SQLException, ClassNotFoundException {
         ProductDTO p = dao.getProduct(Integer.parseInt(v.jtfSearch.getText()));
 
         if( p.getAmount() < Integer.parseInt(v.jtfCount.getText())){ //수량비교
@@ -51,28 +33,18 @@ public class ShoppingController {
             p.setAmount(Integer.parseInt(v.jtfCount.getText()));
             datas2.add(p);
             total = p.getAmount() * p.getPrice() + total;
-            refreshData2();
+
+            refreshData2(v);
+
         }
         v.lblMsg.setText("결제 금액 : " + total +"원");
     }//상품담기
 
-    public class PaymentBtnListener implements  ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                payment();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
-        }
-    }//상품결제 버튼리스너
+    public void payment(ShoppingView v) throws SQLException, ClassNotFoundException {
+        for(ProductDTO p : datas2){ // 담은 리스트
+            for(ProductDTO p2 : datas) { // 재고 리스트
 
-    public void payment() throws SQLException, ClassNotFoundException {
-        for(ProductDTO p : datas2){
-            for(ProductDTO p2 : datas) {
                 if (p.getPrCode() == p2.getPrCode()) {
                     p2.setAmount(p2.getAmount() - p.getAmount());
                     dao.updateProduct(p2);
@@ -80,14 +52,18 @@ public class ShoppingController {
                 }
             }
         }
-        refreshData();
+
+        refreshData(v); // itemList JTable 리프레쉬
         datas2.clear();
-        refreshData2();
+        refreshData2(v);
+
         total=0;
         v.lblMsg.setText("결제 금액 : 0원");
     }//상품결제
 
-    public void refreshData() throws SQLException, ClassNotFoundException {
+
+    public void refreshData(ShoppingView v) throws SQLException, ClassNotFoundException {
+
 
         datas = dao.getAll();
         Object record[] = new Object[5];
@@ -107,9 +83,11 @@ public class ShoppingController {
         }
     }//위에 현재재고 리프레쉬
 
-    public void refreshData2() throws SQLException, ClassNotFoundException {
 
-        Object record[] = new Object[5];
+    public void refreshData2(ShoppingView v) throws SQLException, ClassNotFoundException {
+
+        Object record[] = new Object[4];
+
         v.tableModel2.setNumRows(0); // 다시붙일때 테이블 로우 초기화
 
         if( datas2 != null){
@@ -119,30 +97,21 @@ public class ShoppingController {
                 record[1] = p.getPrName();
                 record[2] = p.getPrice();
                 record[3] = p.getAmount();
-                record[4] = p.getState();
+
                 v.tableModel2.addRow(record);
 
             }
         }
     }//아래 my데이터 리프레쉬
 
-    public class deleteBtnListener implements  ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                deleteMy();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
-            }
-        }
-    }//상품지우기
-
-    public void deleteMy() throws SQLException, ClassNotFoundException {
+    public void deleteMy(ShoppingView v) throws SQLException, ClassNotFoundException {
+        ProductDTO p = datas2.get(datas2.size()-1);
+        total -= (p.getPrice()*p.getAmount());
+        v.lblMsg.setText("결제 금액 : " + total +"원");
         datas2.remove(datas2.size()-1);
-        refreshData2();
+        refreshData2(v);
+
     }
 
 
