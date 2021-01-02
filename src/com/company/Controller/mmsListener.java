@@ -4,7 +4,6 @@ import com.company.Model.*;
 import com.company.View.*;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -19,7 +18,6 @@ import java.net.Socket;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class mmsListener {
     private Gson gson = new Gson();
@@ -117,19 +115,6 @@ public class mmsListener {
             ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
 
             shoppingViewListener(shoppingView);
-        });
-        panel.logoutButton.addActionListener(e -> {
-            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw, "로그아웃",LOGOUT);
-            ProgramManager.getInstance().getMainController().msgSend(msg);
-            if(ProgramManager.getInstance().getState() instanceof MainState) {
-                mainView.productViewPanel.setVisible(false);
-            } else if(ProgramManager.getInstance().getState() instanceof CustomerManageState) {
-                mainView.customerViewPanel.setVisible(false);
-            }else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
-                mainView.orderListViewPanel.setVisible(false);
-            }
-            panel.setVisible(false);
-            ProgramManager.getInstance().setLoginState();
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -450,5 +435,13 @@ public class mmsListener {
         frame.btnExit.addActionListener(e -> {
             frame.dispose();
         });
+    }
+    public void chattingViewListener(ChattingView frame) {
+        frame.exitButton.addActionListener(e-> {
+            ProgramManager.getInstance().getChattingController().exitChatting();
+        });
+        frame.msgInput.addActionListener((e -> {
+            ProgramManager.getInstance().getChattingController().sendTextMessage("아무개" + "/" + frame.msgInput.getText());
+        }));
     }
 }

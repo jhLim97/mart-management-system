@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.Model.CustomerDAO;
 import com.company.Model.CustomerDTO;
+import com.company.Model.Message;
 import com.company.View.CustomerManageView;
 import com.company.View.CustomerViewPanel;
 import com.company.View.MainView;
@@ -161,13 +162,8 @@ public class CustomerController extends Thread{
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
             int cPoint = Integer.parseInt((String)cvp.dtmodel.getValueAt(row, 2));
-//            customer = new CustomerDTO();
-//            customer.setPhoneNum(phoneNum);
-//            customer.setCName(cName);
-//            customer.setCPoint(cPoint);
-//            cdao.updateCustomer(customer, bufferedString);
-            String msg = cName  + "/" + "update Customer set phone_num = " + phoneNum + ", c_name = " + cName + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
-//            ProgramManager.getInstance().getMainController().msgSend(msg, 9);
+            String msg = cName  + "/" + "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
+            ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,9));
         }
     }
 
@@ -178,9 +174,8 @@ public class CustomerController extends Thread{
         } else {
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
-//            cdao.delCustomer(phoneNum);
-//            cvp.dtmodel.removeRow(row);
-//            String msg =
+            String msg = cName + "/" + "delete from Customer where phone_num = " + "'" + phoneNum + "'";
+            ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,10));
         }
     }
 
@@ -192,18 +187,16 @@ public class CustomerController extends Thread{
             JOptionPane.showMessageDialog(cmv, "빈 칸을 채워 주세요.");
         }else {
             int point = Integer.parseInt(cPoint);
-            customer = new CustomerDTO();
-            customer.setCName(cName);
-            customer.setPhoneNum(phoneNum);
-            customer.setCPoint(point);
-            cdao.newCustomer(customer);
+            String msg = cName + "/" + "insert into Customer(phone_num, c_name, c_point) values(" + phoneNum + ", " + "'" + cName + "'" + ", " + cPoint + ")";
+            System.out.println(msg);
+            ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg, 8));
             cmv.refreshTextField();
         }
     }
 
     public void savePoint(String phone, int point) {
-        customer = cdao.getCustomer(phone);
-        cdao.updateCustomer(customer, point);
+        String msg = "아무개" + "/" + "update Customer set c_point = " + point + " where phone_num = " + phone;
+        ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg, 9));
     }
 
 }

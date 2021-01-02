@@ -58,7 +58,7 @@ public class MainController extends Thread {
 
     // 각 컨트롤로에서 maincontroller의 객체를 사용해 msgSend
     public void msgSend(Message msg) {
-        outMsg.println(gson.toJson(msg));
+            outMsg.println(gson.toJson(msg));
     }
 
     public void run() {
@@ -69,6 +69,17 @@ public class MainController extends Thread {
             try {
                 msg = inMsg.readLine();
                 m = gson.fromJson(msg, Message.class);
+                switch (m.getType()) {
+                    case 4 :
+                        ProgramManager.getInstance().getChattingView().refreshData(m.getMsg());
+                        break;
+
+                    case 8 :
+                        ProgramManager.getInstance().getMainView().customerViewPanel.drawTextArea(m.getMsg());
+                        break;
+                    case 9 : break;
+                    case 10 : break;
+                }
 
                 // MultiChatDat 객체로 데이터 갱신
 //                chatData.refreshData(m.getId() + ">" + m.getMsg() + "\n");

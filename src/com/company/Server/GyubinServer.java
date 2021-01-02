@@ -28,13 +28,12 @@ public class GyubinServer {
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    static final int LOGIN = 1, NEWCUSTOMER = 8, UPDATECUSTOMER = 9, DELETECUSTOMER = 10, ERROR = 15; // 여기에 타입 번호 맵핑한 후 임의로 작성 한 후 주석으로 남기기
+    static final int LOGIN = 1, CHATTING = 4, NEWCUSTOMER = 8, UPDATECUSTOMER = 9, DELETECUSTOMER = 10, ERROR = 15; // 여기에 타입 번호 맵핑한 후 임의로 작성 한 후 주석으로 남기기
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
     private ServerSocket ss = null;
     private Socket s = null; // client를 받기 위한 매개체
-    private boolean status = true;
     private CustomerDAO cdao = new CustomerDAO();
 
     // 연결된 client 스레드를 관리하는 ArrayList
@@ -96,6 +95,7 @@ public class GyubinServer {
     }
 
     class MMSThread extends Thread {
+        private boolean status = true;
 
         String msg;
         Message m = new Message();
@@ -117,10 +117,15 @@ public class GyubinServer {
                     msg = inMsg.readLine(); // 메세지 수신
                     m = gson.fromJson(msg, Message.class); // Message 클래스로 매핑
                     String index[] = m.getMsg().split("/");
+                    System.out.println(index[0]);
+                    System.out.println(index[1]);
 
                     switch(m.getType()) {
                         case LOGIN:
                             break;
+                        case CHATTING:
+                            msgSendAll(gson.toJson(new Message("","",m.getMsg(),CHATTING)));
+
                         case NEWCUSTOMER:
                             connectDB();
                             pstmt = conn.prepareStatement(index[1]);

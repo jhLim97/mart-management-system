@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="mms" uuid="33bc05a4-d88e-4f13-b6f3-5dde219cacbc">
+    <data-source source="LOCAL" name="mms" uuid="e6459a18-8269-49e0-88c0-2da1e54c373e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="mms!" uuid="19765d71-6689-4224-b7f2-950b698cb671">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql:// mms.crgsa3qt3jqa.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
 </project>
