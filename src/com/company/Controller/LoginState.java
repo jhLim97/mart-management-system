@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.View.LoginViewPanel;
 import com.company.View.MainView;
+import com.company.View.ViewManager;
 
 import javax.swing.*;
 
@@ -11,8 +12,8 @@ public class LoginState implements State{
     MainView mainView;
 
     public void draw(){
-        ProgramManager.getInstance().getMainView().drawView();
-        ProgramManager.getInstance().getMainView().drawLoginPanel();
+        ViewManager.getInstance().getMainView().drawView();
+        ViewManager.getInstance().getMainView().drawLoginPanel();
         applyListener();
     }
 
@@ -22,7 +23,7 @@ public class LoginState implements State{
 
     @Override
     public void drawPanel() {
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         if(mainView.mainViewPanel != null ) mainView.mainViewPanel.setVisible(false);
         mainView.loginViewPanel.txtId.setText("");
         mainView.loginViewPanel.txtPw.setText("");
@@ -31,7 +32,7 @@ public class LoginState implements State{
 
     @Override
     public void applyListener() {
-        loginViewPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
+        loginViewPanel = ViewManager.getInstance().getMainView().loginViewPanel;
         mmsListener.getInstance().loginPanelListener(loginViewPanel);
     }
 

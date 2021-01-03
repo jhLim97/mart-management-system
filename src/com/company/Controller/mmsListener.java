@@ -47,7 +47,7 @@ public class mmsListener {
         });
         panel.joinButton.addActionListener(e -> {
             ViewManager.getInstance().joinViewOpen();
-            joinViewListener(ViewManager.getInstance().joinView);
+            joinViewListener(ViewManager.getInstance().getJoinView());
         });
     }
     public void joinViewListener(JoinView frame){
@@ -73,7 +73,7 @@ public class mmsListener {
     }
     public void mainViewPanelListener(MainViewPanel panel){ // **********
 
-        MainView mainView = ProgramManager.getInstance().getMainView();
+        MainView mainView = ViewManager.getInstance().getMainView();
         panel.productButton.addActionListener(e -> {
             if(ProgramManager.getInstance().getState() instanceof OrderManageState){
                 mainView.orderListViewPanel.setVisible(false);
@@ -105,7 +105,7 @@ public class mmsListener {
             }
         });
         panel.shoppingButton.addActionListener(e -> {
-            ShoppingView shoppingView = ProgramManager.getInstance().getShoppingView();
+            ShoppingView shoppingView = ViewManager.getInstance().getShoppingView();
             shoppingView.setVisible(true);
 
             shoppingViewListener(shoppingView);
@@ -124,7 +124,7 @@ public class mmsListener {
             ProgramManager.getInstance().setLoginState();
         });
         panel.chatButton.addActionListener(e -> {
-            ProgramManager.getInstance().getChattingView().setVisible(true);
+            ViewManager.getInstance().getChattingView().setVisible(true);
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -174,12 +174,12 @@ public class mmsListener {
     ///여기
     public void deleteProduct(ProductDAO dao, boolean editMode, ProductViewPanel panel, ArrayList<ProductDTO> datas){
         String add_msg="";
-        int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
+        int row = ViewManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
         if(row == -1 ){
-            JOptionPane.showMessageDialog(ProgramManager.getInstance().getMainView().productViewPanel, " 삭제할 정보를 조회 후 선택해 주세요.");
+            JOptionPane.showMessageDialog(ViewManager.getInstance().getMainView().productViewPanel, " 삭제할 정보를 조회 후 선택해 주세요.");
 
         }else {
-            int prCode = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0).toString());
+            int prCode = Integer.parseInt(ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0).toString());
             add_msg = add_msg + "delete from Product where pr_code = " + prCode;
         }
 
@@ -218,8 +218,8 @@ public class mmsListener {
     }//search한후 텍스트area에 정보띄우기
 
     public void addProduct(){
-        ProgramManager.getInstance().getProductCRUDView().drawView();
-        ProgramManager.getInstance().getProductCRUDView().chk = 1;
+        ViewManager.getInstance().getProductCRUDView().drawView();
+        ViewManager.getInstance().getProductCRUDView().chk = 1;
     } //CRUD창 추가후 버튼리스너 추가
     public void refreshData (ArrayList<ProductDTO> datas, ProductDAO dao, ProductViewPanel panel)throws SQLException, ClassNotFoundException {
 
@@ -247,22 +247,22 @@ public class mmsListener {
     }
     public void updateProduct(ArrayList<ProductDTO> datas, ProductDAO dao, int bufferedString ) {
 
-        int row = ProgramManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
+        int row = ViewManager.getInstance().getMainView().productViewPanel.productTable.getSelectedRow();
         if(row == -1 ) {
-            JOptionPane.showMessageDialog(ProgramManager.getInstance().getMainView().productViewPanel, "수정할 정보를 선택해 주세요.");
+            JOptionPane.showMessageDialog(ViewManager.getInstance().getMainView().productViewPanel, "수정할 정보를 선택해 주세요.");
         } else {
-            int prcode = Integer.parseInt((ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0).toString()));
-            String prName = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 1);
-            int price = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 2).toString());
-            String location = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 3);
-            Date date = Date.valueOf(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4).toString());
-            int amount = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
-            String state = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
+            int prcode = Integer.parseInt((ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 0).toString()));
+            String prName = (String)ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 1);
+            int price = Integer.parseInt(ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 2).toString());
+            String location = (String)ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 3);
+            Date date = Date.valueOf(ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4).toString());
+            int amount = Integer.parseInt(ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
+            String state = (String)ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
 
 
-            String prstate = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);;
+            String prstate = (String)ViewManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);;
 
-            DefaultTableModel dt = ProgramManager.getInstance().getMainView().productViewPanel.tableModel;
+            DefaultTableModel dt = ViewManager.getInstance().getMainView().productViewPanel.tableModel;
 
             String add_msg = "update Product set pr_name = " + "'" + prName + "'" +
                     ",  PRICE = "+ price + ", location = "+ "'" + location +"'" +
@@ -273,7 +273,7 @@ public class mmsListener {
 
             ProgramManager.getInstance().getMainController().msgSend(new Message("", "", add_msg, 6));
 
-            ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("수정이 완료되었습니다.");
+            ViewManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("수정이 완료되었습니다.");
         }
     }
 
@@ -326,7 +326,7 @@ public class mmsListener {
         frame.completeButton.addActionListener(e -> {
             if(frame.chk==1)
                 try {
-                    addProduct_inCRUD(frame, dao, ProgramManager.getInstance().getMainView().productViewPanel.editMode, datas);
+                    addProduct_inCRUD(frame, dao, ViewManager.getInstance().getMainView().productViewPanel.editMode, datas);
                 }catch (Exception e1){}
         });
     }//productCRUDViewListener
@@ -361,7 +361,7 @@ public class mmsListener {
         ProgramManager.getInstance().getMainController().msgSend(new Message("", "", add_msg, 5));
 
 
-        ProgramManager.getInstance().getMainView().productViewPanel.SUDLab.setText("검색 정보 :                                                      ");
+        ViewManager.getInstance().getMainView().productViewPanel.SUDLab.setText("검색 정보 :                                                      ");
 
     } //addProduct_inCRUD complete누르면 정보 추가
     //메소드///////////////////////////////
@@ -445,7 +445,7 @@ public class mmsListener {
     public void customerManageViewListener(CustomerManageView frame){
 
         frame.btnRegister.addActionListener(e -> {
-            ProgramManager.getInstance().setCustomerManageView(frame);
+            ViewManager.getInstance().setCustomerManageView(frame);
             ProgramManager.getInstance().getCC().register =true;
             ProgramManager.getInstance().getCC().appMain();
         });
@@ -460,7 +460,7 @@ public class mmsListener {
         });
         frame.msgInput.addActionListener((e -> {
             ProgramManager.getInstance().getChattingController().sendTextMessage(ProgramManager.getInstance().id + "/" + frame.msgInput.getText());
-            ProgramManager.getInstance().getChattingView().msgInput.setText("");
+            ViewManager.getInstance().getChattingView().msgInput.setText("");
         }));
     }
 }

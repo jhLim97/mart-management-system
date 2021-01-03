@@ -9,40 +9,19 @@ public class ProgramManager {
     String jdbcDriver = "com.mysql.cj.jdbc.Driver";
     String jdbcUrl = "jdbc:mysql://localhost:3306/mms?&serverTimezone=Asia/Seoul&useSSL=false";
     Connection conn;
-    MainState mainState;
-    LoginState loginState;
-    OrderManageState orderManageState;
-    CustomerManageState customerManageState;
-    CustomerController CC;
+    private MainState mainState;
+    private LoginState loginState;
+    private OrderManageState orderManageState;
+    private CustomerManageState customerManageState;
+    private CustomerController CC;
     public String id,pw;
-    private JoinView joinView;
-    private ProductCRUDView productCRUDView;
-    private ShoppingView shoppingView;
-    private CustomerManageView customerManageView;
-    private OrderListViewPanel orderListViewPanel;
-    private ChattingView chattingView;
     private ChattingController chattingController;
-
-    private MainView mainView;
-
     private State state;
-
-    public ProgramManager(){
-        mainState = new MainState();
-        loginState = new LoginState();
-        orderManageState = new OrderManageState();
-        customerManageState = new CustomerManageState();
-    }
 
     private static ProgramManager s_Instance;
     public static ProgramManager getInstance(){
         if (s_Instance == null) s_Instance = new ProgramManager();
         return s_Instance;
-    }
-
-    public ChattingView getChattingView() {
-        if(chattingView == null) chattingView = new ChattingView();
-        return chattingView;
     }
 
     public ChattingController getChattingController() {
@@ -88,13 +67,7 @@ public class ProgramManager {
     // ----------------------------------------------
 
 
-    public ShoppingView getShoppingView() {
-        if(shoppingView == null){
-            shoppingView = new ShoppingView();
-            shoppingView.drawView();
-        }
-        return shoppingView;
-    }
+
     ProductController PC;
 
     public CustomerController getCC() {
@@ -103,7 +76,7 @@ public class ProgramManager {
     }
 
     public ProductController getPC() throws SQLException, ClassNotFoundException {
-        if(PC ==null) PC= new ProductController(ProgramManager.getInstance().getMainView().productViewPanel);
+        if(PC ==null) PC= new ProductController(ViewManager.getInstance().getMainView().productViewPanel);
         return PC;
     }
 
@@ -112,15 +85,6 @@ public class ProgramManager {
     }
     public void setPC(ProductController PC){ this.PC = PC;}
 
-    public OrderListViewPanel getOrderListViewPanel() {
-        if(orderListViewPanel == null) orderListViewPanel = new OrderListViewPanel();
-        return orderListViewPanel;
-    }
-
-    public MainView getMainView() {
-        if(mainView == null) mainView = new MainView();
-        return mainView;
-    }
 
     public void setMainState(){
         if(mainState == null) {
@@ -128,7 +92,7 @@ public class ProgramManager {
             mainState.draw();
         }
         if(state instanceof LoginState) {
-            mainView.mainViewPanel.messageLabel.setText(id + " 님이 로그인 하셨습니다.");
+            ViewManager.getInstance().getMainView().mainViewPanel.messageLabel.setText(id + " 님이 로그인 하셨습니다.");
             try {
                 setPC(getPC());
             }catch(Exception e) { }
@@ -171,23 +135,7 @@ public class ProgramManager {
     public void setState(State state) {
         this.state = state;
     }
-    public JoinView getJoinView() {
-        if(joinView == null) joinView = new JoinView();
-        return joinView;
-    }
-
-    public ProductCRUDView getProductCRUDView() {
-        if(productCRUDView == null) productCRUDView = new ProductCRUDView();
-        return productCRUDView;
-    }
-
-    public CustomerManageView getCustomerManageView() {
-        if(customerManageView == null) customerManageView = new CustomerManageView();
-        return customerManageView;
-    }
 
 
-    public void setCustomerManageView(CustomerManageView customerManageView) {
-        this.customerManageView = customerManageView;
-    }
+
 }

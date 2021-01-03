@@ -6,6 +6,7 @@ import com.company.Model.Message;
 import com.company.View.CustomerManageView;
 import com.company.View.CustomerViewPanel;
 import com.company.View.MainView;
+import com.company.View.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,8 +25,8 @@ public class CustomerController extends Thread{
     boolean search = false, register = false, update = false, delete = false, isClick = false;
 
     public void appMain() {
-        cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
-        cmv = ProgramManager.getInstance().getCustomerManageView();
+        cvp = ViewManager.getInstance().getMainView().customerViewPanel;
+        cmv = ViewManager.getInstance().getCustomerManageView();
 
         if(search) {
             cvp.initDTModel();

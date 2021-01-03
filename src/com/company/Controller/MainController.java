@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.Model.Message;
 import com.company.View.LoginViewPanel;
+import com.company.View.ViewManager;
 import com.google.gson.Gson;
 
 
@@ -81,7 +82,7 @@ public class MainController extends Thread {
                 m = gson.fromJson(msg, Message.class);
                 switch (m.getType()) {
                     case 2 :
-                        LoginViewPanel lvp = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        LoginViewPanel lvp = ViewManager.getInstance().getMainView().loginViewPanel;
                         String id = lvp.txtId.getText();
                         String pw = lvp.txtPw.getText();
                         if(m.getId().equals(id) && m.getPasswd().equals(pw)) {
@@ -91,7 +92,7 @@ public class MainController extends Thread {
                         }
                         break;
                     case 4 :
-                        ProgramManager.getInstance().getChattingView().refreshData(m.getMsg());
+                        ViewManager.getInstance().getChattingView().refreshData(m.getMsg());
                         break;
                     //여기
                     case 5 :
@@ -110,7 +111,7 @@ public class MainController extends Thread {
                         catch(Exception e1){}
                         break;
                     case 8 :
-                        ProgramManager.getInstance().getMainView().customerViewPanel.drawTextArea(m.getMsg());
+                        ViewManager.getInstance().getMainView().customerViewPanel.drawTextArea(m.getMsg());
                         break;
                     case 9 : break;
                     case 10 : break;
@@ -119,22 +120,22 @@ public class MainController extends Thread {
                     {
                         System.out.println("클라이언트 체크 : " + "/" + m.getId());
                         if(m.getId().equals(ProgramManager.getInstance().id)) {
-                            ProgramManager.getInstance().getOrderController().OrderItems(ProgramManager.getInstance().getShoppingView(), ProgramManager.getInstance().getShoppingController().getTotal()); // 주문, 주문 내역 쿼리 실행
-                            ProgramManager.getInstance().getCC().savePoint(ProgramManager.getInstance().getShoppingView().txtPhone.getText(), (int)(ProgramManager.getInstance().getShoppingController().getTotal()*0.01)); // 고객 포인트 업데이트
+                            ProgramManager.getInstance().getOrderController().OrderItems(ViewManager.getInstance().getShoppingView(), ProgramManager.getInstance().getShoppingController().getTotal()); // 주문, 주문 내역 쿼리 실행
+                            ProgramManager.getInstance().getCC().savePoint(ViewManager.getInstance().getShoppingView().txtPhone.getText(), (int)(ProgramManager.getInstance().getShoppingController().getTotal()*0.01)); // 고객 포인트 업데이트
 
                             try {
                                 ProgramManager.getInstance().getPC().refreshData();} // 상품 화면 업데이트
                             catch(Exception e1){}
 
                             try {
-                                ProgramManager.getInstance().getShoppingController().payComplete(ProgramManager.getInstance().getShoppingView());
+                                ProgramManager.getInstance().getShoppingController().payComplete(ViewManager.getInstance().getShoppingView());
                             } catch (SQLException e1) {
                                 e1.printStackTrace();
                             } catch (ClassNotFoundException e2) {
                                 e2.printStackTrace();
                             }
 
-                            ProgramManager.getInstance().getShoppingView().repaint();
+                            ViewManager.getInstance().getShoppingView().repaint();
                         }
                         break;
                     }
@@ -142,7 +143,7 @@ public class MainController extends Thread {
                     {
                         if(m.getId().equals(ProgramManager.getInstance().id)) {
                             try {
-                                ProgramManager.getInstance().getShoppingController().payFailed(ProgramManager.getInstance().getShoppingView());
+                                ProgramManager.getInstance().getShoppingController().payFailed(ViewManager.getInstance().getShoppingView());
                             } catch (SQLException e1) {
                                 e1.printStackTrace();
                             } catch (ClassNotFoundException e2) {
@@ -154,7 +155,7 @@ public class MainController extends Thread {
                     }
 
                     case 15 :
-                        LoginViewPanel loginPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        LoginViewPanel loginPanel = ViewManager.getInstance().getMainView().loginViewPanel;
                         loginPanel.txtId.setText("");
                         loginPanel.txtPw.setText("");
 
