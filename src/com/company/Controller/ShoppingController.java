@@ -69,7 +69,7 @@ public class ShoppingController {
 
         updateEntireProduct += "@" + count;
 
-        Message msg = new Message(" ", " ", updateEntireProduct, 8);
+        Message msg = new Message(ProgramManager.getInstance().id, " ", updateEntireProduct, 17);
         ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
 
     } // 상품결제
@@ -82,6 +82,18 @@ public class ShoppingController {
         refreshData2(v);
 
         total=0;
+        v.lblMsg.setText("결제 금액 : 0원");
+    }
+
+    // 결제 실패 시 수행하는 함수
+    public void payFailed(ShoppingView v) throws SQLException, ClassNotFoundException {
+
+        refreshData(v); // itemList JTable 리프레쉬
+        datas2.clear();
+        refreshData2(v);
+
+        total=0;
+        v.lblstate.setText("상태 : 결제 실패");
         v.lblMsg.setText("결제 금액 : 0원");
     }
 
@@ -113,6 +125,7 @@ public class ShoppingController {
     public void refreshData(ShoppingView v) throws SQLException, ClassNotFoundException {
 
 
+        System.out.println("test1");
         datas = dao.getAll();
         Object record[] = new Object[5];
         v.tableModel.setNumRows(0); // 다시붙일때 테이블 로우 초기화
@@ -133,6 +146,7 @@ public class ShoppingController {
 
 
     public void refreshData2(ShoppingView v) throws SQLException, ClassNotFoundException {
+        System.out.println("test2");
 
         Object record[] = new Object[4];
 
@@ -159,7 +173,6 @@ public class ShoppingController {
         v.lblMsg.setText("결제 금액 : " + total +"원");
         datas2.remove(datas2.size()-1);
         refreshData2(v);
-
     }
 
 

@@ -19,8 +19,7 @@ public class ViewManager {
     }
 
     public void shoppingViewOpen(){
-        if(shoppingView != null) shoppingView.dispose();
-        shoppingView = new ShoppingView();
+        if(shoppingView == null) shoppingView = new ShoppingView();
         shoppingView.drawView();
     }
 

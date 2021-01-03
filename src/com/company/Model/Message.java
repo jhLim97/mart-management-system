@@ -24,5 +24,6 @@ public class Message {
     public int getType() { return type; }
     public String getId() { return id; }
     public String getMsg() { return msg; }
+    public String getPasswd() { return passwd; }
 
 }

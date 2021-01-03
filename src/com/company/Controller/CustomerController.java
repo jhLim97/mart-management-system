@@ -195,9 +195,17 @@ public class CustomerController extends Thread{
     }
 
     public void savePoint(String phone, int point) { // 규빈이랑 합병하면 적용하기
-        //String savePointMsg = "update Customer set c_point =" + point + "where phone_num =" + "'" + phone + "'";
-        //Message msg = new Message(" ", " ", savePointMsg, 11);
-        //ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
+
+        customer = cdao.getCustomer(phone);
+        if(customer != null) {
+            point += customer.getCPoint();
+        } else {
+            JOptionPane.showMessageDialog(cvp, "등록되지 않은 회원 입니다.");
+        }
+
+        String savePointMsg = "update Customer set c_point =" + point + " where phone_num =" + "'" + phone + "'";
+        Message msg = new Message(" ", " ", savePointMsg, 9);
+        ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
     }
 
 }
