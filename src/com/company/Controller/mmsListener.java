@@ -38,20 +38,25 @@ public class mmsListener {
         panel.loginButton.addActionListener(e -> {
             String id = panel.txtId.getText();
             String pw = panel.txtPw.getText();
-            AccountDAO dao = new AccountDAO();
+//            AccountDAO dao = new AccountDAO();
 
-            if(dao.loginProgram(id,pw)){
-                ProgramManager.getInstance().id = id;
-                ProgramManager.getInstance().pw = pw;
-                ProgramManager.getInstance().setMainState();
-                msg = new Message(id,pw,"로그인",LOGIN);
-                ProgramManager.getInstance().getMainController().msgSend(msg);
+            String msg = id + "/" + "select * from Accounts where id = "
+                    + "'" + id + "'" + "and passwd = " + "'" + pw + "'";
 
-            }
-            else{
-                panel.txtId.setText("");
-                panel.txtPw.setText("");
-            }
+            ProgramManager.getInstance().getMainController().msgSend(new Message(id, pw, msg, LOGIN));
+
+//            if(dao.loginProgram(id,pw)){
+//                ProgramManager.getInstance().id = id;
+//                ProgramManager.getInstance().pw = pw;
+//                ProgramManager.getInstance().setMainState();
+//                msg = new Message(id,pw,"아무개/로그인",LOGIN);
+//                ProgramManager.getInstance().getMainController().msgSend(msg);
+//
+//            }
+//            else{
+//                panel.txtId.setText("");
+//                panel.txtPw.setText("");
+//            }
         });
         panel.joinButton.addActionListener(e -> {
             ViewManager.getInstance().joinViewOpen();
@@ -118,17 +123,20 @@ public class mmsListener {
             shoppingViewListener(shoppingView);
         });
         panel.logoutButton.addActionListener(e -> {
-            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw, "로그아웃",LOGOUT);
+            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw,  ProgramManager.getInstance().id + "/ 로그아웃", LOGOUT);
             ProgramManager.getInstance().getMainController().msgSend(msg);
             if(ProgramManager.getInstance().getState() instanceof MainState) {
                 mainView.productViewPanel.setVisible(false);
             } else if(ProgramManager.getInstance().getState() instanceof CustomerManageState) {
                 mainView.customerViewPanel.setVisible(false);
-            }else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
+            } else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
                 mainView.orderListViewPanel.setVisible(false);
             }
             panel.setVisible(false);
             ProgramManager.getInstance().setLoginState();
+        });
+        panel.chatButton.addActionListener(e -> {
+            ProgramManager.getInstance().getChattingView().setVisible(true);
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -472,6 +480,7 @@ public class mmsListener {
         });
 
     }
+
     public void customerManageViewListener(CustomerManageView frame){
 
         frame.btnRegister.addActionListener(e -> {
@@ -483,12 +492,14 @@ public class mmsListener {
             frame.dispose();
         });
     }
+
     public void chattingViewListener(ChattingView frame) {
         frame.exitButton.addActionListener(e-> {
             ProgramManager.getInstance().getChattingController().exitChatting();
         });
         frame.msgInput.addActionListener((e -> {
-            ProgramManager.getInstance().getChattingController().sendTextMessage("아무개" + "/" + frame.msgInput.getText());
+            ProgramManager.getInstance().getChattingController().sendTextMessage(ProgramManager.getInstance().id + "/" + frame.msgInput.getText());
+            ProgramManager.getInstance().getChattingView().msgInput.setText("");
         }));
     }
 }

@@ -1,5 +1,7 @@
 package com.company.Server;
 
+import com.company.Model.AccountDAO;
+import com.company.Model.AccountDTO;
 import com.company.Model.CustomerDAO;
 import com.google.gson.Gson;
 
@@ -28,7 +30,7 @@ public class GyubinServer {
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    static final int LOGIN = 1, CHATTING = 4, NEWCUSTOMER = 8, UPDATECUSTOMER = 9, DELETECUSTOMER = 10, ERROR = 15; // 여기에 타입 번호 맵핑한 후 임의로 작성 한 후 주석으로 남기기
+    static final int INSERT_ACCOUNT = 1, LOGIN = 2, LOGOUT = 3, CHATTING = 4, NEWCUSTOMER = 8, UPDATECUSTOMER = 9, DELETECUSTOMER = 10, ERROR = 15;
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
@@ -121,10 +123,9 @@ public class GyubinServer {
                     System.out.println(index[1]);
 
                     switch(m.getType()) {
-                        case LOGIN:
-                            break;
                         case CHATTING:
-                            msgSendAll(gson.toJson(new Message("","",m.getMsg(),CHATTING)));
+                            msgSendAll(gson.toJson(new Message("","",index[0] + " : " + index[1],CHATTING)));
+                            break;
 
                         case NEWCUSTOMER:
                             connectDB();
@@ -153,10 +154,46 @@ public class GyubinServer {
                             }
 
                             break;
+//                        case INSERT_ACCOUNT:
+//                            AccountDTO account = new AccountDTO();
+//                            account.setIsStaff(true);
+//                            account.setId(msg.getId());
+//                            account.setPassword(msg.getPasswd());
+//                            account.setIsSupperUser(false);
+//                            account.setUserName(msg.getMsg());
+//                            account.setIsLogin(false);
+//                            dao.makeAccount(account);
+//                            break;
+                        case LOGIN:
+                            connectDB();
+
+                            pstmt = conn.prepareStatement(index[1]);
+                            rs = pstmt.executeQuery();
+
+                            if(rs.next()) {
+                                AccountDAO adao = new AccountDAO();
+                                adao.setLogin(m.getId(),m.getPasswd());
+                                msgSendAll(gson.toJson(new Message(m.getId(), m.getPasswd(), m.getId() + "님이 로그인 하셨습니다.", LOGIN)));
+                                msgSendAll(gson.toJson(new Message("","",m.getId() + "님이 접속하셨습니다.", CHATTING)));
+                                logger.info("id : " + m.getId() + " pw : " + m.getPasswd());
+                            }
+
+                            closeDB();
+                            break;
+                        case LOGOUT:
+                            connectDB();
+
+                            AccountDAO adao = new AccountDAO();
+                            adao.setLogout(m.getId(), m.getPasswd());
+                            msgSendAll(gson.toJson(new Message(m.getId(), m.getPasswd(), m.getId() + "님이 로그아웃 하셨습니다.", LOGOUT)));
+                            msgSendAll(gson.toJson(new Message("","",m.getId() + "님이 접속종료 하셨습니다.", CHATTING)));
+                            logger.info("id :" + id + " logout");
+                            break;
                     }
 
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
+                    closeDB();
                     status = false;
                 }
 

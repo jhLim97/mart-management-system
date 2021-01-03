@@ -22,7 +22,6 @@ public class CustomerController extends Thread{
     CustomerManageView cmv;
     CustomerViewPanel cvp;
     boolean search = false, register = false, update = false, delete = false, isClick = false;
-    private static CustomerController s_Instance;
 
     public void appMain() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
@@ -53,75 +52,6 @@ public class CustomerController extends Thread{
             bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
             isClick = false;
         }
-    }
-
-    public CustomerController() {
-    }
-
-    public class DeleteButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            deleteCustomer();
-        }
-    }
-
-    public class SearchButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cvp.initDTModel();
-            String phoneNum = cvp.txtPhoneNum.getText();
-            if(phoneNum.equals("")) {
-                searchAllCustomer();
-            } else searchCustomer(phoneNum);
-        }
-    }
-
-    public class RegisterButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            registerCustomer();
-            cmv.refreshTextField();
-            cvp.taNewCustomer.append(customer.getCName() + "님이 새로 등록되었습니다." + "\n");
-        }
-    }
-
-    public class ExitButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cmv.dispose();
-        }
-    }
-
-    public class AddButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            makeCustomerManageView();
-        }
-    }
-
-    public class UpdateButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateCustomer(bufferedString);
-        }
-    }
-
-    public class TableClickListener implements MouseListener {
-
-        public void mouseClicked(MouseEvent e) {
-            int row = cvp.tblCustomerList.getSelectedRow();
-            bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
-        }
-        public void mousePressed(MouseEvent e) { }
-        public void mouseReleased(MouseEvent e) { }
-        public void mouseEntered(MouseEvent e) { }
-        public void mouseExited(MouseEvent e) { }
     }
 
     public CustomerManageView makeCustomerManageView() {
