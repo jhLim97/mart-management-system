@@ -107,8 +107,8 @@ public class mmsListener {
         panel.shoppingButton.addActionListener(e -> {
             ShoppingView shoppingView = ViewManager.getInstance().getShoppingView();
             shoppingView.setVisible(true);
-
-            shoppingViewListener(shoppingView);
+            if(!ViewManager.getInstance().isShoppingViewOpen())
+                shoppingViewListener(shoppingView);
         });
         panel.logoutButton.addActionListener(e -> {
             msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw,  "로그아웃", LOGOUT);
