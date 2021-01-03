@@ -41,7 +41,7 @@ public class AccountDAO {
             e.printStackTrace();
         }
     }
-    ArrayList<AccountDTO> getAll(){
+    public ArrayList<AccountDTO> getAll(){
         sql = "select * from Accounts";
         connectDB();
         ArrayList<AccountDTO> accountList = new ArrayList<>();

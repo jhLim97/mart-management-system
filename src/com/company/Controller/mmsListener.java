@@ -38,20 +38,12 @@ public class mmsListener {
         panel.loginButton.addActionListener(e -> {
             String id = panel.txtId.getText();
             String pw = panel.txtPw.getText();
-            AccountDAO dao = new AccountDAO();
+//            AccountDAO dao = new AccountDAO();
 
-            if(dao.loginProgram(id,pw)){
-                ProgramManager.getInstance().id = id;
-                ProgramManager.getInstance().pw = pw;
-                ProgramManager.getInstance().setMainState();
-                msg = new Message(id,pw,"로그인",LOGIN);
-                ProgramManager.getInstance().getMainController().msgSend(msg);
+            String msg = "select * from Accounts where id = "
+                    + "'" + id + "'" + "and passwd = " + "'" + pw + "'";
 
-            }
-            else{
-                panel.txtId.setText("");
-                panel.txtPw.setText("");
-            }
+            ProgramManager.getInstance().getMainController().msgSend(new Message(id, pw, msg, LOGIN));
         });
         panel.joinButton.addActionListener(e -> {
             ViewManager.getInstance().joinViewOpen();
@@ -63,9 +55,10 @@ public class mmsListener {
             String id = frame.txtId.getText();
             String pw = frame.txtPw.getText();
             String name = frame.txtName.getText();
+            String msg= "insert into Accounts(id, passwd, user_name, is_login) values('"
+                    + id + "', '" + pw + "', '" + name + "', " + 0 + ")";
             if(id != null && pw != null && name != null) {
-                msg = new Message(id, pw, name, INSERT_ACCOUNT);
-                ProgramManager.getInstance().getMainController().msgSend(msg);
+                ProgramManager.getInstance().getMainController().msgSend(new Message(id, pw, msg, INSERT_ACCOUNT));
                 frame.dispose();
 
             }
@@ -118,17 +111,20 @@ public class mmsListener {
             shoppingViewListener(shoppingView);
         });
         panel.logoutButton.addActionListener(e -> {
-            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw, "로그아웃",LOGOUT);
+            msg = new Message(ProgramManager.getInstance().id, ProgramManager.getInstance().pw,  "로그아웃", LOGOUT);
             ProgramManager.getInstance().getMainController().msgSend(msg);
             if(ProgramManager.getInstance().getState() instanceof MainState) {
                 mainView.productViewPanel.setVisible(false);
             } else if(ProgramManager.getInstance().getState() instanceof CustomerManageState) {
                 mainView.customerViewPanel.setVisible(false);
-            }else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
+            } else if(ProgramManager.getInstance().getState() instanceof OrderManageState){
                 mainView.orderListViewPanel.setVisible(false);
             }
             panel.setVisible(false);
             ProgramManager.getInstance().setLoginState();
+        });
+        panel.chatButton.addActionListener(e -> {
+            ProgramManager.getInstance().getChattingView().setVisible(true);
         });
     }
     public void productViewPanelListener(ProductViewPanel panel){
@@ -302,22 +298,18 @@ public class mmsListener {
         panel.addButton.addActionListener(e -> {
             CustomerManageView cmv = ProgramManager.getInstance().getCC().makeCustomerManageView();
             customerManageViewListener(cmv);
-            System.out.println("register");
         });
         panel.searchButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().search = true;
             ProgramManager.getInstance().getCC().appMain();
-            System.out.println("search");
         });
         panel.updateButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().update = true;
             ProgramManager.getInstance().getCC().appMain();
-            System.out.println("update");
         });
         panel.deleteButton.addActionListener(e -> {
             ProgramManager.getInstance().getCC().delete =true;
             ProgramManager.getInstance().getCC().appMain();
-            System.out.println("delete");
         });
 
         panel.tblCustomerList.addMouseListener(new MouseListener() {
@@ -472,6 +464,7 @@ public class mmsListener {
         });
 
     }
+
     public void customerManageViewListener(CustomerManageView frame){
 
         frame.btnRegister.addActionListener(e -> {
@@ -483,12 +476,14 @@ public class mmsListener {
             frame.dispose();
         });
     }
+
     public void chattingViewListener(ChattingView frame) {
         frame.exitButton.addActionListener(e-> {
             ProgramManager.getInstance().getChattingController().exitChatting();
         });
         frame.msgInput.addActionListener((e -> {
-            ProgramManager.getInstance().getChattingController().sendTextMessage("아무개" + "/" + frame.msgInput.getText());
+            ProgramManager.getInstance().getChattingController().sendTextMessage(ProgramManager.getInstance().id + "/" + frame.msgInput.getText());
+            ProgramManager.getInstance().getChattingView().msgInput.setText("");
         }));
     }
 }

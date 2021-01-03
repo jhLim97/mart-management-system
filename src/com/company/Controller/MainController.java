@@ -1,6 +1,7 @@
 package com.company.Controller;
 
 import com.company.Model.Message;
+import com.company.View.LoginViewPanel;
 import com.google.gson.Gson;
 
 
@@ -50,8 +51,8 @@ public class MainController extends Thread {
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
 
-            m = new Message("v.id", "", "", 1); // 여기 내가 테스트용으로 임시 수정.. (임준)
-            outMsg.println(gson.toJson(m));
+//            m = new Message("", "", "시스템접속", 1);
+//            outMsg.println(gson.toJson(m));
 
 
             thread = new Thread(this);
@@ -78,6 +79,16 @@ public class MainController extends Thread {
 
                 m = gson.fromJson(msg, Message.class);
                 switch (m.getType()) {
+                    case 2 :
+                        LoginViewPanel lvp = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        String id = lvp.txtId.getText();
+                        String pw = lvp.txtPw.getText();
+                        if(m.getId().equals(id) && m.getPasswd().equals(pw)) {
+                            ProgramManager.getInstance().id = m.getId();
+                            ProgramManager.getInstance().pw = m.getPasswd();
+                            ProgramManager.getInstance().setMainState();
+                        }
+                        break;
                     case 4 :
                         ProgramManager.getInstance().getChattingView().refreshData(m.getMsg());
                         break;
@@ -102,6 +113,10 @@ public class MainController extends Thread {
                         break;
                     case 9 : break;
                     case 10 : break;
+                    case 15 :
+                        LoginViewPanel loginPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        loginPanel.txtId.setText("");
+                        loginPanel.txtPw.setText("");
                 }
 
 
