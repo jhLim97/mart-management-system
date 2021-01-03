@@ -92,7 +92,7 @@ public class CustomerController extends Thread{
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
             int cPoint = Integer.parseInt((String)cvp.dtmodel.getValueAt(row, 2));
-            String msg = cName  + "/" + "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
+            String msg = "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,9));
         }
     }
@@ -104,7 +104,7 @@ public class CustomerController extends Thread{
         } else {
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
-            String msg = cName + "/" + "delete from Customer where phone_num = " + "'" + phoneNum + "'";
+            String msg = "delete from Customer where phone_num = " + "'" + phoneNum + "'";
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,10));
         }
     }
@@ -117,7 +117,7 @@ public class CustomerController extends Thread{
             JOptionPane.showMessageDialog(cmv, "빈 칸을 채워 주세요.");
         }else {
             int point = Integer.parseInt(cPoint);
-            String msg = cName + "/" + "insert into Customer(phone_num, c_name, c_point) values(" + phoneNum + ", " + "'" + cName + "'" + ", " + cPoint + ")";
+            String msg = cName + "/" + "insert into Customer(phone_num, c_name, c_point) values('" + phoneNum + "', " + "'" + cName + "'" + ", " + cPoint + ")";
             System.out.println(msg);
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg, 8));
             cmv.refreshTextField();

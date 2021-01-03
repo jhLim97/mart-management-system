@@ -51,8 +51,8 @@ public class MainController extends Thread {
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
 
-            m = new Message("", "", "누구게"+"/" + "시스템접속", 1);
-            outMsg.println(gson.toJson(m));
+//            m = new Message("", "", "시스템접속", 1);
+//            outMsg.println(gson.toJson(m));
 
 
             thread = new Thread(this);
