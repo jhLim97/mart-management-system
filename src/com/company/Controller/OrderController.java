@@ -37,7 +37,7 @@ public class OrderController {
         // 선택된 정보 가져오기
         String s = (String) pn.cb.getSelectedItem();
 
-        if (s.equals("요일별 매출")) {
+        if (s.equals("일별 매출")) {
 
         } else if (s.equals("월별 매출")) {
 
