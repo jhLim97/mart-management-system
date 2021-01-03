@@ -1,7 +1,6 @@
 package com.company.Server;
 
 import com.company.Model.AccountDAO;
-import com.company.Model.AccountDTO;
 import com.company.Model.CustomerDAO;
 import com.google.gson.Gson;
 
@@ -13,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 
@@ -34,12 +34,20 @@ public class GyubinServer {
     static final int ADD_PRODUCT =5;
     static final int UPDATE_PRODUCT =6;
     static final int DELETE_PRODUCT = 7;
+    static final int ORDER = 11; // 주문 테이블 갱신
+    static final int ORDERHISTORY = 16; // 주문 내역 테이블 갱신
+    static final int PAYTRY = 17; // 구매 시도
+    static final int ORDERCOMPLETE = 18; // 주문 성공 시
+    static final int ORDERFAIL = 19; // 재고 부족으로 주문 실패 시..'
+    static final int UPDATECUSTOMERPOINT = 20; // 구매완료 시 총 구매금액의 10% 갱신
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
     private ServerSocket ss = null;
     private Socket s = null; // client를 받기 위한 매개체
     private CustomerDAO cdao = new CustomerDAO();
+
+    int orderCode; // 주문 내역을 위한 변수
 
     // 연결된 client 스레드를 관리하는 ArrayList
     ArrayList<MMSThread> mmsThreadList = new ArrayList<MMSThread>();
@@ -77,6 +85,7 @@ public class GyubinServer {
         logger = Logger.getLogger(this.getClass().getName());
 
         try {
+            Collections.synchronizedList(mmsThreadList); // List synchronized 준혁 추가 ...
             ss = new ServerSocket(7777); // 임의의 포트번호를 통해 서버 소켓 생성
             logger.info("MultiChatServer start");
 
@@ -95,8 +104,8 @@ public class GyubinServer {
     }
 
     public static void main(String args[]) {
-        GyubinServer multiChatServer = new GyubinServer();
-        multiChatServer.start();
+        //MMSServer multiChatServer = new MMSServer();
+        //multiChatServer.start();
     }
 
     class MMSThread extends Thread {
@@ -121,18 +130,18 @@ public class GyubinServer {
                 try {
                     msg = inMsg.readLine(); // 메세지 수신
                     m = gson.fromJson(msg, Message.class); // Message 클래스로 매핑
-                    String index[] = {};
+                    String str[] = {};
                     switch(m.getType()) {
                         case CHATTING:
-                            msgSendAll(gson.toJson(new Message("","",index[0] + " : " + index[1],CHATTING)));
+                            msgSendAll(gson.toJson(new Message("","",str[0] + " : " + str[1],CHATTING)));
                             break;
 
                         case NEWCUSTOMER:
-                            index = m.getMsg().split("/");
+                            str = m.getMsg().split("/");
                             connectDB();
-                            pstmt = conn.prepareStatement(index[1]);
+                            pstmt = conn.prepareStatement(str[1]);
                             if(pstmt.executeUpdate() != 0) {
-                                msgSendAll(gson.toJson(new Message("", "", index[0] + "님이 등록되었습니다.", NEWCUSTOMER)));
+                                msgSendAll(gson.toJson(new Message("", "", str[0] + "님이 등록되었습니다.", NEWCUSTOMER)));
                             }
                             closeDB();
                             break;
@@ -153,14 +162,6 @@ public class GyubinServer {
                             closeDB();
                             break;
                         case INSERT_ACCOUNT:
-//                            AccountDTO account = new AccountDTO();
-//                            account.setIsStaff(true);
-//                            account.setId(msg.getId());
-//                            account.setPassword(msg.getPasswd());
-//                            account.setIsSupperUser(false);
-//                            account.setUserName(msg.getMsg());
-//                            account.setIsLogin(false);
-//                            dao.makeAccount(account);
                             connectDB();
                             pstmt = conn.prepareStatement(m.getMsg());
                             if(pstmt.executeUpdate() != 0) {
@@ -221,6 +222,90 @@ public class GyubinServer {
                             }
 
                             break;
+
+                        case ORDER :
+                            connectDB();
+                            try {
+                                pstmt = conn.prepareStatement(m.getMsg());
+                                pstmt.executeUpdate();
+
+                                // 가장 최신의 입력된 auto_increment 값 가져오기
+                                // --> mysql에서는 해당 값을 컨넥션 별로 관리하므로 멀티 스레드 구현 시 race condition같은 문제를 걱정할 필요없음
+                                // 즉, 락을 걸거나 트랜잭션을 구현할 필요가 X
+                                sql = "select last_insert_id()";
+                                pstmt = conn.prepareStatement(sql);
+                                rs = pstmt.executeQuery();
+
+                                if(rs.next()) orderCode = rs.getInt(1);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            closeDB();
+                            break;
+
+                        case PAYTRY :
+                            connectDB();
+                            str = m.getMsg().split("@");
+                            int cnt = Integer.parseInt(str[1]); // 구매 예정인 즉, 업데이트 할 품목 개수
+                            System.out.println("품목개수 : " + cnt);
+                            boolean canBuy = true;
+                            String str1[] = str[0].split("/");
+                            for(int i=1; i<=cnt; i++) {
+                                try {
+                                    sql = "select * from Product where pr_code = ?";
+                                    pstmt = conn.prepareStatement(sql);
+                                    pstmt.setInt(1, Integer.parseInt(str1[i*3-1]));
+                                    System.out.println("코드번호 : " + Integer.parseInt(str1[i*3-1]));
+                                    rs = pstmt.executeQuery();
+
+                                    if(rs.next()) {
+                                        if(rs.getInt("amount") < Integer.parseInt(str1[i*3-2])) {
+                                            System.out.println("품목별 재고 : " + rs.getInt("pr_code"));
+                                            canBuy = false;
+                                        }
+                                    }
+                                } catch (SQLException e){
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            System.out.println(canBuy);
+
+                            if(canBuy) {
+                                for(int i=1; i<=cnt; i++) {
+                                    try {
+                                        sql = "update Product set amount = ? where pr_code = ?";
+                                        pstmt = conn.prepareStatement(sql);
+                                        pstmt.setInt(1, Integer.parseInt(str1[i*3-3]));
+                                        pstmt.setInt(2, Integer.parseInt(str1[i*3-1]));
+                                        System.out.println(Integer.parseInt(str1[i*3-3]) + "/" + Integer.parseInt(str1[i*3-2]) + "/" + Integer.parseInt(str1[i*3-1]));
+                                        pstmt.executeUpdate();
+                                    } catch (SQLException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                                msgSendAll(gson.toJson(new Message(m.getId(), "", "", ORDERCOMPLETE))); // 고객 아이디로 보내기
+                            }
+                            else msgSendAll(gson.toJson(new Message(m.getId(), "", "", ORDERFAIL))); // 고객 아이디로 보내기
+
+                            System.out.println("서버에서 아이디는 : " + m.getId());
+                            closeDB();
+                            break;
+
+                        case ORDERHISTORY :
+                            connectDB();
+                            str = m.getMsg().split("/");
+                            try {
+                                sql = str[0] + orderCode + str[1];
+                                pstmt = conn.prepareStatement(sql);
+                                pstmt.executeUpdate();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            closeDB();
+                            break;
+
+
                     }
 
                 } catch (IOException | SQLException e) {
