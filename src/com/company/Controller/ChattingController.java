@@ -13,6 +13,6 @@ public class ChattingController {
     }
 
     public void sendTextMessage(String text) {
-        ProgramManager.getInstance().getMainController().msgSend(new Message("","",text,4));
+        ProgramManager.getInstance().getMainController().msgSend(new Message(ProgramManager.getInstance().id,"",text,4));
     }
 }

@@ -6,13 +6,16 @@ import com.company.Model.ProductDTO;
 import com.company.View.MainView;
 import com.company.View.ProductViewPanel;
 import com.company.View.ProductCRUDView;
+import com.company.View.ViewManager;
 
+import javax.naming.ServiceUnavailableException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class ProductController extends Thread{
@@ -25,6 +28,8 @@ public class ProductController extends Thread{
     Date date ;
     public boolean isClick = false;
     public int bufferedString =-1;
+    SimpleDateFormat format = new SimpleDateFormat ( "yyyy년 MM월dd일 HH시mm분");
+
 
     public ProductController(ProductViewPanel v) throws SQLException, ClassNotFoundException {
         this.v=v;
@@ -67,6 +72,7 @@ public class ProductController extends Thread{
 
 
     public void run(){
+
         String txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
         String txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
@@ -74,6 +80,10 @@ public class ProductController extends Thread{
 
         while(true){//while
             java.util.Date now = new java.util.Date();
+
+            Calendar time = Calendar.getInstance();
+            String format_time = format.format(time.getTime());
+            ViewManager.getInstance().getMainView().mainViewPanel.timeLabel.setText(format_time);
 
             try {
                 data=dao.getAll();
@@ -135,10 +145,12 @@ public class ProductController extends Thread{
                 }
 
             }try {
-                sleep(10000);
+                sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+
             v.smallAMountArea.setText(txt);
             v.almostExpiredArea.setText(txt2);
             txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";

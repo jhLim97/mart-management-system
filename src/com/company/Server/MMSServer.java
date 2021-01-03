@@ -133,6 +133,7 @@ public class MMSServer {
                     String str[] = {};
                     switch(m.getType()) {
                         case CHATTING:
+                            str = m.getMsg().split("/");
                             msgSendAll(gson.toJson(new Message("","",str[0] + " : " + str[1],CHATTING)));
                             break;
 
@@ -148,6 +149,7 @@ public class MMSServer {
                         case UPDATECUSTOMER:
                             connectDB();
                             pstmt = conn.prepareStatement(m.getMsg());
+                            System.out.println(m.getMsg());
                             if(pstmt.executeUpdate() != 0) {
                                 msgSendAll(gson.toJson(new Message("", "", "정보가 수정되었습니다.", UPDATECUSTOMER)));
                             }

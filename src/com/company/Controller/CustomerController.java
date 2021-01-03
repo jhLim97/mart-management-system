@@ -93,7 +93,9 @@ public class CustomerController extends Thread{
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
             int cPoint = Integer.parseInt((String)cvp.dtmodel.getValueAt(row, 2));
-            String msg = "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
+            String tmp = "'" + bufferedString + "'";
+            String msg = "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + tmp;
+
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,9));
         }
     }
