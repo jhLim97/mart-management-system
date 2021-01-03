@@ -13,21 +13,14 @@ public class MainState implements State{
     MainView mainView;
     ProductViewPanel productViewPanel;
 
-    public void drawFrameInit(){
-        mainView = ProgramManager.getInstance().getMainView();
-        mainView.loginViewPanel.setVisible(false);
-        if(mainView.mainViewPanel == null) mainView.drawMainPanel();
-        else mainView.mainViewPanel.setVisible(true);
-        if(mainView.productViewPanel == null) mainView.drawProductViewPanel();
-        else mainView.productViewPanel.setVisible(true);
-
-        applyListener();
-
-    }
-
     @Override
     public void draw() {
-        drawPanel();
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.drawMainPanel();
+        mainView.drawCustomerViewPanel();
+        mainView.drawOrderListViewPanel();
+        mainView.drawProductViewPanel();
+        mainView.drawMainPanel();
         applyListener();
     }
 
@@ -36,18 +29,25 @@ public class MainState implements State{
 
     }
 
+    @Override
     public void drawPanel() {
-
-
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.mainViewPanel.setVisible(true);
+        mainView.loginViewPanel.setVisible(false);
+        mainView.customerViewPanel.setVisible(false);
+        mainView.orderListViewPanel.setVisible(false);
+        mainView.productViewPanel.setVisible(true);
+        ProgramManager.getInstance().getChattingView().drawView();
     }
 
     @Override
     public void applyListener() {
         mainView = ProgramManager.getInstance().getMainView();
+        mainView = ProgramManager.getInstance().getMainView();
         mmsListener.getInstance().mainViewPanelListener(mainView.mainViewPanel);
-        mmsListener.getInstance().productViewPanelListener(
-                (ProgramManager.getInstance().getMainView().productViewPanel));
+        mmsListener.getInstance().productViewPanelListener(mainView.productViewPanel);
         mmsListener.getInstance().productCRUDViewListener(ProgramManager.getInstance().getProductCRUDView());
+        mmsListener.getInstance().chattingViewListener(ProgramManager.getInstance().getChattingView());
     }
 
     @Override

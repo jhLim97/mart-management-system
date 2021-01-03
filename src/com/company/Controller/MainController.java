@@ -1,6 +1,7 @@
 package com.company.Controller;
 
 import com.company.Model.Message;
+import com.company.View.LoginViewPanel;
 import com.google.gson.Gson;
 
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,8 +52,8 @@ public class MainController extends Thread {
             outMsg = new PrintWriter(s.getOutputStream(), true);
 
 
-            m = new Message("v.id", "", "", 1); // 여기 내가 테스트용으로 임시 수정.. (임준)
-            outMsg.println(gson.toJson(m));
+//            m = new Message("", "", "시스템접속", 1);
+//            outMsg.println(gson.toJson(m));
 
 
             thread = new Thread(this);
@@ -78,6 +80,16 @@ public class MainController extends Thread {
 
                 m = gson.fromJson(msg, Message.class);
                 switch (m.getType()) {
+                    case 2 :
+                        LoginViewPanel lvp = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        String id = lvp.txtId.getText();
+                        String pw = lvp.txtPw.getText();
+                        if(m.getId().equals(id) && m.getPasswd().equals(pw)) {
+                            ProgramManager.getInstance().id = m.getId();
+                            ProgramManager.getInstance().pw = m.getPasswd();
+                            ProgramManager.getInstance().setMainState();
+                        }
+                        break;
                     case 4 :
                         ProgramManager.getInstance().getChattingView().refreshData(m.getMsg());
                         break;
@@ -102,6 +114,50 @@ public class MainController extends Thread {
                         break;
                     case 9 : break;
                     case 10 : break;
+
+                    case 18 : // 주문 성공
+                    {
+                        System.out.println("클라이언트 체크 : " + "/" + m.getId());
+                        if(m.getId().equals(ProgramManager.getInstance().id)) {
+                            ProgramManager.getInstance().getOrderController().OrderItems(ProgramManager.getInstance().getShoppingView(), ProgramManager.getInstance().getShoppingController().getTotal()); // 주문, 주문 내역 쿼리 실행
+                            ProgramManager.getInstance().getCC().savePoint(ProgramManager.getInstance().getShoppingView().txtPhone.getText(), (int)(ProgramManager.getInstance().getShoppingController().getTotal()*0.01)); // 고객 포인트 업데이트
+
+                            try {
+                                ProgramManager.getInstance().getPC().refreshData();} // 상품 화면 업데이트
+                            catch(Exception e1){}
+
+                            try {
+                                ProgramManager.getInstance().getShoppingController().payComplete(ProgramManager.getInstance().getShoppingView());
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            } catch (ClassNotFoundException e2) {
+                                e2.printStackTrace();
+                            }
+
+                            ProgramManager.getInstance().getShoppingView().repaint();
+                        }
+                        break;
+                    }
+                    case 19 : // 주문 실패
+                    {
+                        if(m.getId().equals(ProgramManager.getInstance().id)) {
+                            try {
+                                ProgramManager.getInstance().getShoppingController().payFailed(ProgramManager.getInstance().getShoppingView());
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            } catch (ClassNotFoundException e2) {
+                                e2.printStackTrace();
+                            }
+
+                        }
+                        break;
+                    }
+
+                    case 15 :
+                        LoginViewPanel loginPanel = ProgramManager.getInstance().getMainView().loginViewPanel;
+                        loginPanel.txtId.setText("");
+                        loginPanel.txtPw.setText("");
+
                 }
 
 

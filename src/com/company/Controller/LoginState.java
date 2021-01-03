@@ -11,20 +11,22 @@ public class LoginState implements State{
     MainView mainView;
 
     public void draw(){
-        drawFrame();
-        drawPanel();
+        ProgramManager.getInstance().getMainView().drawView();
+        ProgramManager.getInstance().getMainView().drawLoginPanel();
         applyListener();
     }
 
     @Override
     public void drawFrame() {
-        mainView = ProgramManager.getInstance().getMainView();
-        mainView.drawView();
     }
 
     @Override
     public void drawPanel() {
-        ProgramManager.getInstance().getMainView().drawLoginPanel();
+        mainView = ProgramManager.getInstance().getMainView();
+        if(mainView.mainViewPanel != null ) mainView.mainViewPanel.setVisible(false);
+        mainView.loginViewPanel.txtId.setText("");
+        mainView.loginViewPanel.txtPw.setText("");
+        mainView.loginViewPanel.setVisible(true);
     }
 
     @Override

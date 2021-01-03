@@ -22,7 +22,6 @@ public class CustomerController extends Thread{
     CustomerManageView cmv;
     CustomerViewPanel cvp;
     boolean search = false, register = false, update = false, delete = false, isClick = false;
-    private static CustomerController s_Instance;
 
     public void appMain() {
         cvp = ProgramManager.getInstance().getMainView().customerViewPanel;
@@ -53,75 +52,6 @@ public class CustomerController extends Thread{
             bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
             isClick = false;
         }
-    }
-
-    public CustomerController() {
-    }
-
-    public class DeleteButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            deleteCustomer();
-        }
-    }
-
-    public class SearchButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cvp.initDTModel();
-            String phoneNum = cvp.txtPhoneNum.getText();
-            if(phoneNum.equals("")) {
-                searchAllCustomer();
-            } else searchCustomer(phoneNum);
-        }
-    }
-
-    public class RegisterButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            registerCustomer();
-            cmv.refreshTextField();
-            cvp.taNewCustomer.append(customer.getCName() + "님이 새로 등록되었습니다." + "\n");
-        }
-    }
-
-    public class ExitButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cmv.dispose();
-        }
-    }
-
-    public class AddButtonListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            makeCustomerManageView();
-        }
-    }
-
-    public class UpdateButtonListener implements  ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            updateCustomer(bufferedString);
-        }
-    }
-
-    public class TableClickListener implements MouseListener {
-
-        public void mouseClicked(MouseEvent e) {
-            int row = cvp.tblCustomerList.getSelectedRow();
-            bufferedString = (String)cvp.dtmodel.getValueAt(row, 0);
-        }
-        public void mousePressed(MouseEvent e) { }
-        public void mouseReleased(MouseEvent e) { }
-        public void mouseEntered(MouseEvent e) { }
-        public void mouseExited(MouseEvent e) { }
     }
 
     public CustomerManageView makeCustomerManageView() {
@@ -162,7 +92,7 @@ public class CustomerController extends Thread{
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
             int cPoint = Integer.parseInt((String)cvp.dtmodel.getValueAt(row, 2));
-            String msg = cName  + "/" + "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
+            String msg = "update Customer set phone_num = " + "'" + phoneNum + "'" + ", c_name = " + "'" + cName + "'" + ", c_point = " + cPoint + " where phone_num = " + bufferedString;
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,9));
         }
     }
@@ -174,7 +104,7 @@ public class CustomerController extends Thread{
         } else {
             String phoneNum = (String)cvp.dtmodel.getValueAt(row, 0);
             String cName = (String)cvp.dtmodel.getValueAt(row, 1);
-            String msg = cName + "/" + "delete from Customer where phone_num = " + "'" + phoneNum + "'";
+            String msg = "delete from Customer where phone_num = " + "'" + phoneNum + "'";
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg,10));
         }
     }
@@ -187,7 +117,7 @@ public class CustomerController extends Thread{
             JOptionPane.showMessageDialog(cmv, "빈 칸을 채워 주세요.");
         }else {
             int point = Integer.parseInt(cPoint);
-            String msg = cName + "/" + "insert into Customer(phone_num, c_name, c_point) values(" + phoneNum + ", " + "'" + cName + "'" + ", " + cPoint + ")";
+            String msg = cName + "/" + "insert into Customer(phone_num, c_name, c_point) values('" + phoneNum + "', " + "'" + cName + "'" + ", " + cPoint + ")";
             System.out.println(msg);
             ProgramManager.getInstance().getMainController().msgSend(new Message("","",msg, 8));
             cmv.refreshTextField();
@@ -195,9 +125,17 @@ public class CustomerController extends Thread{
     }
 
     public void savePoint(String phone, int point) { // 규빈이랑 합병하면 적용하기
-        //String savePointMsg = "update Customer set c_point =" + point + "where phone_num =" + "'" + phone + "'";
-        //Message msg = new Message(" ", " ", savePointMsg, 11);
-        //ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
+
+        customer = cdao.getCustomer(phone);
+        if(customer != null) {
+            point += customer.getCPoint();
+        } else {
+            JOptionPane.showMessageDialog(cvp, "등록되지 않은 회원 입니다.");
+        }
+
+        String savePointMsg = "update Customer set c_point =" + point + " where phone_num =" + "'" + phone + "'";
+        Message msg = new Message(" ", " ", savePointMsg, 9);
+        ProgramManager.getInstance().getMainController().msgSend(msg); // addOrder 요청
     }
 
 }

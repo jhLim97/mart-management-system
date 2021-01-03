@@ -24,7 +24,15 @@ public class ProgramManager {
     private ChattingController chattingController;
 
     private MainView mainView;
+
     private State state;
+
+    public ProgramManager(){
+        mainState = new MainState();
+        loginState = new LoginState();
+        orderManageState = new OrderManageState();
+        customerManageState = new CustomerManageState();
+    }
 
     private static ProgramManager s_Instance;
     public static ProgramManager getInstance(){
@@ -81,7 +89,10 @@ public class ProgramManager {
 
 
     public ShoppingView getShoppingView() {
-        if(shoppingView == null) shoppingView = new ShoppingView();
+        if(shoppingView == null){
+            shoppingView = new ShoppingView();
+            shoppingView.drawView();
+        }
         return shoppingView;
     }
     ProductController PC;
@@ -112,52 +123,45 @@ public class ProgramManager {
     }
 
     public void setMainState(){
-        if(mainState == null) mainState = new MainState();
+        if(mainState == null) {
+            mainState = new MainState();
+            mainState.draw();
+        }
         if(state instanceof LoginState) {
-            mainState.drawFrameInit();
-            this.state = mainState;
             mainView.mainViewPanel.messageLabel.setText(id + " 님이 로그인 하셨습니다.");
             try {
                 setPC(getPC());
-            }catch(Exception e) {
-
-            }
-            return;
+            }catch(Exception e) { }
         }
-
         this.state = mainState;
-        mainState.mainView.productViewPanel.setVisible(true);
-        state.applyListener();
+        mainState.drawPanel();
     }
     public void setLoginState() {
-
         if(loginState == null) {
             loginState = new LoginState();
             loginState.draw();
         } else {
-            mainView.loginViewPanel.txtId.setText("");
-            mainView.loginViewPanel.txtPw.setText("");
-            mainView.loginViewPanel.setVisible(true);
-            loginState.applyListener();
+            loginState.drawPanel();
         }
 
         this.state = loginState;
     }
     public void setOrderManageState(){
-        if(orderManageState == null) orderManageState = new OrderManageState();
+        if(orderManageState == null) {
+            orderManageState = new OrderManageState();
+            orderManageState.applyListener();
+        }
+        orderManageState.drawPanel();
         this.state = orderManageState;
-        if(mainView.orderListViewPanel == null) { mainView.drawOrderListViewPanel();}
-        else mainView.orderListViewPanel.setVisible(true);
-        state.applyListener();
 
     }
     public void setCustomerManageState(){
-
-        if(customerManageState == null) customerManageState = new CustomerManageState();
+        if(customerManageState == null) {
+            customerManageState = new CustomerManageState();
+            customerManageState.applyListener();
+        }
         this.state = customerManageState;
-        if(mainView.customerViewPanel == null) mainView.drawCustomerViewPanel();
-        else mainView.customerViewPanel.setVisible(true);
-        state.applyListener();
+        customerManageState.drawPanel();
         setCC(getCC());
     }
 

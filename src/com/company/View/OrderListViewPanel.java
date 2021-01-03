@@ -39,7 +39,7 @@ public class OrderListViewPanel extends JPanel {
 
         //OrderLab
         //orderLab = new JLabel("판매 정보 및 매출");
-        String menu[] = {"요일별 조회", "월별 조회", "주문 내역", "주문 상세 내역"};
+        String menu[] = {"주문 내역", "주문 상세 내역"};
         cb = new JComboBox(menu); // 상품을 콤보박스에서 조회할 수 있도록 생성
         btnSerach = new JButton("조회");
 
@@ -55,14 +55,14 @@ public class OrderListViewPanel extends JPanel {
 
         //revenue panel + Label
         revenuePanel = new JPanel();
-        revenueDay = new JLabel("요일별 매출");
-        minDay = new JLabel("최저 : ");
-        maxDay = new JLabel("최고 : ");
-        revenueMonth = new JLabel("월별 매출");
-        minMonth = new JLabel("최저 : ");
-        maxMonth = new JLabel("최고 : ");
-        revenueTotal = new JLabel("총 매출");
-        total = new JLabel("총액 : ");
+        revenueDay = new JLabel("");
+        minDay = new JLabel("");
+        maxDay = new JLabel("");
+        revenueMonth = new JLabel("");
+        minMonth = new JLabel("");
+        maxMonth = new JLabel("");
+        revenueTotal = new JLabel("");
+        total = new JLabel("");
 
     }
 
@@ -94,17 +94,17 @@ public class OrderListViewPanel extends JPanel {
         //JScrollPane sp = new JScrollPane(orderHistoryView);
         orderScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         orderScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        orderScroll.setBounds(10, 70,800,380);
+        orderScroll.setBounds(10, 70,800,500);
         orderScroll.setVisible(true);
 
         orderHistoryScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         orderHistoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        orderHistoryScroll.setBounds(10, 70,800,380);
+        orderHistoryScroll.setBounds(10, 70,800,500);
         orderHistoryScroll.setVisible(false);
 
         //revenuePanel
         revenuePanel.setBackground(Color.lightGray);
-        revenuePanel.setBounds(820,70,360,380);
+        revenuePanel.setBounds(820,70,360,500);
         revenuePanel.setLayout(null);
         //revenue panel + Label
         revenueDay.setBounds(20,20,320,30);
@@ -138,7 +138,6 @@ public class OrderListViewPanel extends JPanel {
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
 
-        setVisible(true);
     }
 
 }

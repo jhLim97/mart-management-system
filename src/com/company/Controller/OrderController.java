@@ -37,7 +37,7 @@ public class OrderController {
         // 선택된 정보 가져오기
         String s = (String) pn.cb.getSelectedItem();
 
-        if (s.equals("요일별 매출")) {
+        if (s.equals("일별 매출")) {
 
         } else if (s.equals("월별 매출")) {
 
@@ -202,8 +202,9 @@ public class OrderController {
         int orderCode, prCode, prPrice, prCount;
         orderCode = 0; // 초기화
 
-        String cName[], cPhone[], prName;
-        cName = shoppingView.lblCname.getText().split(" : "); // 이름 추출
+        String cName, cPhone[], prName;
+        //cName = shoppingView.lblCname.getText().split(" : "); // 이름 추출
+        cName = ProgramManager.getInstance().getShoppingView().txtName.getText();
         cPhone = shoppingView.lblCphoneNum.getText().split(" : "); // 번호 추출
 
         // ----- 현재 시간 가져오기 -----
@@ -219,8 +220,7 @@ public class OrderController {
 
         String date = year + "-" + month + "-" + day;
 
-        //addOrderMsg += "value(" + totalPrice + " ," + cName[1] + " ," + cPhone[1] + " ," +  "'2020-01-02'" + ")";
-        addOrderMsg += "value(" + totalPrice + " ," + "'" + cName[1] + "'" + " ," + "'" + cPhone[1] + "'" + " ," +  "'" + date + "'" + ")";
+        addOrderMsg += "value(" + totalPrice + " ," + "'" + cName + "'" + " ," + "'" + cPhone[1] + "'" + " ," +  "'" + date + "'" + ")";
         //addOrderMsg = totalPrice + "/" + cName[1] + "/" + cPhone[1] + "/" + date;
 
         Message msg = new Message(" ", " ", addOrderMsg, 11);
