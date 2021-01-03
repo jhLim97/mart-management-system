@@ -1,6 +1,7 @@
 package com.company.View;
 
 import com.company.Controller.ProgramManager;
+import com.company.Controller.mmsListener;
 
 public class ViewManager {
 
@@ -11,7 +12,7 @@ public class ViewManager {
     private OrderListViewPanel orderListViewPanel;
     private ChattingView chattingView;
     private MainView mainView;
-
+    private boolean isShoppingViewOpen;
     private static ViewManager s_Instance;
 
 
@@ -25,19 +26,24 @@ public class ViewManager {
         joinView.drawView();
     }
 
+    public boolean isShoppingViewOpen() {
+        return isShoppingViewOpen;
+    }
+
     public void shoppingViewOpen(){
         if(shoppingView == null) shoppingView = new ShoppingView();
-        shoppingView.drawView();
+        shoppingView.setVisible(true);
     }
     public ChattingView getChattingView() {
         if(chattingView == null) chattingView = new ChattingView();
         return chattingView;
     }
-
     public ShoppingView getShoppingView() {
         if(shoppingView == null){
+            isShoppingViewOpen = true;
             shoppingView = new ShoppingView();
             shoppingView.drawView();
+            mmsListener.getInstance().shoppingViewListener(shoppingView);
         }
         return shoppingView;
     }
