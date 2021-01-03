@@ -81,7 +81,10 @@ public class ProgramManager {
 
 
     public ShoppingView getShoppingView() {
-        if(shoppingView == null) shoppingView = new ShoppingView();
+        if(shoppingView == null){
+            shoppingView = new ShoppingView();
+            shoppingView.drawView();
+        }
         return shoppingView;
     }
     ProductController PC;

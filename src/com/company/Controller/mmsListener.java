@@ -105,8 +105,10 @@ public class mmsListener {
             }
         });
         panel.shoppingButton.addActionListener(e -> {
-            ViewManager.getInstance().shoppingViewOpen();
-            ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
+            //ViewManager.getInstance().shoppingViewOpen();
+            //ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
+            ShoppingView shoppingView = ProgramManager.getInstance().getShoppingView();
+            shoppingView.setVisible(true);
 
             shoppingViewListener(shoppingView);
         });
@@ -258,7 +260,7 @@ public class mmsListener {
             Date date = Date.valueOf(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 4).toString());
             int amount = Integer.parseInt(ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 5).toString());
             String state = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);
-//
+
 
             String prstate = (String)ProgramManager.getInstance().getMainView().productViewPanel.tableModel.getValueAt(row, 6);;
 
@@ -269,12 +271,6 @@ public class mmsListener {
                     ", exp_date = "+ "'" + date + "'" + ", amount = "+ amount + ", state = "+ "'" + prstate + "'" + "where pr_code = " + prcode;
 
 
-//            try {
-//
-//                dao.updateProduct2(p, bufferedString);
-//                System.out.println("야호");
-//
-//            }catch (Exception e){}
 
 
             ProgramManager.getInstance().getMainController().msgSend(new Message("", "", add_msg, 6));
@@ -282,7 +278,7 @@ public class mmsListener {
             ProgramManager.getInstance().getMainView().productViewPanel.SUDtxt.setText("수정이 완료되었습니다.");
         }
     }
-    ////////////메소드///////////////
+
 
 
 
@@ -339,34 +335,6 @@ public class mmsListener {
 
     //productCRUDViewListener Method CRUD패널 메소드 ////////////////////
     public void addProduct_inCRUD(ProductCRUDView CRUDv, ProductDAO dao, boolean editMode, ArrayList<ProductDTO> datas) throws SQLException, ClassNotFoundException {
-//        ProductDTO productDTO = new ProductDTO();
-//        productDTO.setPrCode(Integer.parseInt(CRUDv.codeText.getText()));
-//        productDTO.setPrName(CRUDv.nameText.getText());
-//        productDTO.setPrice(Integer.parseInt(CRUDv.priceText.getText()));
-//        productDTO.setLocation(CRUDv.locationText.getText());
-//        productDTO.setExpDate(Date.valueOf(CRUDv.expDateText.getText()));
-//        productDTO.setAmount(Integer.parseInt(CRUDv.countText.getText()));
-//        productDTO.setState("판매");
-//        try {
-//            if(dao.newProduct(productDTO)) { //상품등록 완료
-//                System.out.println("상품등록 완료");
-//                CRUDv.codeText.setText("");
-//                CRUDv.nameText.setText("");
-//                CRUDv.priceText.setText("");
-//                CRUDv.locationText.setText("");
-//                CRUDv.expDateText.setText("");
-//                CRUDv.countText.setText("");
-//                editMode = false;
-//                refreshData(datas,dao,ProgramManager.getInstance().getMainView().productViewPanel);
-//            }
-//            else{
-//                System.out.println("실패");
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        } catch (ClassNotFoundException classNotFoundException) {
-//            classNotFoundException.printStackTrace();
-//        }
 
         String add_msg="insert into Product(pr_code, pr_name, price, location, exp_date, amount, state) ";
         String prstate = "판매";
@@ -403,6 +371,19 @@ public class mmsListener {
 
 
     public void shoppingViewListener(ShoppingView frame){
+
+        for (ActionListener al : frame.btnEnter.getActionListeners()) {
+            frame.btnEnter.removeActionListener(al);
+        }
+        for (ActionListener al : frame.btnEnroll.getActionListeners()) {
+            frame.btnEnter.removeActionListener(al);
+        }
+        for (ActionListener al : frame.btnPay.getActionListeners()) {
+            frame.btnEnter.removeActionListener(al);
+        }
+        for (ActionListener al : frame.btnDelete.getActionListeners()) {
+            frame.btnEnter.removeActionListener(al);
+        }
 
         frame.btnEnter.addActionListener(e -> {
 
@@ -441,10 +422,7 @@ public class mmsListener {
         frame.btnPay.addActionListener(e -> {
 
             try {
-                int total = ProgramManager.getInstance().getShoppingController().getTotal();
                 ProgramManager.getInstance().getShoppingController().payment(frame); // 여기를 통과해야 되게끔..
-                ProgramManager.getInstance().getOrderController().OrderItems(frame, total); // 주문, 주문 내역 쿼리 실행
-                ProgramManager.getInstance().getCC().savePoint(frame.txtPhone.getText(), (int)(total*0.01));
             } catch (SQLException e1) {
                 e1.printStackTrace();
             } catch (ClassNotFoundException e2) {

@@ -55,7 +55,7 @@ public class OrderListViewPanel extends JPanel {
 
         //revenue panel + Label
         revenuePanel = new JPanel();
-        revenueDay = new JLabel("요일별 매출");
+        revenueDay = new JLabel("일별 매출");
         minDay = new JLabel("최저 : ");
         maxDay = new JLabel("최고 : ");
         revenueMonth = new JLabel("월별 매출");
@@ -94,12 +94,12 @@ public class OrderListViewPanel extends JPanel {
         //JScrollPane sp = new JScrollPane(orderHistoryView);
         orderScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         orderScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        orderScroll.setBounds(10, 70,800,380);
+        orderScroll.setBounds(10, 70,800,500);
         orderScroll.setVisible(true);
 
         orderHistoryScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         orderHistoryScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        orderHistoryScroll.setBounds(10, 70,800,380);
+        orderHistoryScroll.setBounds(10, 70,800,500);
         orderHistoryScroll.setVisible(false);
 
         //revenuePanel
