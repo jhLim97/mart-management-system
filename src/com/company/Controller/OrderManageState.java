@@ -8,12 +8,10 @@ import javax.swing.*;
 
 public class OrderManageState implements State{
     OrderListViewPanel listViewPanel;
-    MainView productView;
+    MainView mainView;
 
     @Override
     public void draw() {
-        drawPanel();
-        applyListener();
     }
 
     @Override
@@ -23,7 +21,10 @@ public class OrderManageState implements State{
 
     @Override
     public void drawPanel() {
-        ProgramManager.getInstance().getMainView().drawOrderListViewPanel();
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.customerViewPanel.setVisible(false);
+        mainView.productViewPanel.setVisible(false);
+        mainView.orderListViewPanel.setVisible(true);
     }
 
     @Override
