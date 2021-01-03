@@ -17,12 +17,9 @@ import java.util.ArrayList;
 
 public class ProductController extends Thread{
     public ProductViewPanel v;
-    public ProductCRUDView CRUDv ;
     ProductDAO dao;
     public ArrayList<ProductDTO> datas;
-    public boolean editMode = false;
     MainView mainView ;
-    Date date ;
     public boolean isClick = false;
     public int bufferedString =-1;
 
