@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.View.MainView;
 import com.company.View.ProductViewPanel;
+import com.company.View.ViewManager;
 
 import javax.swing.*;
 
@@ -15,7 +16,7 @@ public class MainState implements State{
 
     @Override
     public void draw() {
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         mainView.drawMainPanel();
         mainView.drawCustomerViewPanel();
         mainView.drawOrderListViewPanel();
@@ -31,23 +32,23 @@ public class MainState implements State{
 
     @Override
     public void drawPanel() {
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         mainView.mainViewPanel.setVisible(true);
         mainView.loginViewPanel.setVisible(false);
         mainView.customerViewPanel.setVisible(false);
         mainView.orderListViewPanel.setVisible(false);
         mainView.productViewPanel.setVisible(true);
-        ProgramManager.getInstance().getChattingView().drawView();
+        ViewManager.getInstance().getChattingView().drawView();
     }
 
     @Override
     public void applyListener() {
-        mainView = ProgramManager.getInstance().getMainView();
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         mmsListener.getInstance().mainViewPanelListener(mainView.mainViewPanel);
         mmsListener.getInstance().productViewPanelListener(mainView.productViewPanel);
-        mmsListener.getInstance().productCRUDViewListener(ProgramManager.getInstance().getProductCRUDView());
-        mmsListener.getInstance().chattingViewListener(ProgramManager.getInstance().getChattingView());
+        mmsListener.getInstance().productCRUDViewListener(ViewManager.getInstance().getProductCRUDView());
+        mmsListener.getInstance().chattingViewListener(ViewManager.getInstance().getChattingView());
     }
 
     @Override

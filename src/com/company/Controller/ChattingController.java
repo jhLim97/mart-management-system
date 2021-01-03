@@ -2,12 +2,13 @@ package com.company.Controller;
 
 import com.company.Model.Message;
 import com.company.View.ChattingView;
+import com.company.View.ViewManager;
 
 public class ChattingController {
     ChattingView chattingView;
 
     public void exitChatting() {
-        chattingView = ProgramManager.getInstance().getChattingView();
+        chattingView = ViewManager.getInstance().getChattingView();
         chattingView.setVisible(false);
     }
 

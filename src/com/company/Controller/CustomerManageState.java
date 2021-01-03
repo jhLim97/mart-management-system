@@ -1,9 +1,6 @@
 package com.company.Controller;
 
-import com.company.View.CustomerManageView;
-import com.company.View.CustomerViewPanel;
-import com.company.View.MainView;
-import com.company.View.ProductViewPanel;
+import com.company.View.*;
 
 import javax.swing.*;
 
@@ -22,7 +19,7 @@ public class CustomerManageState implements State {
 
     @Override
     public void drawPanel() {
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         mainView.orderListViewPanel.setVisible(false);
         mainView.productViewPanel.setVisible(false);
         mainView.customerViewPanel.setVisible(true);
@@ -32,7 +29,7 @@ public class CustomerManageState implements State {
     @Override
     public void applyListener() {
 
-        customerViewPanel = ProgramManager.getInstance().getMainView().customerViewPanel;
+        customerViewPanel = ViewManager.getInstance().getMainView().customerViewPanel;
         mmsListener.getInstance().customerViewPanelListener(customerViewPanel);
 
     }

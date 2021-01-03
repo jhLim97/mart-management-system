@@ -138,7 +138,6 @@ public class OrderListViewPanel extends JPanel {
         revenuePanel.add(minMonth); revenuePanel.add(maxMonth);
         revenuePanel.add(total);
 
-        setVisible(true);
     }
 
 }

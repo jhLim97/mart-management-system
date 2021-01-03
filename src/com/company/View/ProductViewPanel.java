@@ -54,7 +54,6 @@ public class ProductViewPanel extends JPanel {
         smallAMountArea = new JTextArea(15,30);
         almostExpiredArea = new JTextArea(15,30);
 
-        setVisible(true);
     }
 
     public void drawView() throws SQLException, ClassNotFoundException {

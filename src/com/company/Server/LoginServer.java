@@ -108,33 +108,4 @@ public class LoginServer {
 
     }
 
-
-
-    public void connectDB() {
-        try {
-            Class.forName(jdbcDriver);
-            System.out.println("드라이버 로드 성공");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            System.out.println("데이터베이스 연결 준비...");
-            connection = DriverManager.getConnection(jdbcUrl, userId, pwd);
-            System.out.println("데이터베이스 연결 성공");
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-    }
-
-    public void closeDB() {
-        try {
-            preparedStatement.close();
-            if(resultSet!=null) resultSet.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

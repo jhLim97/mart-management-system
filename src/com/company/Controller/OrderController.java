@@ -4,6 +4,7 @@ import com.company.Model.*;
 import com.company.View.OrderListViewPanel;
 import com.company.View.ShoppingView;
 import com.company.View.TestOrderListViewPanel;
+import com.company.View.ViewManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -204,7 +205,7 @@ public class OrderController {
 
         String cName, cPhone[], prName;
         //cName = shoppingView.lblCname.getText().split(" : "); // 이름 추출
-        cName = ProgramManager.getInstance().getShoppingView().txtName.getText();
+        cName = ViewManager.getInstance().getShoppingView().txtName.getText();
         cPhone = shoppingView.lblCphoneNum.getText().split(" : "); // 번호 추출
 
         // ----- 현재 시간 가져오기 -----

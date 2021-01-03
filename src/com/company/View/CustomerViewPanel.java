@@ -82,7 +82,6 @@ public class CustomerViewPanel extends JPanel {
         add(optionPanel, BorderLayout.PAGE_START);
         add(cusInfoPanel, BorderLayout.CENTER);
 
-        setVisible(true);
     }
 
     public void drawTextArea(String text) {

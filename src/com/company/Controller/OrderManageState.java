@@ -3,6 +3,7 @@ package com.company.Controller;
 import com.company.View.MainView;
 import com.company.View.OrderListViewPanel;
 import com.company.View.ProductViewPanel;
+import com.company.View.ViewManager;
 
 import javax.swing.*;
 
@@ -21,7 +22,7 @@ public class OrderManageState implements State{
 
     @Override
     public void drawPanel() {
-        mainView = ProgramManager.getInstance().getMainView();
+        mainView = ViewManager.getInstance().getMainView();
         mainView.customerViewPanel.setVisible(false);
         mainView.productViewPanel.setVisible(false);
         mainView.orderListViewPanel.setVisible(true);
@@ -29,7 +30,7 @@ public class OrderManageState implements State{
 
     @Override
     public void applyListener() {
-        listViewPanel = ProgramManager.getInstance().getMainView().orderListViewPanel;
+        listViewPanel = ViewManager.getInstance().getMainView().orderListViewPanel;
         mmsListener.getInstance().orderListViewPanelListener(listViewPanel);
     }
 
