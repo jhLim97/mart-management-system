@@ -107,7 +107,6 @@ public class mmsListener {
         panel.shoppingButton.addActionListener(e -> {
             ShoppingView shoppingView = ViewManager.getInstance().getShoppingView();
             shoppingView.setVisible(true);
-
             shoppingViewListener(shoppingView);
         });
         panel.logoutButton.addActionListener(e -> {

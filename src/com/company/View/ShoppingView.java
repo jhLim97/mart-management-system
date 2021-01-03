@@ -211,31 +211,4 @@ public class ShoppingView extends JFrame {
         setVisible(true);
     }
 
-
-    public void addOrderActionListner(ActionListener listener) {
-        btnPay.addActionListener(listener);
-        // 다른 리스너들은 추가하기...
-    } // addButtonActionListener()
-
-    public void addEnrollButtonListener(ActionListener listener){
-        btnEnroll.addActionListener(listener);
-    }
-
-    public void addPayMentButtonListneer(ActionListener listener){
-        btnPay.addActionListener(listener);
-    }
-
-    public void addDeletButtonListener(ActionListener listener){
-        btnDelete.addActionListener(listener);
-    }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        ShoppingView shoppingView = new ShoppingView();
-        shoppingView.drawView();
-        new ShoppingController();
-    }
-
-
-
-
 }
