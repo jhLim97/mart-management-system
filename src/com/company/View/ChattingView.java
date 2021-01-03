@@ -16,7 +16,6 @@ public class ChattingView extends JFrame{
     String id;
 
     public ChattingView() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("::멀티채팅::");
         setLayout(new BorderLayout());
 

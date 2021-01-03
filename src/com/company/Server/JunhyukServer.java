@@ -28,10 +28,13 @@ public class JunhyukServer {
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
-    static final int LOGIN = 1; // 여기에 타입 번호 맵핑한 후 임의로 작성 한 후 주석으로 남기기
-    static final int ORDER = 11; //오더 추가, 연관 : 오더, 오더히스토리, 상품, 고객
-    static final int PRODUCTDELETE = 8;
-    static final int ORDERHISTORY = 16;
+    static final int UPDATECUSTOMER = 9;
+    static final int ORDER = 11; // 주문 테이블 갱신
+    static final int ORDERHISTORY = 16; // 주문 내역 테이블 갱신
+    static final int PAYTRY = 17; // 구매 시도
+    static final int ORDERCOMPLETE = 18; // 주문 성공 시
+    static final int ORDERFAIL = 19; // 재고 부족으로 주문 실패 시..'
+    static final int UPDATECUSTOMERPOINT = 20; // 구매완료 시 총 구매금액의 10% 갱신
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
@@ -124,7 +127,19 @@ public class JunhyukServer {
                     m = gson.fromJson(msg, Message.class); // Message 클래스로 매핑
 
                     switch(m.getType()) {
-                        case LOGIN : System.out.println("로그인 성공!!") ;break; // 준혁 테스트 중
+                        //case LOGIN : System.out.println("로그인 성공!!") ;break; // 준혁 테스트 중
+                        case UPDATECUSTOMER : {
+                            connectDB();
+                            try {
+                                System.out.println(m.getMsg());
+                                pstmt = con.prepareStatement(m.getMsg());
+                                pstmt.executeUpdate();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            closeDB();
+                            break;
+                        }
                         case ORDER : {
                             connectDB();
                             try {
@@ -145,7 +160,7 @@ public class JunhyukServer {
                             closeDB();
                             break;
                         }
-                        case PRODUCTDELETE : {
+                        case PAYTRY : {
                             connectDB();
                             String str[] = m.getMsg().split("@");
                             int cnt = Integer.parseInt(str[1]); // 구매 예정인 즉, 업데이트 할 품목 개수
@@ -186,9 +201,11 @@ public class JunhyukServer {
                                         e.printStackTrace();
                                     }
                                 }
+                                msgSendAll(gson.toJson(new Message(m.getId(), "", "", ORDERCOMPLETE))); // 고객 아이디로 보내기
                             }
-                            //else msgSendAll();
+                            else msgSendAll(gson.toJson(new Message(m.getId(), "", "", ORDERFAIL))); // 고객 아이디로 보내기
 
+                            System.out.println("서버에서 아이디는 : " + m.getId());
                             closeDB();
                             break;
                         }

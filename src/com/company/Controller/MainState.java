@@ -20,6 +20,7 @@ public class MainState implements State{
         else mainView.mainViewPanel.setVisible(true);
         if(mainView.productViewPanel == null) mainView.drawProductViewPanel();
         else mainView.productViewPanel.setVisible(true);
+        ProgramManager.getInstance().getChattingView().drawView();
 
         applyListener();
 
@@ -48,6 +49,7 @@ public class MainState implements State{
         mmsListener.getInstance().productViewPanelListener(
                 (ProgramManager.getInstance().getMainView().productViewPanel));
         mmsListener.getInstance().productCRUDViewListener(ProgramManager.getInstance().getProductCRUDView());
+        mmsListener.getInstance().chattingViewListener(ProgramManager.getInstance().getChattingView());
     }
 
     @Override
