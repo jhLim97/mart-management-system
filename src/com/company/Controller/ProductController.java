@@ -73,10 +73,6 @@ public class ProductController extends Thread{
 
     public void run(){
 
-        Calendar time = Calendar.getInstance();
-        String format_time = format.format(time.getTime());
-        ViewManager.getInstance().getMainView().mainViewPanel.timeLabel.setText(format_time);
-
         String txt="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
         String txt2="코드\t이름\t가격\t위치\t유통기한\t재고\t상태\n";
 
@@ -84,6 +80,10 @@ public class ProductController extends Thread{
 
         while(true){//while
             java.util.Date now = new java.util.Date();
+
+            Calendar time = Calendar.getInstance();
+            String format_time = format.format(time.getTime());
+            ViewManager.getInstance().getMainView().mainViewPanel.timeLabel.setText(format_time);
 
             try {
                 data=dao.getAll();

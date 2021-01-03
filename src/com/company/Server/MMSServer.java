@@ -133,6 +133,7 @@ public class MMSServer {
                     String str[] = {};
                     switch(m.getType()) {
                         case CHATTING:
+                            str = m.getMsg().split("/");
                             msgSendAll(gson.toJson(new Message("","",str[0] + " : " + str[1],CHATTING)));
                             break;
 
