@@ -105,8 +105,6 @@ public class mmsListener {
             }
         });
         panel.shoppingButton.addActionListener(e -> {
-            //ViewManager.getInstance().shoppingViewOpen();
-            //ShoppingView shoppingView = ViewManager.getInstance().shoppingView;
             ShoppingView shoppingView = ProgramManager.getInstance().getShoppingView();
             shoppingView.setVisible(true);
 

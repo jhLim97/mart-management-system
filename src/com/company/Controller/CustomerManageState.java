@@ -8,7 +8,7 @@ import com.company.View.ProductViewPanel;
 import javax.swing.*;
 
 public class CustomerManageState implements State {
-    MainView productView;
+    MainView mainView;
     CustomerViewPanel customerViewPanel;
     @Override
     public void draw() {
@@ -22,7 +22,10 @@ public class CustomerManageState implements State {
 
     @Override
     public void drawPanel() {
-        ProgramManager.getInstance().getMainView().drawCustomerViewPanel();
+        mainView = ProgramManager.getInstance().getMainView();
+        mainView.orderListViewPanel.setVisible(false);
+        mainView.productViewPanel.setVisible(false);
+        mainView.customerViewPanel.setVisible(true);
     }
 
 
