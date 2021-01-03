@@ -372,6 +372,7 @@ public class mmsListener {
 
     public void shoppingViewListener(ShoppingView frame){
 
+        /*
         for (ActionListener al : frame.btnEnter.getActionListeners()) {
             frame.btnEnter.removeActionListener(al);
         }
@@ -383,7 +384,7 @@ public class mmsListener {
         }
         for (ActionListener al : frame.btnDelete.getActionListeners()) {
             frame.btnEnter.removeActionListener(al);
-        }
+        }*/
 
         frame.btnEnter.addActionListener(e -> {
 

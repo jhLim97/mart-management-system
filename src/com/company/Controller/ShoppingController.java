@@ -29,20 +29,28 @@ public class ShoppingController {
 
     public void addMyList(ShoppingView v) throws SQLException, ClassNotFoundException {
 
-        ProductDTO p = dao.getProduct(Integer.parseInt(v.jtfSearch.getText()));
+        ProductDTO p = null;
 
-        if( p.getAmount() < Integer.parseInt(v.jtfCount.getText())){ //수량비교
-            v.lblstate.setText("상태 : 재고 초과 입력");
+        if(v.jtfSearch.getText() != null && v.jtfCount.getText() != null) {
+            p = dao.getProduct(Integer.parseInt(v.jtfSearch.getText()));
+
+            if( p.getAmount() < Integer.parseInt(v.jtfCount.getText())){ //수량비교
+                v.lblstate.setText("상태 : 재고 초과 입력");
+            }
+            else{
+                p.setAmount(Integer.parseInt(v.jtfCount.getText()));
+                datas2.add(p);
+                total = p.getAmount() * p.getPrice() + total;
+
+                refreshData2(v);
+
+            }
+            v.jtfSearch.setText("");
+            v.jtfCount.setText("");
+            v.lblMsg.setText("결제 금액 : " + total +"원");
         }
-        else{
-            p.setAmount(Integer.parseInt(v.jtfCount.getText()));
-            datas2.add(p);
-            total = p.getAmount() * p.getPrice() + total;
 
-            refreshData2(v);
 
-        }
-        v.lblMsg.setText("결제 금액 : " + total +"원");
     }//상품담기
 
     public void payment(ShoppingView v) throws SQLException, ClassNotFoundException {

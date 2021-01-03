@@ -18,8 +18,12 @@ public class CustomerViewPanel extends JPanel {
     public JScrollPane jsp;
     String header[] = {"휴대폰 번호", "고객 이름", "누적 포인트"};
     public DefaultTableModel dtmodel;
+    public Font fnt;
 
     public CustomerViewPanel() {
+
+        // 폰트 설정
+        fnt = new Font("Dialog", Font.BOLD, 15);
 
         // -------optionPanel--------
         optionPanel = new JPanel(); // 상단 조회 및 관리 패널
@@ -68,6 +72,7 @@ public class CustomerViewPanel extends JPanel {
         newCustomerPanel.setPreferredSize(new Dimension(200, 400));
         newCustomerPanel.setLayout(new BorderLayout());
 
+        lblNewCustomer.setFont(fnt);
         newCustomerPanel.add(lblNewCustomer, BorderLayout.PAGE_START);
         newCustomerPanel.add(taNewCustomer, BorderLayout.CENTER);
 
